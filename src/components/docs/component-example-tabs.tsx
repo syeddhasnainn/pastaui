@@ -120,9 +120,9 @@ export function ComponentExampleTabs({ component }: ComponentExampleTabsProps) {
 
       {component.examples?.map((example) => (
         <section className="mt-16" key={example.previewSlug}>
-          <h3 className="text-2xl font-medium tracking-[-0.02em] text-foreground">
+          <h2 className="text-2xl font-medium tracking-[-0.02em] text-foreground">
             {example.title}
-          </h3>
+          </h2>
           {example.description && (
             <p className="mt-3 max-w-xl text-sm leading-5 text-muted-foreground">
               {example.description}

@@ -3,8 +3,19 @@ import { Link, createFileRoute } from '@tanstack/react-router'
 import { DocsLayout } from '#/components/docs/docs-layout'
 import { InstallationCard } from '#/components/docs/installation-card'
 import { createInstallCommand } from '#/components/docs/catalog/create-install-command'
+import { seo, siteName } from '#/lib/seo'
 
-export const Route = createFileRoute('/docs/installation')({ component: InstallationPage })
+export const Route = createFileRoute('/docs/installation')({
+  head: () =>
+    seo({
+      title: `Installation — ${siteName}`,
+      description:
+        'Add Pasta UI components to your React project with the shadcn CLI. The source is yours to customize.',
+      path: '/docs/installation',
+      type: 'article',
+    }),
+  component: InstallationPage,
+})
 
 function InstallationPage() {
   return (

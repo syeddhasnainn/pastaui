@@ -11,6 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PageRouteImport } from './routes/$page'
+import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
+import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ComponentsIndexRouteImport } from './routes/components/index'
 import { Route as ComponentsSlugRouteImport } from './routes/components/$slug'
 import { Route as DocsIndexRouteImport } from './routes/docs/index'
@@ -26,6 +29,21 @@ const IndexRoute = IndexRouteImport.update({
 const PageRoute = PageRouteImport.update({
   id: '/$page',
   path: '/$page',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
+  id: '/llms.txt',
+  path: '/llms.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
+  id: '/robots.txt',
+  path: '/robots.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ComponentsIndexRoute = ComponentsIndexRouteImport.update({
@@ -62,6 +80,9 @@ const DocsComponentSlugRoute = DocsComponentSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$page': typeof PageRoute
+  '/llms.txt': typeof LlmsDottxtRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/components/$slug': typeof ComponentsSlugRoute
   '/docs/installation': typeof DocsInstallationRoute
   '/components/': typeof ComponentsIndexRoute
@@ -72,6 +93,9 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$page': typeof PageRoute
+  '/llms.txt': typeof LlmsDottxtRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/components/$slug': typeof ComponentsSlugRoute
   '/docs/installation': typeof DocsInstallationRoute
   '/components': typeof ComponentsIndexRoute
@@ -83,6 +107,9 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$page': typeof PageRoute
+  '/llms.txt': typeof LlmsDottxtRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/components/$slug': typeof ComponentsSlugRoute
   '/docs/installation': typeof DocsInstallationRoute
   '/components/': typeof ComponentsIndexRoute
@@ -95,6 +122,9 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/$page'
+    | '/llms.txt'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/components/$slug'
     | '/docs/installation'
     | '/components/'
@@ -105,6 +135,9 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/$page'
+    | '/llms.txt'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/components/$slug'
     | '/docs/installation'
     | '/components'
@@ -115,6 +148,9 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/$page'
+    | '/llms.txt'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/components/$slug'
     | '/docs/installation'
     | '/components/'
@@ -126,6 +162,9 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PageRoute: typeof PageRoute
+  LlmsDottxtRoute: typeof LlmsDottxtRoute
+  RobotsDottxtRoute: typeof RobotsDottxtRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ComponentsSlugRoute: typeof ComponentsSlugRoute
   DocsInstallationRoute: typeof DocsInstallationRoute
   ComponentsIndexRoute: typeof ComponentsIndexRoute
@@ -148,6 +187,27 @@ declare module '@tanstack/react-router' {
       path: '/$page'
       fullPath: '/$page'
       preLoaderRoute: typeof PageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/llms.txt': {
+      id: '/llms.txt'
+      path: '/llms.txt'
+      fullPath: '/llms.txt'
+      preLoaderRoute: typeof LlmsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/robots.txt': {
+      id: '/robots.txt'
+      path: '/robots.txt'
+      fullPath: '/robots.txt'
+      preLoaderRoute: typeof RobotsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/components/': {
@@ -198,6 +258,9 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PageRoute: PageRoute,
+  LlmsDottxtRoute: LlmsDottxtRoute,
+  RobotsDottxtRoute: RobotsDottxtRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   ComponentsSlugRoute: ComponentsSlugRoute,
   DocsInstallationRoute: DocsInstallationRoute,
   ComponentsIndexRoute: ComponentsIndexRoute,

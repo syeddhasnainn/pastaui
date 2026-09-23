@@ -20,7 +20,9 @@ export function Hero() {
               buttonVariants({ size: 'lg' }),
               'h-11 gap-2 rounded-full! bg-charcoal-black px-5 text-lg font-normal text-charcoal-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.18)] hover:brightness-110 has-data-[icon=inline-end]:pr-4',
             )}
-            href="/pro"
+            href="https://pro.pastaui.com/"
+            rel="noreferrer"
+            target="_blank"
           >
             Explore Pro <ArrowRightIcon data-icon="inline-end" />
           </a>

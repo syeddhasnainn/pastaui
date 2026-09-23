@@ -1,17 +1,19 @@
+import { githubUrl } from '#/lib/seo'
+
 const footerGroups = [
   {
     title: 'Product',
     links: [
       { label: 'Components', href: '/docs/component' },
       { label: 'Blocks', href: '/blocks' },
-      { label: 'Pro', href: '/pro' },
+      { label: 'Pro', href: 'https://pro.pastaui.com/' },
     ],
   },
   {
     title: 'Resources',
     links: [
       { label: 'Documentation', href: '/docs/installation' },
-      { label: 'GitHub', href: 'https://github.com/pastaui/pastaui' },
+      { label: 'GitHub', href: githubUrl },
       { label: 'Changelog', href: '/changelog' },
     ],
   },

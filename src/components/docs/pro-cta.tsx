@@ -34,7 +34,9 @@ export function ProCta() {
             size: 'lg',
             variant: 'default',
           })}
-          href="/pro"
+          href="https://pro.pastaui.com/"
+          rel="noreferrer"
+          target="_blank"
         >
           Explore Pro <ArrowUpRightIcon data-icon="inline-end" />
         </a>
