@@ -2,6 +2,7 @@ import ArrowRightIcon from '~icons/solar/arrow-right-linear'
 import GitForkIcon from '~icons/solar/git-fork-linear'
 import TerminalIcon from '~icons/solar/file-terminal-linear'
 import { buttonVariants } from '#/components/ui/button'
+import { githubUrl } from '#/lib/seo'
 import { cn } from '#/lib/utils'
 
 export function OpenSourceSection() {
@@ -21,7 +22,7 @@ export function OpenSourceSection() {
           </p>
           <a
             className={cn(buttonVariants({ variant: 'outline', size: 'lg' }), 'mt-7')}
-            href="https://github.com/pastaui/pastaui"
+            href={githubUrl}
             target="_blank"
             rel="noreferrer"
           >

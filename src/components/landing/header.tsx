@@ -4,6 +4,7 @@ import { BrandMark } from '#/components/brand-mark'
 import { ComponentSearch } from '#/components/docs/component-search'
 import { ThemeToggle } from '#/components/theme-toggle'
 import { buttonVariants } from '#/components/ui/button'
+import { githubUrl } from '#/lib/seo'
 import { cn } from '#/lib/utils'
 
 const navigation = [
@@ -47,7 +48,7 @@ export function LandingHeader() {
           <a
             aria-label="Pasta UI on GitHub"
             className={buttonVariants({ variant: 'ghost', size: 'icon-lg' })}
-            href="https://github.com/pastaui/pastaui"
+            href={githubUrl}
             rel="noreferrer"
             target="_blank"
           >
