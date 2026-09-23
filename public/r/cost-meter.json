@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "cost-meter",
+  "title": "Cost Meter",
+  "description": "Run cost split by model or task and compared against an optional session budget.",
+  "dependencies": [
+    "@solar-icons/react@^2.2.0",
+    "cn@^0.3.0"
+  ],
+  "registryDependencies": [
+    "https://pastaui.com/r/pastaui-styles.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ai/cost-meter.tsx",
+      "content": "import { DollarMinimalisticIcon as CoinsIcon } from '@solar-icons/react/linear/dollar-minimalistic'\nimport * as React from 'react'\n\nimport { cn } from 'cn'\n\ninterface CostItem {\n  cost: number\n  id: string\n  label: string\n  tokens?: number\n}\n\ninterface CostMeterProps extends React.ComponentProps<'section'> {\n  budget?: number\n  currency?: string\n  items: CostItem[]\n}\n\nfunction CostMeter({ budget, className, currency = '$', items, ...props }: CostMeterProps) {\n  const total = items.reduce((sum, item) => sum + item.cost, 0)\n  const max = Math.max(...items.map((item) => item.cost), 0.001)\n  const budgetPercent = budget ? Math.min((total / budget) * 100, 100) : undefined\n\n  return (\n    <section\n      data-slot=\"cost-meter\"\n      className={cn(\n        'rounded-md bg-card p-5 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',\n        className,\n      )}\n      {...props}\n    >\n      <header className=\"flex items-start gap-3\">\n        <CoinsIcon className=\"mt-0.5 size-5 shrink-0 text-muted-foreground\" />\n        <div className=\"min-w-0 flex-1\">\n          <p className=\"card-heading\">Run cost</p>\n          <p className=\"mt-0.5 text-sm font-[450] tabular-nums\">\n            {currency}\n            {total.toFixed(4)}\n          </p>\n        </div>\n        {budget && (\n          <span className=\"text-xs leading-5 text-muted-foreground tabular-nums\">\n            of {currency}\n            {budget.toFixed(2)}\n          </span>\n        )}\n      </header>\n      {budgetPercent !== undefined && (\n        <div className=\"mt-4 h-1.5 overflow-hidden rounded-full bg-muted\">\n          <div\n            className=\"h-full rounded-full bg-foreground transition-[width]\"\n            style={{ width: `${budgetPercent}%` }}\n          />\n        </div>\n      )}\n      <ul className=\"mt-5 flex flex-col gap-4\">\n        {items.map((item) => {\n          const filledSegments = item.cost > 0 ? Math.max(1, Math.round((item.cost / max) * 10)) : 0\n\n          return (\n            <li\n              className=\"grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-3\"\n              key={item.id}\n            >\n              <div className=\"min-w-0\">\n                <p className=\"truncate text-sm font-[450]\">{item.label}</p>\n                {item.tokens && (\n                  <p className=\"mt-0.5 text-xs leading-5 text-muted-foreground tabular-nums\">\n                    {item.tokens.toLocaleString()} tokens\n                  </p>\n                )}\n              </div>\n              <div aria-hidden=\"true\" className=\"flex items-center gap-1\">\n                {Array.from({ length: 10 }, (_, index) => (\n                  <span\n                    className={cn(\n                      'h-6 w-1 rounded-full bg-muted',\n                      index < filledSegments && 'bg-foreground',\n                    )}\n                    key={index}\n                  />\n                ))}\n              </div>\n              <span className=\"w-16 text-right text-sm text-muted-foreground tabular-nums\">\n                {currency}\n                {item.cost.toFixed(4)}\n              </span>\n              <meter\n                aria-label={`${item.label}: ${currency}${item.cost.toFixed(4)}`}\n                className=\"sr-only\"\n                max={max}\n                min={0}\n                value={item.cost}\n              />\n            </li>\n          )\n        })}\n      </ul>\n    </section>\n  )\n}\n\nexport { CostMeter }\nexport type { CostItem, CostMeterProps }\n",
+      "type": "registry:component",
+      "target": "@components/ai/cost-meter.tsx"
+    }
+  ],
+  "type": "registry:component"
+}

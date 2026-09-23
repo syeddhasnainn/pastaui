@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "background-inbox",
+  "title": "Background Inbox",
+  "description": "Work still running elsewhere and completed results waiting to be collected.",
+  "dependencies": [
+    "@solar-icons/react@^2.2.0",
+    "cn@^0.3.0"
+  ],
+  "registryDependencies": [
+    "button",
+    "https://pastaui.com/r/pastaui-styles.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ai/background-inbox.tsx",
+      "content": "import { CheckCircleIcon as CheckIcon } from '@solar-icons/react/linear/check-circle'\nimport { ClockCircleIcon as Clock3Icon } from '@solar-icons/react/linear/clock-circle'\nimport { InboxIcon } from '@solar-icons/react/linear/inbox'\nimport { LoaderIcon as LoaderCircleIcon } from '@solar-icons/react/linear/loader'\nimport { CloseIcon as XIcon } from '@solar-icons/react/linear/close'\nimport * as React from 'react'\n\nimport { Button } from '@/components/ui/button'\nimport { cn } from 'cn'\n\ninterface BackgroundInboxItem {\n  detail?: string\n  id: string\n  status: 'ready' | 'running' | 'waiting'\n  time?: string\n  title: string\n}\n\ninterface BackgroundInboxProps extends Omit<React.ComponentProps<'section'>, 'onSelect'> {\n  items: BackgroundInboxItem[]\n  onDismiss?: (id: string) => void\n  onSelect?: (id: string) => void\n}\n\nfunction InboxStatus({ status }: Pick<BackgroundInboxItem, 'status'>) {\n  if (status === 'ready') return <CheckIcon aria-label=\"Ready\" className=\"size-3.5\" />\n  if (status === 'running')\n    return <LoaderCircleIcon aria-label=\"Running\" className=\"size-3.5 animate-spin\" />\n  return <Clock3Icon aria-label=\"Waiting\" className=\"size-3.5 text-muted-foreground\" />\n}\n\nfunction BackgroundInbox({\n  className,\n  items,\n  onDismiss,\n  onSelect,\n  ...props\n}: BackgroundInboxProps) {\n  const ready = items.filter((item) => item.status === 'ready').length\n\n  return (\n    <section\n      data-slot=\"background-inbox\"\n      className={cn(\n        'overflow-hidden rounded-md bg-card font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',\n        className,\n      )}\n      {...props}\n    >\n      <header className=\"flex items-center gap-2 px-4 py-3\">\n        <InboxIcon className=\"size-4 text-muted-foreground\" />\n        <h3 className=\"card-heading\">Background inbox</h3>\n        <span className=\"ml-auto text-xs leading-5 text-muted-foreground\">{ready} ready</span>\n      </header>\n      <ul className=\"flex flex-col gap-1 bg-muted/30 p-2\">\n        {items.map((item) => (\n          <li\n            className=\"group flex items-start gap-2 rounded-md bg-card p-2.5 shadow-card\"\n            key={item.id}\n          >\n            <span className=\"mt-0.5 flex size-5 shrink-0 items-center justify-center text-muted-foreground\">\n              <InboxStatus status={item.status} />\n            </span>\n            <button\n              className=\"min-w-0 flex-1 text-left\"\n              onClick={() => onSelect?.(item.id)}\n              type=\"button\"\n            >\n              <span className=\"flex items-center gap-2\">\n                <span className=\"truncate text-sm font-[450]\">{item.title}</span>\n                {item.time && (\n                  <span className=\"ml-auto shrink-0 text-[10px] text-muted-foreground\">\n                    {item.time}\n                  </span>\n                )}\n              </span>\n              {item.detail && (\n                <span className=\"mt-0.5 block truncate text-xs leading-5 text-muted-foreground\">\n                  {item.detail}\n                </span>\n              )}\n            </button>\n            <Button\n              aria-label={`Dismiss ${item.title}`}\n              className=\"opacity-0 group-hover:opacity-100\"\n              onClick={() => onDismiss?.(item.id)}\n              size=\"icon-xs\"\n              type=\"button\"\n              variant=\"ghost\"\n            >\n              <XIcon />\n            </Button>\n          </li>\n        ))}\n      </ul>\n    </section>\n  )\n}\n\nexport { BackgroundInbox }\nexport type { BackgroundInboxItem, BackgroundInboxProps }\n",
+      "type": "registry:component",
+      "target": "@components/ai/background-inbox.tsx"
+    }
+  ],
+  "type": "registry:component"
+}

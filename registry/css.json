@@ -1,0 +1,150 @@
+{
+  "base": {
+    "name": "pastaui-styles",
+    "description": "Shared card shadow, surface shadow and heading/label utilities used across Pasta UI components.",
+    "classes": [
+      "shadow-card",
+      "shadow-linear-surface",
+      "card-heading",
+      "metadata-label"
+    ],
+    "cssVars": {
+      "theme": {
+        "shadow-card": "var(--card-shadow)",
+        "shadow-linear-surface": "var(--linear-surface-shadow)"
+      },
+      "light": {
+        "card-outline": "lch(0 0 0 / 8.8%)",
+        "card-shadow": "0 0 0 0.5px var(--card-outline), 0 3px 6px -2px lch(0 0 0 / 2%), 0 1px 1px 0 lch(0 0 0 / 4%)",
+        "linear-surface-shadow": "0 3px 6px -2px lch(0 0 0 / 2%), 0 1px 1px 0 lch(0 0 0 / 4%)"
+      },
+      "dark": {
+        "card-outline": "lch(100 0 0 / 8.8%)"
+      }
+    },
+    "css": {
+      "@utility card-heading": {
+        "font-family": "var(--font-sans)",
+        "font-size": "15px",
+        "font-weight": "500",
+        "letter-spacing": "-0.05px"
+      },
+      "@utility metadata-label": {
+        "font-family": "var(--font-sans)",
+        "font-size": "12px",
+        "font-weight": "450",
+        "line-height": "20px",
+        "letter-spacing": "-0.05px",
+        "color": "var(--muted-foreground)"
+      }
+    }
+  },
+  "items": {
+    "code-block": {
+      "cssVars": {
+        "light": {
+          "syntax-comment": "oklch(0.556 0 0)",
+          "syntax-keyword": "oklch(0.49 0.2 292)",
+          "syntax-string": "oklch(0.45 0.13 153)",
+          "syntax-function": "oklch(0.48 0.15 255)",
+          "syntax-number": "oklch(0.53 0.16 55)",
+          "syntax-property": "oklch(0.48 0.14 20)",
+          "syntax-punctuation": "oklch(0.4 0 0)"
+        },
+        "dark": {
+          "syntax-comment": "oklch(0.708 0 0)",
+          "syntax-keyword": "oklch(0.75 0.16 292)",
+          "syntax-string": "oklch(0.76 0.13 153)",
+          "syntax-function": "oklch(0.76 0.12 255)",
+          "syntax-number": "oklch(0.78 0.13 65)",
+          "syntax-property": "oklch(0.75 0.12 20)",
+          "syntax-punctuation": "oklch(0.78 0 0)"
+        }
+      }
+    },
+    "tool-group-output": {
+      "cssVars": {
+        "light": {
+          "syntax-comment": "oklch(0.556 0 0)",
+          "syntax-keyword": "oklch(0.49 0.2 292)",
+          "syntax-string": "oklch(0.45 0.13 153)",
+          "syntax-function": "oklch(0.48 0.15 255)",
+          "syntax-number": "oklch(0.53 0.16 55)",
+          "syntax-property": "oklch(0.48 0.14 20)",
+          "syntax-punctuation": "oklch(0.4 0 0)"
+        },
+        "dark": {
+          "syntax-comment": "oklch(0.708 0 0)",
+          "syntax-keyword": "oklch(0.75 0.16 292)",
+          "syntax-string": "oklch(0.76 0.13 153)",
+          "syntax-function": "oklch(0.76 0.12 255)",
+          "syntax-number": "oklch(0.78 0.13 65)",
+          "syntax-property": "oklch(0.75 0.12 20)",
+          "syntax-punctuation": "oklch(0.78 0 0)"
+        }
+      }
+    },
+    "audio-player": {
+      "cssVars": {
+        "light": {
+          "audio-surface": "var(--muted)",
+          "audio-track": "var(--border)",
+          "audio-progress": "var(--muted-foreground)",
+          "audio-shadow": "oklch(0 0 0 / 12%)"
+        },
+        "dark": {
+          "audio-surface": "oklch(0.08 0 0)",
+          "audio-track": "oklch(0.26 0 0)",
+          "audio-progress": "oklch(0.62 0 0)",
+          "audio-shadow": "oklch(0 0 0 / 35%)"
+        }
+      }
+    },
+    "tool-group": {
+      "css": {
+        ".agent-text-shimmer": {
+          "color": "transparent",
+          "background-image": "linear-gradient( 90deg, var(--muted-foreground), var(--foreground), var(--muted-foreground) )",
+          "background-size": "200% 100%",
+          "background-clip": "text",
+          "animation": "agent-text-shimmer 1.6s linear infinite"
+        },
+        "@keyframes agent-text-shimmer": {
+          "from": {
+            "background-position": "200% 0"
+          },
+          "to": {
+            "background-position": "-200% 0"
+          }
+        },
+        "@media (prefers-reduced-motion: reduce)": {
+          ".agent-text-shimmer": {
+            "color": "var(--muted-foreground)",
+            "background-image": "none",
+            "animation": "none"
+          }
+        }
+      }
+    },
+    "voice-input": {
+      "css": {
+        ".voice-input-waveform": {
+          "animation": "voice-input-scroll 8s linear infinite"
+        },
+        "@keyframes voice-input-scroll": {
+          "from": {
+            "transform": "translateX(0)"
+          },
+          "to": {
+            "transform": "translateX(-50%)"
+          }
+        },
+        "@media (prefers-reduced-motion: reduce)": {
+          ".voice-input-waveform": {
+            "animation": "none"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "file-tree",
+  "title": "File Tree",
+  "description": "A compact repository tree with selection, nesting, expansion, and change status.",
+  "dependencies": [
+    "@solar-icons/react@^2.2.0",
+    "cn@^0.3.0"
+  ],
+  "registryDependencies": [
+    "https://pastaui.com/r/pastaui-styles.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ai/file-tree.tsx",
+      "content": "import { AltArrowRightIcon as ChevronRightIcon } from '@solar-icons/react/linear/alt-arrow-right'\nimport { FileCodeIcon as FileCode2Icon } from '@solar-icons/react/linear/file-code'\nimport { FileIcon } from '@solar-icons/react/linear/file'\nimport { FolderIcon } from '@solar-icons/react/linear/folder'\nimport { FolderOpenIcon } from '@solar-icons/react/linear/folder-open'\nimport * as React from 'react'\n\nimport { cn } from 'cn'\n\ninterface FileTreeItem {\n  depth?: number\n  expanded?: boolean\n  id: string\n  kind: 'file' | 'folder'\n  name: string\n  status?: 'added' | 'deleted' | 'modified'\n}\n\ninterface FileTreeProps extends Omit<React.ComponentProps<'section'>, 'onSelect'> {\n  items: FileTreeItem[]\n  onSelect?: (id: string) => void\n  selectedId?: string\n  title?: string\n}\n\nconst statusCopy = { added: 'A', deleted: 'D', modified: 'M' }\n\nfunction FileTree({\n  className,\n  items,\n  onSelect,\n  selectedId,\n  title = 'Files',\n  ...props\n}: FileTreeProps) {\n  return (\n    <section\n      data-slot=\"file-tree\"\n      className={cn(\n        'rounded-md bg-card p-2 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',\n        className,\n      )}\n      {...props}\n    >\n      <h3 className=\"px-2 py-1.5 card-heading text-muted-foreground\">{title}</h3>\n      <ul className=\"mt-1 space-y-0.5\">\n        {items.map((item) => (\n          <li key={item.id}>\n            <button\n              className={cn(\n                'flex w-full items-center gap-1.5 rounded-md py-1.5 pr-2 text-left text-sm transition-colors hover:bg-muted',\n                item.id === selectedId && 'bg-muted',\n              )}\n              onClick={() => onSelect?.(item.id)}\n              style={{ paddingLeft: `${(item.depth ?? 0) * 16 + 8}px` }}\n              type=\"button\"\n            >\n              {item.kind === 'folder' ? (\n                <>\n                  <ChevronRightIcon\n                    className={cn('size-3.5 text-muted-foreground', item.expanded && 'rotate-90')}\n                  />\n                  {item.expanded ? (\n                    <FolderOpenIcon className=\"size-4 text-muted-foreground\" />\n                  ) : (\n                    <FolderIcon className=\"size-4 text-muted-foreground\" />\n                  )}\n                </>\n              ) : (\n                <>\n                  <span className=\"w-3.5\" />\n                  {item.name.endsWith('.tsx') || item.name.endsWith('.ts') ? (\n                    <FileCode2Icon className=\"size-4 text-muted-foreground\" />\n                  ) : (\n                    <FileIcon className=\"size-4 text-muted-foreground\" />\n                  )}\n                </>\n              )}\n              <span className=\"min-w-0 flex-1 truncate\">{item.name}</span>\n              {item.status && (\n                <span\n                  className={cn(\n                    'text-[10px] font-medium',\n                    item.status === 'added' && 'text-emerald-600',\n                    item.status === 'deleted' && 'text-destructive',\n                    item.status === 'modified' && 'text-amber-600',\n                  )}\n                >\n                  {statusCopy[item.status]}\n                </span>\n              )}\n            </button>\n          </li>\n        ))}\n      </ul>\n    </section>\n  )\n}\n\nexport { FileTree }\nexport type { FileTreeItem, FileTreeProps }\n",
+      "type": "registry:component",
+      "target": "@components/ai/file-tree.tsx"
+    }
+  ],
+  "type": "registry:component"
+}

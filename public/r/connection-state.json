@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "connection-state",
+  "title": "Connection State",
+  "description": "Clear connected, reconnecting, resumed, and offline states for resumable agent streams.",
+  "dependencies": [
+    "@solar-icons/react@^2.2.0",
+    "cn@^0.3.0"
+  ],
+  "registryDependencies": [
+    "button",
+    "https://pastaui.com/r/pastaui-styles.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ai/connection-state.tsx",
+      "content": "import { CheckCircleIcon as CheckCircle2Icon } from '@solar-icons/react/linear/check-circle'\nimport { CloudCrossIcon as CloudOffIcon } from '@solar-icons/react/linear/cloud-cross'\nimport { LoaderIcon as LoaderCircleIcon } from '@solar-icons/react/linear/loader'\nimport { RefreshIcon as RefreshCwIcon } from '@solar-icons/react/linear/refresh'\nimport { WiFiIcon as WifiIcon } from '@solar-icons/react/linear/wi-fi'\nimport * as React from 'react'\n\nimport { Button } from '@/components/ui/button'\nimport { cn } from 'cn'\n\ninterface ConnectionStateProps extends React.ComponentProps<'div'> {\n  detail?: string\n  onRetry?: () => void\n  state: 'connected' | 'offline' | 'reconnected' | 'reconnecting'\n}\n\nfunction ConnectionState({ className, detail, onRetry, state, ...props }: ConnectionStateProps) {\n  const copy = {\n    connected: 'Connected',\n    offline: 'Connection lost',\n    reconnected: 'Stream resumed',\n    reconnecting: 'Reconnecting',\n  }[state]\n\n  return (\n    <div\n      aria-live=\"polite\"\n      data-slot=\"connection-state\"\n      className={cn(\n        'flex items-center gap-3 rounded-md bg-card p-3 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',\n        state === 'offline' && 'text-destructive',\n        className,\n      )}\n      {...props}\n    >\n      <ConnectionIcon state={state} />\n      <div className=\"min-w-0 flex-1\">\n        <p className=\"card-heading\">{copy}</p>\n        {detail && <p className=\"mt-0.5 truncate text-xs leading-5 opacity-70\">{detail}</p>}\n      </div>\n      {state === 'offline' && onRetry && (\n        <Button onClick={onRetry} size=\"sm\" variant=\"outline\">\n          <RefreshCwIcon data-icon=\"inline-start\" /> Retry\n        </Button>\n      )}\n    </div>\n  )\n}\n\nfunction ConnectionIcon({ state }: Pick<ConnectionStateProps, 'state'>) {\n  if (state === 'offline') return <CloudOffIcon className=\"size-4\" />\n  if (state === 'reconnecting') return <LoaderCircleIcon className=\"size-4 animate-spin\" />\n  if (state === 'reconnected') return <CheckCircle2Icon className=\"size-4 text-emerald-600\" />\n  return <WifiIcon className=\"size-4 text-muted-foreground\" />\n}\n\nexport { ConnectionState }\nexport type { ConnectionStateProps }\n",
+      "type": "registry:component",
+      "target": "@components/ai/connection-state.tsx"
+    }
+  ],
+  "type": "registry:component"
+}

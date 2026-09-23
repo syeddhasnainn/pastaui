@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "agent-activity",
+  "title": "Agent Activity",
+  "description": "A chronological stream for reasoning, searches, terminal work, and tool execution.",
+  "dependencies": [
+    "@solar-icons/react@^2.2.0",
+    "cn@^0.3.0"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "src/components/ai/agent-activity.tsx",
+      "content": "import { CheckCircleIcon as CheckIcon } from '@solar-icons/react/linear/check-circle'\nimport { RecordCircleIcon as CircleIcon } from '@solar-icons/react/linear/record-circle'\nimport { LoaderIcon as LoaderCircleIcon } from '@solar-icons/react/linear/loader'\nimport { MagnifierIcon as SearchIcon } from '@solar-icons/react/linear/magnifier'\nimport { FileTerminalIcon as TerminalIcon } from '@solar-icons/react/linear/file-terminal'\nimport { ToolboxIcon as WrenchIcon } from '@solar-icons/react/linear/toolbox'\nimport * as React from 'react'\n\nimport { cn } from 'cn'\n\ninterface AgentActivityItem {\n  detail?: string\n  id: string\n  label: string\n  status: 'complete' | 'running' | 'waiting'\n  type?: 'reasoning' | 'search' | 'terminal' | 'tool'\n}\n\ninterface AgentActivityProps extends React.ComponentProps<'ol'> {\n  items: AgentActivityItem[]\n}\n\nfunction AgentActivity({ className, items, ...props }: AgentActivityProps) {\n  return (\n    <ol\n      data-slot=\"agent-activity\"\n      className={cn(\n        'space-y-1 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground',\n        className,\n      )}\n      {...props}\n    >\n      {items.map((item, index) => (\n        <li className=\"relative flex gap-3 pb-3\" key={item.id}>\n          {index < items.length - 1 && (\n            <span\n              aria-hidden=\"true\"\n              className=\"absolute top-5 left-2 h-[calc(100%-0.5rem)] w-px bg-border\"\n            />\n          )}\n          <span className=\"relative flex size-4 shrink-0 items-center justify-center bg-background text-muted-foreground\">\n            <ActivityIcon item={item} />\n          </span>\n          <div className=\"min-w-0 flex-1\">\n            <p className={cn('text-sm', item.status === 'waiting' && 'text-muted-foreground')}>\n              {item.label}\n            </p>\n            {item.detail && (\n              <p className=\"mt-0.5 text-xs leading-5 text-muted-foreground\">{item.detail}</p>\n            )}\n          </div>\n        </li>\n      ))}\n    </ol>\n  )\n}\n\nfunction ActivityIcon({ item }: { item: AgentActivityItem }) {\n  if (item.status === 'running')\n    return <LoaderCircleIcon aria-label=\"Running\" className=\"size-3.5 animate-spin\" />\n  if (item.status === 'complete') return <CheckIcon aria-label=\"Complete\" className=\"size-3.5\" />\n  if (item.type === 'search') return <SearchIcon aria-label=\"Search\" className=\"size-3.5\" />\n  if (item.type === 'terminal') return <TerminalIcon aria-label=\"Terminal\" className=\"size-3.5\" />\n  if (item.type === 'tool') return <WrenchIcon aria-label=\"Tool\" className=\"size-3.5\" />\n  return <CircleIcon aria-label=\"Waiting\" className=\"size-3\" />\n}\n\nexport { AgentActivity }\nexport type { AgentActivityItem, AgentActivityProps }\n",
+      "type": "registry:component",
+      "target": "@components/ai/agent-activity.tsx"
+    }
+  ],
+  "type": "registry:component"
+}

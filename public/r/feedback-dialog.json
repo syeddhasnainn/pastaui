@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "feedback-dialog",
+  "title": "Feedback Dialog",
+  "description": "A low-friction reason and note form for turning negative feedback into signal.",
+  "dependencies": [
+    "@solar-icons/react@^2.2.0",
+    "cn@^0.3.0"
+  ],
+  "registryDependencies": [
+    "button",
+    "https://pastaui.com/r/pastaui-styles.json",
+    "textarea"
+  ],
+  "files": [
+    {
+      "path": "src/components/ai/feedback-dialog.tsx",
+      "content": "import { ChatSquareIcon as MessageSquareIcon } from '@solar-icons/react/linear/chat-square'\nimport * as React from 'react'\n\nimport { Button } from '@/components/ui/button'\nimport { Textarea } from '@/components/ui/textarea'\nimport { cn } from 'cn'\n\ninterface FeedbackDialogProps extends Omit<React.ComponentProps<'form'>, 'onSubmit'> {\n  comment?: string\n  onCommentChange?: (comment: string) => void\n  onReasonChange?: (reason: string) => void\n  onSubmit?: () => void\n  reason?: string\n  reasons: string[]\n  title?: string\n}\n\nfunction FeedbackDialog({\n  className,\n  comment = '',\n  onCommentChange,\n  onReasonChange,\n  onSubmit,\n  reason,\n  reasons,\n  title = 'What could be better?',\n  ...props\n}: FeedbackDialogProps) {\n  const commentId = React.useId()\n\n  return (\n    <form\n      data-slot=\"feedback-dialog\"\n      className={cn(\n        'rounded-md bg-card p-5 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',\n        className,\n      )}\n      onSubmit={(event) => {\n        event.preventDefault()\n        onSubmit?.()\n      }}\n      {...props}\n    >\n      <header className=\"flex items-start gap-3\">\n        <span className=\"flex size-9 shrink-0 items-center justify-center rounded-md bg-muted text-muted-foreground\">\n          <MessageSquareIcon className=\"size-4\" />\n        </span>\n        <div>\n          <h3 className=\"card-heading\">{title}</h3>\n          <p className=\"mt-0.5 text-xs leading-5 text-muted-foreground\">\n            Your feedback helps improve the next response.\n          </p>\n        </div>\n      </header>\n\n      <fieldset className=\"mt-4\">\n        <legend className=\"sr-only\">Feedback reason</legend>\n        <div className=\"flex flex-wrap gap-1.5\">\n          {reasons.map((item) => (\n            <button\n              aria-pressed={reason === item}\n              className={cn(\n                'inline-flex h-6 items-center rounded-md px-2 text-xs leading-4 font-[450] ring-1 ring-foreground/10 transition-colors outline-none hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring',\n                reason === item && 'bg-muted text-muted-foreground ring-foreground/20',\n              )}\n              key={item}\n              onClick={() => onReasonChange?.(item)}\n              type=\"button\"\n            >\n              {item}\n            </button>\n          ))}\n        </div>\n      </fieldset>\n\n      <label className=\"mt-4 block text-sm font-[450]\" htmlFor={commentId}>\n        Add a note{' '}\n        <span className=\"text-xs leading-5 font-[450] text-muted-foreground\">Optional</span>\n      </label>\n      <Textarea\n        className=\"mt-1.5 min-h-20 resize-none rounded-md bg-transparent px-3 text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-none dark:bg-transparent\"\n        id={commentId}\n        onChange={(event) => onCommentChange?.(event.target.value)}\n        placeholder=\"Tell us what was missing…\"\n        value={comment}\n      />\n\n      <div className=\"mt-4 flex justify-end\">\n        <Button\n          className=\"h-7 rounded-full border-0 bg-linear-to-b from-[color-mix(in_oklch,var(--color-neutral-900),var(--color-neutral-50)_30%)] to-neutral-900 px-3 text-sm font-[450] tracking-[-0.05px] text-neutral-50 shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.18)] shadow-none hover:brightness-110\"\n          disabled={!reason}\n          size=\"sm\"\n          type=\"submit\"\n          variant=\"default\"\n        >\n          Send feedback\n        </Button>\n      </div>\n    </form>\n  )\n}\n\nexport { FeedbackDialog }\nexport type { FeedbackDialogProps }\n",
+      "type": "registry:component",
+      "target": "@components/ai/feedback-dialog.tsx"
+    }
+  ],
+  "type": "registry:component"
+}

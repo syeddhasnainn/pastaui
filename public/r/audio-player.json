@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "audio-player",
+  "title": "Audio Player",
+  "description": "A controlled playback surface for speech, generated audio, and recorded tool output.",
+  "dependencies": [
+    "@solar-icons/react@^2.2.0",
+    "cn@^0.3.0"
+  ],
+  "registryDependencies": [
+    "button",
+    "https://pastaui.com/r/pastaui-styles.json",
+    "slider"
+  ],
+  "files": [
+    {
+      "path": "src/components/ai/audio-player.tsx",
+      "content": "import { SoundwaveIcon as AudioLinesIcon } from '@solar-icons/react/linear/soundwave'\nimport { PauseIcon } from '@solar-icons/react/bold/pause'\nimport { PlayIcon } from '@solar-icons/react/bold/play'\nimport { RewindBackIcon as PreviousIcon } from '@solar-icons/react/bold/rewind-back'\nimport { RewindForwardIcon as NextIcon } from '@solar-icons/react/bold/rewind-forward'\nimport { AirbudsIcon } from '@solar-icons/react/bold/airbuds'\nimport * as React from 'react'\n\nimport { Button } from '@/components/ui/button'\nimport { Slider } from '@/components/ui/slider'\nimport { cn } from 'cn'\n\ninterface AudioPlayerProps extends Omit<React.ComponentProps<'section'>, 'onChange'> {\n  currentTime: number\n  artworkUrl?: string\n  duration: number\n  isPlaying?: boolean\n  onChange?: (time: number) => void\n  onToggle?: () => void\n  onPrevious?: () => void\n  onNext?: () => void\n  onOutput?: () => void\n  subtitle?: string\n  title: string\n}\n\nfunction formatTime(seconds: number) {\n  const minutes = Math.floor(seconds / 60)\n  const remainder = Math.floor(seconds % 60)\n  return `${minutes}:${remainder.toString().padStart(2, '0')}`\n}\n\nfunction AudioPlayer({\n  className,\n  artworkUrl,\n  currentTime,\n  duration,\n  isPlaying = false,\n  onChange,\n  onToggle,\n  onPrevious,\n  onNext,\n  onOutput,\n  subtitle,\n  title,\n  ...props\n}: AudioPlayerProps) {\n  return (\n    <section\n      data-slot=\"audio-player\"\n      className={cn(\n        'rounded-md bg-card p-6 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card sm:p-7',\n        className,\n      )}\n      {...props}\n    >\n      <div className=\"flex items-center gap-5\">\n        {artworkUrl ? (\n          <img src={artworkUrl} alt=\"\" className=\"size-20 shrink-0 rounded-md object-cover\" />\n        ) : (\n          <span className=\"flex size-20 shrink-0 items-center justify-center rounded-md bg-muted\">\n            <AudioLinesIcon aria-hidden=\"true\" className=\"size-8 text-muted-foreground\" />\n          </span>\n        )}\n        <div className=\"min-w-0 flex-1\">\n          <h3 className=\"truncate card-heading\">{title}</h3>\n          {subtitle && (\n            <p className=\"mt-1 truncate text-xs leading-5 text-muted-foreground\">{subtitle}</p>\n          )}\n        </div>\n        <AudioLinesIcon aria-hidden=\"true\" className=\"size-7 shrink-0 text-muted-foreground\" />\n      </div>\n      <div className=\"mt-5 flex items-center gap-2.5\">\n        <span className=\"shrink-0 text-xs leading-5 text-muted-foreground tabular-nums\">\n          {formatTime(currentTime)}\n        </span>\n        <Slider\n          aria-label=\"Audio position\"\n          className=\"min-w-0 flex-1 [--muted:var(--audio-track)] [--primary:var(--audio-progress)] [&_[data-slot=slider-thumb]]:size-4 [&_[data-slot=slider-thumb]]:opacity-0 [&_[data-slot=slider-thumb]:has(:focus-visible)]:opacity-100 [&_[data-slot=slider-track]]:h-1.5 [&:hover_[data-slot=slider-thumb]]:opacity-100\"\n          max={duration}\n          min={0}\n          onValueChange={(value) => onChange?.(Array.isArray(value) ? value[0] : value)}\n          value={[currentTime]}\n        />\n        <span className=\"shrink-0 text-right text-xs leading-5 text-muted-foreground tabular-nums\">\n          −{formatTime(Math.max(0, duration - currentTime))}\n        </span>\n      </div>\n      <div className=\"relative mt-4 flex items-center justify-center gap-6\">\n        <Button\n          aria-label={onPrevious ? 'Previous track' : 'Rewind 10 seconds'}\n          disabled={!onPrevious && !onChange}\n          onClick={() => (onPrevious ? onPrevious() : onChange?.(Math.max(0, currentTime - 10)))}\n          className=\"size-11 rounded-md text-muted-foreground hover:bg-foreground/10 hover:text-muted-foreground\"\n          size=\"icon\"\n          variant=\"ghost\"\n        >\n          <PreviousIcon className=\"size-8\" />\n        </Button>\n        <Button\n          aria-label={isPlaying ? 'Pause audio' : 'Play audio'}\n          disabled={!onToggle}\n          onClick={onToggle}\n          className=\"size-14 rounded-md text-muted-foreground hover:bg-foreground/10 hover:text-muted-foreground\"\n          size=\"icon\"\n          variant=\"ghost\"\n        >\n          {isPlaying ? <PauseIcon className=\"size-10\" /> : <PlayIcon className=\"size-10\" />}\n        </Button>\n        <Button\n          aria-label={onNext ? 'Next track' : 'Forward 10 seconds'}\n          disabled={!onNext && !onChange}\n          onClick={() => (onNext ? onNext() : onChange?.(Math.min(duration, currentTime + 10)))}\n          className=\"size-11 rounded-md text-muted-foreground hover:bg-foreground/10 hover:text-muted-foreground\"\n          size=\"icon\"\n          variant=\"ghost\"\n        >\n          <NextIcon className=\"size-8\" />\n        </Button>\n        {onOutput ? (\n          <Button\n            aria-label=\"Audio output\"\n            onClick={onOutput}\n            className=\"absolute right-0 size-8 rounded-md text-muted-foreground hover:bg-foreground/10 hover:text-foreground\"\n            size=\"icon\"\n            variant=\"ghost\"\n          >\n            <AirbudsIcon className=\"size-6\" />\n          </Button>\n        ) : (\n          <AirbudsIcon\n            aria-hidden=\"true\"\n            className=\"absolute right-0 size-6 text-muted-foreground\"\n          />\n        )}\n      </div>\n    </section>\n  )\n}\n\nexport { AudioPlayer }\nexport type { AudioPlayerProps }\n",
+      "type": "registry:component",
+      "target": "@components/ai/audio-player.tsx"
+    }
+  ],
+  "cssVars": {
+    "light": {
+      "audio-surface": "var(--muted)",
+      "audio-track": "var(--border)",
+      "audio-progress": "var(--muted-foreground)",
+      "audio-shadow": "oklch(0 0 0 / 12%)"
+    },
+    "dark": {
+      "audio-surface": "oklch(0.08 0 0)",
+      "audio-track": "oklch(0.26 0 0)",
+      "audio-progress": "oklch(0.62 0 0)",
+      "audio-shadow": "oklch(0 0 0 / 35%)"
+    }
+  },
+  "type": "registry:component"
+}

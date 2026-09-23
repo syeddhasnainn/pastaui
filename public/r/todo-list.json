@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "todo-list",
+  "title": "Todo List",
+  "description": "A live agent plan with completion counts, task states, and expandable detail.",
+  "dependencies": [
+    "@solar-icons/react@^2.2.0",
+    "cn@^0.3.0"
+  ],
+  "registryDependencies": [
+    "collapsible",
+    "https://pastaui.com/r/pastaui-styles.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ai/todo-list.tsx",
+      "content": "import { CheckCircleIcon } from '@solar-icons/react/bold-duotone/check-circle'\nimport { AltArrowDownIcon as ChevronDownIcon } from '@solar-icons/react/linear/alt-arrow-down'\nimport { ChecklistIcon as ListTodoIcon } from '@solar-icons/react/linear/checklist'\nimport { LoaderIcon as LoaderCircleIcon } from '@solar-icons/react/linear/loader'\nimport * as React from 'react'\n\nimport { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'\nimport { cn } from 'cn'\n\ninterface AgentTodoItem {\n  detail?: string\n  id: string\n  label: string\n  status: 'complete' | 'in-progress' | 'pending'\n}\n\ninterface TodoListProps extends React.ComponentProps<typeof Collapsible> {\n  items: AgentTodoItem[]\n  title?: string\n}\n\nfunction TodoList({\n  className,\n  defaultOpen = true,\n  items,\n  title = 'Plan',\n  ...props\n}: TodoListProps) {\n  const complete = items.filter((item) => item.status === 'complete').length\n\n  return (\n    <Collapsible\n      data-slot=\"todo-list\"\n      className={cn(\n        'rounded-md bg-card p-4 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',\n        className,\n      )}\n      defaultOpen={defaultOpen}\n      {...props}\n    >\n      <CollapsibleTrigger\n        className=\"group flex w-full items-center gap-2 rounded-sm text-left card-heading leading-5 outline-none focus-visible:ring-2 focus-visible:ring-ring/30\"\n        render={<button aria-label=\"Toggle agent plan\" type=\"button\" />}\n      >\n        <ListTodoIcon aria-hidden=\"true\" className=\"size-4 shrink-0\" />\n        <span>{title}</span>\n        <span className=\"ml-auto shrink-0 text-xs leading-5 font-[450] text-muted-foreground\">\n          {complete}/{items.length}\n        </span>\n        <ChevronDownIcon className=\"size-4 shrink-0 text-muted-foreground transition-transform group-data-panel-open:rotate-180 motion-reduce:transition-none\" />\n      </CollapsibleTrigger>\n      <CollapsibleContent>\n        <ol className=\"mt-4 space-y-3\">\n          {items.map((item) => (\n            <li className=\"flex gap-3\" key={item.id}>\n              <TodoStatus status={item.status} />\n              <div className=\"min-w-0 flex-1\">\n                <p\n                  className={cn(\n                    'text-sm leading-5 font-[450]',\n                    item.status === 'complete' && 'text-muted-foreground line-through',\n                  )}\n                >\n                  {item.label}\n                </p>\n                {item.detail && (\n                  <p className=\"mt-0.5 text-xs leading-5 font-[450] text-muted-foreground\">\n                    {item.detail}\n                  </p>\n                )}\n              </div>\n            </li>\n          ))}\n        </ol>\n      </CollapsibleContent>\n    </Collapsible>\n  )\n}\n\nfunction TodoStatus({ status }: Pick<AgentTodoItem, 'status'>) {\n  if (status === 'complete') {\n    return <CheckCircleIcon aria-label=\"Complete\" className=\"mt-0.5 size-4 shrink-0\" />\n  }\n\n  if (status === 'in-progress') {\n    return (\n      <span className=\"mt-0.5 flex size-4 shrink-0 items-center justify-center\">\n        <LoaderCircleIcon\n          aria-label=\"In progress\"\n          className=\"size-3.5 animate-spin motion-reduce:animate-none\"\n        />\n      </span>\n    )\n  }\n\n  return (\n    <span className=\"mt-0.5 flex size-4 shrink-0 items-center justify-center\">\n      <span aria-hidden=\"true\" className=\"size-3.5 rounded-full border border-current\" />\n      <span className=\"sr-only\">Pending</span>\n    </span>\n  )\n}\n\nexport { TodoList }\nexport type { AgentTodoItem, TodoListProps }\n",
+      "type": "registry:component",
+      "target": "@components/ai/todo-list.tsx"
+    }
+  ],
+  "type": "registry:component"
+}

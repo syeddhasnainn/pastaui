@@ -1,0 +1,228 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+@import '@fontsource-variable/inter';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --radius: 0.625rem;
+  --linear-surface-shadow: 0 3px 6px -2px lch(0 0 0 / 2%), 0 1px 1px 0 lch(0 0 0 / 4%);
+  --card-outline: lch(0 0 0 / 8.8%);
+  --card-shadow:
+    0 0 0 0.5px var(--card-outline), 0 3px 6px -2px lch(0 0 0 / 2%), 0 1px 1px 0 lch(0 0 0 / 4%);
+  --sidebar-item-hover: lch(91.64% 0.5 282);
+  --sidebar-item-active: lch(89.54% 0.5 282);
+  --sidebar-glide-ease: cubic-bezier(0.23, 1, 0.32, 1);
+  --syntax-comment: oklch(0.556 0 0);
+  --syntax-keyword: oklch(0.49 0.2 292);
+  --syntax-string: oklch(0.45 0.13 153);
+  --syntax-function: oklch(0.48 0.15 255);
+  --syntax-number: oklch(0.53 0.16 55);
+  --syntax-property: oklch(0.48 0.14 20);
+  --syntax-punctuation: oklch(0.4 0 0);
+  --charcoal-top: color-mix(in oklch, var(--charcoal-bottom), var(--charcoal-foreground) 30%);
+  --charcoal-bottom: #171717;
+  --charcoal-foreground: oklch(0.985 0 0);
+  --audio-surface: var(--muted);
+  --audio-track: var(--border);
+  --audio-progress: var(--muted-foreground);
+  --audio-shadow: oklch(0 0 0 / 12%);
+}
+
+.dark {
+  --card-outline: lch(100 0 0 / 8.8%);
+  --audio-surface: oklch(0.08 0 0);
+  --audio-track: oklch(0.26 0 0);
+  --audio-progress: oklch(0.62 0 0);
+  --audio-shadow: oklch(0 0 0 / 35%);
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --sidebar-item-hover: oklch(1 0 0 / 8%);
+  --sidebar-item-active: oklch(1 0 0 / 12%);
+  --syntax-comment: oklch(0.708 0 0);
+  --syntax-keyword: oklch(0.75 0.16 292);
+  --syntax-string: oklch(0.76 0.13 153);
+  --syntax-function: oklch(0.76 0.12 255);
+  --syntax-number: oklch(0.78 0.13 65);
+  --syntax-property: oklch(0.75 0.12 20);
+  --syntax-punctuation: oklch(0.78 0 0);
+}
+
+@theme inline {
+  --font-heading: var(--font-sans);
+  --font-sans: 'Inter Variable', sans-serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-sidebar-item-hover: var(--sidebar-item-hover);
+  --color-sidebar-item-active: var(--sidebar-item-active);
+  --color-charcoal-foreground: var(--charcoal-foreground);
+  --shadow-linear-surface: var(--linear-surface-shadow);
+  --shadow-card: var(--card-shadow);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+@utility card-heading {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.05px;
+}
+
+@utility metadata-label {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 450;
+  line-height: 20px;
+  letter-spacing: -0.05px;
+  color: var(--muted-foreground);
+}
+
+@utility bg-charcoal-black {
+  background-image: linear-gradient(180deg, var(--charcoal-top) 0%, var(--charcoal-bottom) 100%);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply scroll-smooth font-sans;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+html:has(.docs-page) {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+.sidebar-hover-indicator[data-ready='true'] {
+  transition:
+    top 220ms var(--sidebar-glide-ease),
+    height 220ms var(--sidebar-glide-ease),
+    opacity 150ms ease;
+}
+
+.agent-text-shimmer {
+  color: transparent;
+  background-image: linear-gradient(
+    90deg,
+    var(--muted-foreground),
+    var(--foreground),
+    var(--muted-foreground)
+  );
+  background-size: 200% 100%;
+  background-clip: text;
+  animation: agent-text-shimmer 1.6s linear infinite;
+}
+
+@keyframes agent-text-shimmer {
+  from {
+    background-position: 200% 0;
+  }
+
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-hover-indicator[data-ready='true'] {
+    transition: opacity 150ms ease;
+  }
+
+  .agent-text-shimmer {
+    color: var(--muted-foreground);
+    background-image: none;
+    animation: none;
+  }
+}
+
+.voice-input-waveform {
+  animation: voice-input-scroll 8s linear infinite;
+}
+
+@keyframes voice-input-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .voice-input-waveform {
+    animation: none;
+  }
+}

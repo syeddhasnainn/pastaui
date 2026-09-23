@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "message-bubble",
+  "title": "Message Bubble",
+  "description": "A focused conversational surface with distinct user, assistant, and system treatments.",
+  "dependencies": [
+    "cn@^0.3.0"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "src/components/ai/message-bubble.tsx",
+      "content": "import * as React from 'react'\n\nimport { cn } from 'cn'\n\ninterface MessageBubbleProps extends React.ComponentProps<'div'> {\n  from?: 'assistant' | 'system' | 'user'\n}\n\nfunction MessageBubble({ children, className, from = 'assistant', ...props }: MessageBubbleProps) {\n  return (\n    <div\n      data-from={from}\n      data-slot=\"message-bubble\"\n      className={cn(\n        'w-fit max-w-[85%] rounded-md px-3.5 py-2.5 text-sm leading-6',\n        from === 'user' &&\n          'ml-auto rounded-br-md bg-linear-to-b from-[color-mix(in_oklch,var(--color-neutral-900),var(--color-neutral-50)_30%)] to-neutral-900 text-neutral-50',\n        from === 'assistant' && 'rounded-bl-md bg-muted text-foreground',\n        from === 'system' &&\n          'mx-auto max-w-full bg-transparent px-0 py-1 text-center text-xs text-muted-foreground',\n        className,\n      )}\n      {...props}\n    >\n      {children}\n    </div>\n  )\n}\n\nexport { MessageBubble }\nexport type { MessageBubbleProps }\n",
+      "type": "registry:component",
+      "target": "@components/ai/message-bubble.tsx"
+    }
+  ],
+  "type": "registry:component"
+}

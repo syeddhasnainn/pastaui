@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "voice-input",
+  "title": "Voice Input",
+  "description": "A tactile recording control with a recessed waveform, red playhead, and pause control.",
+  "dependencies": [
+    "@solar-icons/react@^2.2.0",
+    "cn@^0.3.0"
+  ],
+  "registryDependencies": [
+    "button",
+    "https://pastaui.com/r/pastaui-styles.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ai/voice-input.tsx",
+      "content": "import { Microphone2Icon as MicIcon } from '@solar-icons/react/linear/microphone-2'\nimport { PauseIcon } from '@solar-icons/react/bold/pause'\nimport * as React from 'react'\nimport { useState } from 'react'\n\nimport { Button } from '@/components/ui/button'\nimport { cn } from 'cn'\n\ninterface VoiceInputProps extends Omit<React.ComponentProps<'div'>, 'onChange'> {\n  duration?: string\n  onRecordingChange?: (recording: boolean) => void\n  recording?: boolean\n}\n\nconst waveform = [\n  32, 23, 10, 54, 54, 46, 32, 23, 12, 55, 98, 46, 54, 33, 23, 34, 54, 46, 32, 23, 13, 45, 64, 54,\n]\n\nfunction VoiceInput({\n  className,\n  duration = '00:12',\n  onRecordingChange,\n  recording,\n  ...props\n}: VoiceInputProps) {\n  const [internalRecording, setInternalRecording] = useState(false)\n  const isRecording = recording ?? internalRecording\n\n  function toggleRecording() {\n    const next = !isRecording\n    if (recording === undefined) setInternalRecording(next)\n    onRecordingChange?.(next)\n  }\n\n  return (\n    <div\n      data-recording={isRecording}\n      data-slot=\"voice-input\"\n      className={cn(\n        'flex w-full items-center gap-4 rounded-md bg-muted p-4 text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',\n        className,\n      )}\n      {...props}\n    >\n      <Button\n        aria-label={isRecording ? 'Pause recording' : 'Start recording'}\n        aria-pressed={isRecording}\n        type=\"button\"\n        variant=\"default\"\n        size=\"icon\"\n        className=\"size-12 rounded-full bg-linear-to-b from-[color-mix(in_oklch,var(--color-neutral-900),var(--color-neutral-50)_30%)] to-neutral-900 text-neutral-50 shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.18)] hover:brightness-110\"\n        onClick={toggleRecording}\n      >\n        {isRecording ? (\n          <PauseIcon aria-hidden=\"true\" className=\"size-5\" />\n        ) : (\n          <MicIcon aria-hidden=\"true\" className=\"size-5\" />\n        )}\n      </Button>\n      <div\n        aria-hidden=\"true\"\n        className=\"relative h-20 min-w-0 flex-1 overflow-hidden rounded-md bg-muted\"\n      >\n        <div\n          className=\"absolute inset-x-0 inset-y-[24%]\"\n          style={{\n            maskImage: 'linear-gradient(to right, #000 50%, #0003 50%)',\n          }}\n        >\n          <div\n            className=\"voice-input-waveform flex h-full w-[200%]\"\n            style={{ animationPlayState: isRecording ? 'running' : 'paused' }}\n          >\n            {[0, 1].map((copy) => (\n              <div key={copy} className=\"flex h-full w-1/2 shrink-0 items-center justify-around\">\n                {waveform.map((height, index) => (\n                  <span\n                    className=\"h-full w-0.5 shrink-0 rounded-full bg-muted-foreground\"\n                    key={`${index}-${height}`}\n                    style={{ height: `${height}%` }}\n                  />\n                ))}\n              </div>\n            ))}\n          </div>\n        </div>\n        <div className=\"absolute inset-y-0 left-1/2 w-px bg-destructive\">\n          <span className=\"absolute bottom-0 left-1/2 size-0 -translate-x-1/2 border-x-[5px] border-b-[6px] border-x-transparent border-b-destructive\" />\n        </div>\n      </div>\n      <span className=\"sr-only\">{isRecording ? `Recording, ${duration}` : 'Recording paused'}</span>\n    </div>\n  )\n}\n\nexport { VoiceInput }\nexport type { VoiceInputProps }\n",
+      "type": "registry:component",
+      "target": "@components/ai/voice-input.tsx"
+    }
+  ],
+  "css": {
+    ".voice-input-waveform": {
+      "animation": "voice-input-scroll 8s linear infinite"
+    },
+    "@keyframes voice-input-scroll": {
+      "from": {
+        "transform": "translateX(0)"
+      },
+      "to": {
+        "transform": "translateX(-50%)"
+      }
+    },
+    "@media (prefers-reduced-motion: reduce)": {
+      ".voice-input-waveform": {
+        "animation": "none"
+      }
+    }
+  },
+  "type": "registry:component"
+}

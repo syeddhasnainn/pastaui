@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tool-approval",
+  "title": "Tool Approval",
+  "description": "A permission gate that shows scope and command detail before an agent tool runs.",
+  "dependencies": [
+    "@solar-icons/react@^2.2.0",
+    "cn@^0.3.0"
+  ],
+  "registryDependencies": [
+    "button",
+    "https://pastaui.com/r/pastaui-styles.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ai/tool-approval.tsx",
+      "content": "import { ShieldCheckIcon } from '@solar-icons/react/linear/shield-check'\nimport { FileTerminalIcon as TerminalIcon } from '@solar-icons/react/linear/file-terminal'\nimport * as React from 'react'\n\nimport { Button } from '@/components/ui/button'\nimport { cn } from 'cn'\n\ninterface ToolApprovalProps extends React.ComponentProps<'section'> {\n  command?: string\n  description: string\n  onAllow?: (remember: boolean) => void\n  onDeny?: () => void\n  scope?: string\n  tool: string\n}\n\nfunction ToolApproval({\n  className,\n  command,\n  description,\n  onAllow,\n  onDeny,\n  scope,\n  tool,\n  ...props\n}: ToolApprovalProps) {\n  return (\n    <section\n      data-slot=\"tool-approval\"\n      className={cn(\n        'font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground',\n        className,\n      )}\n      {...props}\n    >\n      <div className=\"mb-3 flex items-center gap-2 px-1 text-emerald-600 dark:text-emerald-400\">\n        <ShieldCheckIcon aria-hidden=\"true\" className=\"size-3.5 shrink-0\" />\n        <span>Approval needed</span>\n      </div>\n      <div className=\"rounded-md bg-muted/40 p-4 shadow-card\">\n        <h3 className=\"card-heading text-foreground\">Allow {tool}?</h3>\n        <p className=\"mt-1 text-xs leading-5\">{description}</p>\n        {command && (\n          <div className=\"mt-3 flex items-start gap-2 rounded-md bg-muted p-3 font-mono text-xs leading-5\">\n            <TerminalIcon aria-hidden=\"true\" className=\"mt-0.5 size-3.5 shrink-0\" />\n            <code className=\"min-w-0 break-all\">{command}</code>\n          </div>\n        )}\n        {scope && <p className=\"mt-2 text-xs leading-5\">Scope: {scope}</p>}\n        <div className=\"mt-4 flex flex-wrap items-center gap-2\">\n          <Button\n            onClick={() => onAllow?.(false)}\n            size=\"sm\"\n            variant=\"default\"\n            className=\"h-7 rounded-md border-0 bg-linear-to-b from-[color-mix(in_oklch,var(--color-neutral-900),var(--color-neutral-50)_30%)] to-neutral-900 px-3 text-sm font-[450] text-neutral-50 shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.18)] shadow-none hover:brightness-110\"\n          >\n            Allow once\n          </Button>\n          <Button\n            onClick={() => onAllow?.(true)}\n            size=\"sm\"\n            variant=\"outline\"\n            className=\"h-7 rounded-md bg-card px-3 text-sm font-[450]\"\n          >\n            Always allow\n          </Button>\n          <Button\n            onClick={onDeny}\n            size=\"sm\"\n            variant=\"ghost\"\n            className=\"h-7 rounded-md px-3 text-sm font-[450] text-muted-foreground\"\n          >\n            Deny\n          </Button>\n        </div>\n      </div>\n    </section>\n  )\n}\n\nexport { ToolApproval }\nexport type { ToolApprovalProps }\n",
+      "type": "registry:component",
+      "target": "@components/ai/tool-approval.tsx"
+    }
+  ],
+  "type": "registry:component"
+}

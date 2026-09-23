@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "approval-card",
+  "title": "Approval Card",
+  "description": "A human-in-the-loop decision surface for questions, review steps, and consequential actions.",
+  "dependencies": [
+    "@solar-icons/react@^2.2.0",
+    "cn@^0.3.0"
+  ],
+  "registryDependencies": [
+    "button",
+    "https://pastaui.com/r/pastaui-styles.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ai/approval-card.tsx",
+      "content": "import { QuestionCircleIcon as CircleHelpIcon } from '@solar-icons/react/linear/question-circle'\nimport * as React from 'react'\n\nimport { Button } from '@/components/ui/button'\nimport { cn } from 'cn'\n\ninterface ApprovalOption {\n  description?: string\n  label: string\n  value: string\n}\n\ninterface ApprovalCardProps extends React.ComponentProps<'section'> {\n  description?: string\n  onDecision?: (value: string) => void\n  options?: ApprovalOption[]\n  status?: 'approved' | 'denied' | 'pending'\n  title: string\n}\n\nconst defaultOptions: ApprovalOption[] = [\n  { label: 'Approve', value: 'approve' },\n  { label: 'Deny', value: 'deny' },\n]\n\nfunction ApprovalCard({\n  className,\n  description,\n  onDecision,\n  options = defaultOptions,\n  status = 'pending',\n  title,\n  ...props\n}: ApprovalCardProps) {\n  return (\n    <section\n      data-slot=\"approval-card\"\n      className={cn(\n        'rounded-md bg-card p-5 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',\n        className,\n      )}\n      {...props}\n    >\n      <div className=\"flex gap-3\">\n        <span className=\"flex size-9 shrink-0 items-center justify-center rounded-md bg-muted text-muted-foreground\">\n          <CircleHelpIcon className=\"size-4\" />\n        </span>\n        <div className=\"min-w-0 flex-1\">\n          <div className=\"flex items-start justify-between gap-3\">\n            <h3 className=\"card-heading\">{title}</h3>\n            {status !== 'pending' && (\n              <span className=\"rounded-full bg-muted px-2 py-1 text-sm font-[450] text-muted-foreground capitalize\">\n                {status}\n              </span>\n            )}\n          </div>\n          {description && (\n            <p className=\"mt-1 text-sm leading-6 text-muted-foreground\">{description}</p>\n          )}\n        </div>\n      </div>\n      {status === 'pending' && (\n        <div\n          className={cn(\n            'mt-4 gap-2',\n            options.some((option) => option.description)\n              ? 'grid sm:grid-cols-2'\n              : 'flex flex-wrap justify-end',\n          )}\n        >\n          {options.map((option, index) => (\n            <Button\n              className={cn(\n                'border-0 px-3 text-sm font-[450] tracking-[-0.05px] shadow-none',\n                option.description\n                  ? 'h-auto min-h-9 justify-start rounded-md py-2 text-left whitespace-normal'\n                  : 'h-7 rounded-full',\n                index === 0 &&\n                  'bg-linear-to-b from-[color-mix(in_oklch,var(--color-neutral-900),var(--color-neutral-50)_30%)] to-neutral-900 text-neutral-50 shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.18)] hover:brightness-110',\n                index !== 0 && 'text-muted-foreground hover:text-muted-foreground',\n              )}\n              key={option.value}\n              onClick={() => onDecision?.(option.value)}\n              size=\"sm\"\n              variant={index === 0 ? 'default' : 'ghost'}\n            >\n              <span>\n                <span className=\"block\">{option.label}</span>\n                {option.description && (\n                  <span className=\"mt-0.5 block text-sm font-[450] opacity-70\">\n                    {option.description}\n                  </span>\n                )}\n              </span>\n            </Button>\n          ))}\n        </div>\n      )}\n    </section>\n  )\n}\n\nexport { ApprovalCard }\nexport type { ApprovalCardProps, ApprovalOption }\n",
+      "type": "registry:component",
+      "target": "@components/ai/approval-card.tsx"
+    }
+  ],
+  "type": "registry:component"
+}

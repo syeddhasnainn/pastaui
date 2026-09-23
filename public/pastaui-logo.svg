@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-labelledby="title desc">
+  <title id="title">PastaUI logo</title>
+  <desc id="desc">A white P cut into a black geometric badge with clipped corners.</desc>
+  <path fill="#000" d="M25 6h69v69L75 94H6V25L25 6Z"/>
+  <path fill="#fff" d="M29 23h29c13.8 0 22 10.6 22 23.5S71.8 69 58 69H44v14H29V23Z"/>
+</svg>

@@ -1,0 +1,9 @@
+allowBuilds:
+  esbuild: true
+  lightningcss: true
+blockExoticSubdeps: true
+minimumReleaseAge: 1440
+trustPolicy: no-downgrade
+trustPolicyExclude:
+  - semver@6.3.1
+  - undici-types@6.21.0
