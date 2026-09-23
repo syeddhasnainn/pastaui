@@ -15,6 +15,6 @@ export interface ComponentDocument {
   installation: string
   usage: string
   source: string
-  examples?: { title: string; previewSlug: string }[]
+  examples?: { title: string; previewSlug: string; description?: string; usage?: string }[]
   api: ApiProperty[]
 }

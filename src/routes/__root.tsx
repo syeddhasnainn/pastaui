@@ -32,6 +32,58 @@ export const Route = createRootRoute({
           'Accessible, composable React components with polished defaults and source code you can make your own.',
       },
       {
+        property: 'og:type',
+        content: 'website',
+      },
+      {
+        property: 'og:site_name',
+        content: 'Pasta UI',
+      },
+      {
+        property: 'og:title',
+        content: 'Pasta UI — Open-source React components',
+      },
+      {
+        property: 'og:description',
+        content: 'Accessible, composable React components with polished defaults and source code you can make your own.',
+      },
+      {
+        property: 'og:url',
+        content: 'https://pastaui.com',
+      },
+      {
+        property: 'og:image',
+        content: 'https://pastaui.com/og.png',
+      },
+      {
+        property: 'og:image:width',
+        content: '1200',
+      },
+      {
+        property: 'og:image:height',
+        content: '630',
+      },
+      {
+        property: 'og:image:alt',
+        content: 'Pasta UI — Open-source React components',
+      },
+      {
+        name: 'twitter:card',
+        content: 'summary_large_image',
+      },
+      {
+        name: 'twitter:title',
+        content: 'Pasta UI — Open-source React components',
+      },
+      {
+        name: 'twitter:description',
+        content: 'Accessible, composable React components with polished defaults and source code you can make your own.',
+      },
+      {
+        name: 'twitter:image',
+        content: 'https://pastaui.com/og.png',
+      },
+      {
         name: 'theme-color',
         content: '#ffffff',
       },

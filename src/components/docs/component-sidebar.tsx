@@ -111,7 +111,7 @@ export function ComponentSidebar({ activeComponent }: ComponentSidebarProps) {
   return (
     <aside className="hidden lg:sticky lg:top-26 lg:block lg:h-[calc(100dvh-6.5rem)]">
       <div
-        className="relative -ml-2 flex h-full w-[calc(100%+0.5rem)] [scrollbar-width:none] flex-col gap-8 overflow-y-auto overscroll-contain pb-8 pl-2 [&::-webkit-scrollbar]:hidden"
+        className="relative -ml-2 flex h-full w-[calc(100%+0.5rem)] scroll-fade-y [scrollbar-width:none] flex-col gap-8 overflow-y-auto overscroll-contain pb-8 pl-2 [&::-webkit-scrollbar]:hidden"
         onMouseLeave={() => setHoveredComponent(null)}
         ref={scrollContainerRef}
       >
@@ -191,7 +191,7 @@ export function MobileComponentNav({ activeComponent }: ComponentSidebarProps) {
   return (
     <nav
       aria-label="Components"
-      className="flex shrink-0 [scrollbar-width:none] gap-1 overflow-x-auto pr-4 pb-2 sm:pr-6 lg:hidden [&::-webkit-scrollbar]:hidden"
+      className="flex shrink-0 scroll-fade-x [scrollbar-width:none] gap-1 overflow-x-auto pr-4 pb-2 sm:pr-6 lg:hidden [&::-webkit-scrollbar]:hidden"
     >
       <Link
         to="/docs/installation"

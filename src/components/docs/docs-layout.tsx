@@ -24,10 +24,12 @@ export function DocsLayout({
           <div className="sticky top-18 z-20 bg-background pt-4 pb-4 lg:hidden">
             <MobileComponentNav activeComponent={component} />
           </div>
-          <div className="grid grid-cols-1 gap-12 pr-4 sm:pr-6 lg:grid-cols-[220px_minmax(0,720px)_230px] lg:items-start lg:justify-center lg:gap-10 lg:pr-12 xl:grid-cols-[250px_minmax(0,760px)_260px] xl:gap-14">
+          <div className="grid grid-cols-1 gap-12 pr-4 sm:pr-6 lg:grid-cols-[220px_minmax(0,1fr)_230px] lg:items-start lg:gap-10 lg:pr-12 xl:grid-cols-[250px_minmax(0,1fr)_260px] xl:gap-14">
             <ComponentSidebar activeComponent={component} />
 
-            {children}
+            <div className="min-w-0">
+              <div className="mx-auto w-full max-w-[720px] xl:max-w-[760px]">{children}</div>
+            </div>
 
             <ProCta />
           </div>

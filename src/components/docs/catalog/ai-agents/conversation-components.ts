@@ -319,9 +319,57 @@ export function UploadExample({
 }`,
     source: attachmentsSource,
     examples: [
-      { title: 'Default', previewSlug: 'attachments-default' },
-      { title: 'Uploading', previewSlug: 'attachments-uploading' },
-      { title: 'Failed', previewSlug: 'attachments-failed' },
+      {
+        title: 'Default',
+        previewSlug: 'attachments-default',
+        description: 'A settled attachment with its file type, size, and a remove action.',
+        usage: `import { Attachments } from "@/components/ai/attachments"
+
+export function AttachmentDefault() {
+  return (
+    <Attachments
+      variant="default"
+      items={[
+        { id: "spec", kind: "pdf", name: "agent-spec.pdf", size: "1.8 MB" },
+      ]}
+    />
+  )
+}`,
+      },
+      {
+        title: 'Uploading',
+        previewSlug: 'attachments-uploading',
+        description: 'An attachment in progress with a live upload bar.',
+        usage: `import { Attachments } from "@/components/ai/attachments"
+
+export function AttachmentUploading() {
+  return (
+    <Attachments
+      variant="uploading"
+      items={[
+        { id: "spec", kind: "pdf", name: "agent-spec.pdf", size: "1.8 MB", progress: 45 },
+      ]}
+    />
+  )
+}`,
+      },
+      {
+        title: 'Failed',
+        previewSlug: 'attachments-failed',
+        description: 'An attachment that did not upload, with a retry action.',
+        usage: `import { Attachments } from "@/components/ai/attachments"
+
+export function AttachmentFailed() {
+  return (
+    <Attachments
+      variant="failed"
+      items={[
+        { id: "spec", kind: "pdf", name: "agent-spec.pdf", size: "1.8 MB" },
+      ]}
+    />
+  )
+}`,
+      },
     ],
     api: [
       {

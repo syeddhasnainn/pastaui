@@ -72,7 +72,7 @@ export function CodeBlock({ code, language = 'tsx' }: CodeBlockProps) {
       <Highlight code={code} language={syntaxLanguage} theme={codeTheme}>
         {({ getLineProps, getTokenProps, style, tokens }) => (
           <pre
-            className="overflow-x-auto px-4 py-5 pr-14 font-mono text-[13px] leading-6"
+            className="scroll-fade-x overflow-x-auto px-4 py-5 pr-14 font-mono text-[13px] leading-6"
             style={style}
           >
             <code>
