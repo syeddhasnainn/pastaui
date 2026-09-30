@@ -21,11 +21,13 @@ Set up shadcn in a React project using Tailwind CSS:
 pnpm dlx shadcn@latest init
 ```
 
-Then add any component from its page on [pastaui.com](https://pastaui.com/docs/component):
+Then add any component from its page on [pastaui.com](https://pastaui.com). Pasta UI is listed in the shadcn registry directory as `@pastaui`, so no extra setup is needed:
 
 ```bash
-pnpm dlx shadcn@latest add https://pastaui.com/r/plan-approval-card.json
+pnpm dlx shadcn@latest add @pastaui/plan-approval-card
 ```
+
+The full URL still works if you prefer it: `https://pastaui.com/r/plan-approval-card.json`.
 
 The component is copied into your project. Import it, follow the usage example, and edit it to match your product.
 
