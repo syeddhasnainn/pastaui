@@ -22,18 +22,12 @@ function ComponentTile({ component }: { component: ComponentDocument }) {
       <span className="relative block aspect-[16/10] w-full overflow-hidden">
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 flex items-center justify-center p-6 [&>*]:max-h-full [&>*]:max-w-full"
+          className="pointer-events-none absolute inset-0 flex items-center justify-center p-6 [:where(&>*)]:max-h-full [:where(&>*)]:max-w-full"
           inert
         >
           <Suspense fallback={null}>
             <ComponentPreview slug={component.slug} />
           </Suspense>
-        </span>
-      </span>
-      <span className="flex items-baseline justify-between gap-3 border-t-[0.5px] border-border px-4 py-3">
-        <span className="truncate card-text-sm text-foreground">{component.name}</span>
-        <span className="shrink-0 sidebar-text-sm text-muted-foreground">
-          {component.category ?? component.group}
         </span>
       </span>
     </Link>

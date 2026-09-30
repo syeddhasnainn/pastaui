@@ -70,7 +70,7 @@ function PromptInputPreview() {
 function CitationsPreview() {
   return (
     <Citations
-      className="w-full max-w-lg"
+      className="w-fit max-w-lg"
       items={[
         {
           id: 'figma',
