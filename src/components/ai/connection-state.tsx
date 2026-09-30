@@ -27,7 +27,7 @@ function ConnectionState({ className, detail, onRetry, state, ...props }: Connec
       aria-live="polite"
       data-slot="connection-state"
       className={cn(
-        'flex items-center gap-3 rounded-md bg-card p-3 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',
+        'flex items-center gap-3 rounded-[16px] bg-card p-3 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',
         state === 'offline' && 'text-destructive',
         className,
       )}

@@ -123,7 +123,7 @@ function MessageScroller({
     <TooltipProvider>
       <section
         className={cn(
-          'relative flex h-60 w-full overflow-hidden rounded-md bg-background',
+          'relative flex h-60 w-full overflow-hidden rounded-[16px] bg-background',
           className,
         )}
         data-slot="message-scroller"

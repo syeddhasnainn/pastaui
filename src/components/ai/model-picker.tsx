@@ -35,9 +35,9 @@ interface ModelPickerProps {
 }
 
 const surface =
-  'w-80 max-h-[var(--available-height)] max-w-[calc(100vw-2rem)] overflow-y-auto rounded-[8px] bg-card p-1.5 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card outline-none'
+  'w-80 max-h-[var(--available-height)] max-w-[calc(100vw-2rem)] overflow-y-auto rounded-[16px] bg-card p-1.5 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card outline-none'
 const row =
-  'flex w-full cursor-pointer items-center gap-3 rounded-md px-3 py-2 text-left outline-none data-highlighted:bg-muted data-disabled:cursor-default data-disabled:opacity-50'
+  'flex w-full cursor-pointer items-center gap-3 rounded-[10px] px-3 py-2 text-left outline-none data-highlighted:bg-muted data-disabled:cursor-default data-disabled:opacity-50'
 const effortLabels: Record<ModelEffort, string> = {
   low: 'Low',
   medium: 'Medium',
@@ -115,7 +115,7 @@ function ModelPicker({
           onClick={() => onUpgrade?.(model.id)}
         >
           {content}
-          <span className="shrink-0 rounded-full bg-linear-to-b from-[color-mix(in_oklch,var(--color-neutral-900),var(--color-neutral-50)_30%)] to-neutral-900 px-2.5 py-1 text-xs leading-4 text-neutral-50">
+          <span className="shrink-0 rounded-full bg-primary bg-linear-to-b from-[color-mix(in_oklch,var(--primary),var(--primary-foreground)_30%)] to-primary px-2.5 py-1 text-xs leading-4 text-primary-foreground dark:bg-none">
             Upgrade
           </span>
         </Menu.Item>

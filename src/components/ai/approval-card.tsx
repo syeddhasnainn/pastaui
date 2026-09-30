@@ -36,13 +36,13 @@ function ApprovalCard({
     <section
       data-slot="approval-card"
       className={cn(
-        'rounded-md bg-card p-5 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',
+        'rounded-[16px] bg-card p-5 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',
         className,
       )}
       {...props}
     >
       <div className="flex gap-3">
-        <span className="flex size-9 shrink-0 items-center justify-center rounded-md bg-muted text-muted-foreground">
+        <span className="flex size-9 shrink-0 items-center justify-center rounded-[10px] bg-muted text-muted-foreground">
           <CircleHelpIcon className="size-4" />
         </span>
         <div className="min-w-0 flex-1">
@@ -73,10 +73,10 @@ function ApprovalCard({
               className={cn(
                 'border-0 px-3 text-sm font-[450] tracking-[-0.05px] shadow-none',
                 option.description
-                  ? 'h-auto min-h-9 justify-start rounded-md py-2 text-left whitespace-normal'
+                  ? 'h-auto min-h-9 justify-start rounded-[10px] py-2 text-left whitespace-normal'
                   : 'h-7 rounded-full',
                 index === 0 &&
-                  'bg-linear-to-b from-[color-mix(in_oklch,var(--color-neutral-900),var(--color-neutral-50)_30%)] to-neutral-900 text-neutral-50 shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.18)] hover:brightness-110',
+                  'bg-primary bg-linear-to-b from-[color-mix(in_oklch,var(--primary),var(--primary-foreground)_30%)] to-primary text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.18)] hover:brightness-110 dark:bg-none',
                 index !== 0 && 'text-muted-foreground hover:text-muted-foreground',
               )}
               key={option.value}

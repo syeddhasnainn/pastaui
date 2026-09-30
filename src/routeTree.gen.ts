@@ -9,26 +9,22 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as PageRouteImport } from './routes/$page'
+import { Route as ShellRouteImport } from './routes/_shell'
 import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as ShellIndexRouteImport } from './routes/_shell/index'
+import { Route as ShellPageRouteImport } from './routes/_shell/$page'
+import { Route as ShellPrivacyRouteImport } from './routes/_shell/privacy'
 import { Route as ComponentsIndexRouteImport } from './routes/components/index'
 import { Route as ComponentsSlugRouteImport } from './routes/components/$slug'
 import { Route as DocsIndexRouteImport } from './routes/docs/index'
-import { Route as DocsInstallationRouteImport } from './routes/docs/installation'
+import { Route as ShellDocsInstallationRouteImport } from './routes/_shell/docs/installation'
 import { Route as DocsComponentIndexRouteImport } from './routes/docs/component/index'
-import { Route as DocsComponentSlugRouteImport } from './routes/docs/component/$slug'
+import { Route as ShellDocsComponentSlugRouteImport } from './routes/_shell/docs/component/$slug'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PageRoute = PageRouteImport.update({
-  id: '/$page',
-  path: '/$page',
+const ShellRoute = ShellRouteImport.update({
+  id: '/_shell',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
@@ -46,6 +42,21 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ShellIndexRoute = ShellIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellPageRoute = ShellPageRouteImport.update({
+  id: '/$page',
+  path: '/$page',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellPrivacyRoute = ShellPrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => ShellRoute,
+} as any)
 const ComponentsIndexRoute = ComponentsIndexRouteImport.update({
   id: '/components/',
   path: '/components/',
@@ -61,132 +72,130 @@ const DocsIndexRoute = DocsIndexRouteImport.update({
   path: '/docs/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DocsInstallationRoute = DocsInstallationRouteImport.update({
+const ShellDocsInstallationRoute = ShellDocsInstallationRouteImport.update({
   id: '/docs/installation',
   path: '/docs/installation',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => ShellRoute,
 } as any)
 const DocsComponentIndexRoute = DocsComponentIndexRouteImport.update({
   id: '/docs/component/',
   path: '/docs/component/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DocsComponentSlugRoute = DocsComponentSlugRouteImport.update({
+const ShellDocsComponentSlugRoute = ShellDocsComponentSlugRouteImport.update({
   id: '/docs/component/$slug',
   path: '/docs/component/$slug',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => ShellRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/$page': typeof PageRoute
+  '/': typeof ShellIndexRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$page': typeof ShellPageRoute
+  '/privacy': typeof ShellPrivacyRoute
   '/components/$slug': typeof ComponentsSlugRoute
-  '/docs/installation': typeof DocsInstallationRoute
   '/components/': typeof ComponentsIndexRoute
   '/docs/': typeof DocsIndexRoute
-  '/docs/component/$slug': typeof DocsComponentSlugRoute
+  '/docs/installation': typeof ShellDocsInstallationRoute
   '/docs/component/': typeof DocsComponentIndexRoute
+  '/docs/component/$slug': typeof ShellDocsComponentSlugRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/$page': typeof PageRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$page': typeof ShellPageRoute
+  '/privacy': typeof ShellPrivacyRoute
   '/components/$slug': typeof ComponentsSlugRoute
-  '/docs/installation': typeof DocsInstallationRoute
+  '/': typeof ShellIndexRoute
   '/components': typeof ComponentsIndexRoute
   '/docs': typeof DocsIndexRoute
-  '/docs/component/$slug': typeof DocsComponentSlugRoute
+  '/docs/installation': typeof ShellDocsInstallationRoute
   '/docs/component': typeof DocsComponentIndexRoute
+  '/docs/component/$slug': typeof ShellDocsComponentSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/$page': typeof PageRoute
+  '/_shell': typeof ShellRouteWithChildren
   '/llms.txt': typeof LlmsDottxtRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/_shell/$page': typeof ShellPageRoute
+  '/_shell/privacy': typeof ShellPrivacyRoute
   '/components/$slug': typeof ComponentsSlugRoute
-  '/docs/installation': typeof DocsInstallationRoute
+  '/_shell/': typeof ShellIndexRoute
   '/components/': typeof ComponentsIndexRoute
   '/docs/': typeof DocsIndexRoute
-  '/docs/component/$slug': typeof DocsComponentSlugRoute
+  '/_shell/docs/installation': typeof ShellDocsInstallationRoute
   '/docs/component/': typeof DocsComponentIndexRoute
+  '/_shell/docs/component/$slug': typeof ShellDocsComponentSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/$page'
     | '/llms.txt'
     | '/robots.txt'
     | '/sitemap.xml'
+    | '/$page'
+    | '/privacy'
     | '/components/$slug'
-    | '/docs/installation'
     | '/components/'
     | '/docs/'
-    | '/docs/component/$slug'
+    | '/docs/installation'
     | '/docs/component/'
+    | '/docs/component/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
-    | '/$page'
     | '/llms.txt'
     | '/robots.txt'
     | '/sitemap.xml'
+    | '/$page'
+    | '/privacy'
     | '/components/$slug'
-    | '/docs/installation'
+    | '/'
     | '/components'
     | '/docs'
-    | '/docs/component/$slug'
+    | '/docs/installation'
     | '/docs/component'
+    | '/docs/component/$slug'
   id:
     | '__root__'
-    | '/'
-    | '/$page'
+    | '/_shell'
     | '/llms.txt'
     | '/robots.txt'
     | '/sitemap.xml'
+    | '/_shell/$page'
+    | '/_shell/privacy'
     | '/components/$slug'
-    | '/docs/installation'
+    | '/_shell/'
     | '/components/'
     | '/docs/'
-    | '/docs/component/$slug'
+    | '/_shell/docs/installation'
     | '/docs/component/'
+    | '/_shell/docs/component/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  PageRoute: typeof PageRoute
+  ShellRoute: typeof ShellRouteWithChildren
   LlmsDottxtRoute: typeof LlmsDottxtRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ComponentsSlugRoute: typeof ComponentsSlugRoute
-  DocsInstallationRoute: typeof DocsInstallationRoute
   ComponentsIndexRoute: typeof ComponentsIndexRoute
   DocsIndexRoute: typeof DocsIndexRoute
-  DocsComponentSlugRoute: typeof DocsComponentSlugRoute
   DocsComponentIndexRoute: typeof DocsComponentIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
+    '/_shell': {
+      id: '/_shell'
+      path: ''
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/$page': {
-      id: '/$page'
-      path: '/$page'
-      fullPath: '/$page'
-      preLoaderRoute: typeof PageRouteImport
+      preLoaderRoute: typeof ShellRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/llms.txt': {
@@ -210,6 +219,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_shell/': {
+      id: '/_shell/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof ShellIndexRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/$page': {
+      id: '/_shell/$page'
+      path: '/$page'
+      fullPath: '/$page'
+      preLoaderRoute: typeof ShellPageRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/privacy': {
+      id: '/_shell/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof ShellPrivacyRouteImport
+      parentRoute: typeof ShellRoute
+    }
     '/components/': {
       id: '/components/'
       path: '/components'
@@ -231,12 +261,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/docs/installation': {
-      id: '/docs/installation'
+    '/_shell/docs/installation': {
+      id: '/_shell/docs/installation'
       path: '/docs/installation'
       fullPath: '/docs/installation'
-      preLoaderRoute: typeof DocsInstallationRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof ShellDocsInstallationRouteImport
+      parentRoute: typeof ShellRoute
     }
     '/docs/component/': {
       id: '/docs/component/'
@@ -245,27 +275,42 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocsComponentIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/docs/component/$slug': {
-      id: '/docs/component/$slug'
+    '/_shell/docs/component/$slug': {
+      id: '/_shell/docs/component/$slug'
       path: '/docs/component/$slug'
       fullPath: '/docs/component/$slug'
-      preLoaderRoute: typeof DocsComponentSlugRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof ShellDocsComponentSlugRouteImport
+      parentRoute: typeof ShellRoute
     }
   }
 }
 
+interface ShellRouteChildren {
+  ShellPageRoute: typeof ShellPageRoute
+  ShellPrivacyRoute: typeof ShellPrivacyRoute
+  ShellIndexRoute: typeof ShellIndexRoute
+  ShellDocsInstallationRoute: typeof ShellDocsInstallationRoute
+  ShellDocsComponentSlugRoute: typeof ShellDocsComponentSlugRoute
+}
+
+const ShellRouteChildren: ShellRouteChildren = {
+  ShellPageRoute: ShellPageRoute,
+  ShellPrivacyRoute: ShellPrivacyRoute,
+  ShellIndexRoute: ShellIndexRoute,
+  ShellDocsInstallationRoute: ShellDocsInstallationRoute,
+  ShellDocsComponentSlugRoute: ShellDocsComponentSlugRoute,
+}
+
+const ShellRouteWithChildren = ShellRoute._addFileChildren(ShellRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  PageRoute: PageRoute,
+  ShellRoute: ShellRouteWithChildren,
   LlmsDottxtRoute: LlmsDottxtRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ComponentsSlugRoute: ComponentsSlugRoute,
-  DocsInstallationRoute: DocsInstallationRoute,
   ComponentsIndexRoute: ComponentsIndexRoute,
   DocsIndexRoute: DocsIndexRoute,
-  DocsComponentSlugRoute: DocsComponentSlugRoute,
   DocsComponentIndexRoute: DocsComponentIndexRoute,
 }
 export const routeTree = rootRouteImport

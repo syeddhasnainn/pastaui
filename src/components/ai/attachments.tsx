@@ -52,7 +52,7 @@ function Attachments({
         }
         return (
           <li
-            className="relative flex min-w-0 items-center gap-3 overflow-hidden rounded-md bg-card p-3 shadow-card"
+            className="relative flex min-w-0 items-center gap-3 overflow-hidden rounded-[16px] bg-card p-3 shadow-card"
             key={item.id}
           >
             <AttachmentPreview item={item} />

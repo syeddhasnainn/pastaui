@@ -1,16 +1,16 @@
 import { HeadContent, Link, Scripts, createRootRoute } from '@tanstack/react-router'
 import { lazy, Suspense } from 'react'
 
-import { LandingHeader } from '#/components/landing/header'
-import { ThemeProvider } from '#/components/theme-provider'
 import { buttonVariants } from '#/components/ui/button'
+import { AnalyticsProvider } from '#/site/analytics-provider'
+import { getThemeScript, ThemeProvider, themeStorageKey } from '#/site/theme-provider'
 import { siteDescription, siteName, siteUrl } from '#/lib/seo'
 
 import appCss from '../styles.css?url'
 
-const PageEditor = import.meta.env.DEV
+const DesignInspector = import.meta.env.DEV
   ? lazy(() =>
-      import('#/components/editor/page-editor').then((module) => ({ default: module.PageEditor })),
+      import('#/site/dev/design-inspector').then((module) => ({ default: module.DesignInspector })),
     )
   : null
 
@@ -49,6 +49,7 @@ export const Route = createRootRoute({
         href: appCss,
       },
     ],
+    scripts: [{ children: getThemeScript(themeStorageKey, 'dark') }],
   }),
   notFoundComponent: NotFoundPage,
   shellComponent: RootDocument,
@@ -56,17 +57,14 @@ export const Route = createRootRoute({
 
 function NotFoundPage() {
   return (
-    <main className="min-h-dvh bg-background" id="main-content">
-      <LandingHeader />
-      <section className="mx-auto flex min-h-[calc(100dvh-4.5rem)] max-w-lg flex-col items-center justify-center px-6 pb-18 text-center">
-        <p className="text-xs font-semibold tracking-[0.14em] text-muted-foreground uppercase">
-          Error 404
-        </p>
-        <h1 className="mt-3 text-4xl font-normal tracking-[-0.03em]">Page not found</h1>
-        <p className="mt-3 text-sm leading-6 text-muted-foreground">
+    <main className="isolate min-h-dvh bg-background" id="main-content">
+      <section className="mx-auto flex min-h-dvh max-w-lg flex-col items-center justify-center px-6 pb-18 text-center">
+        <p className="text-[13px] font-medium text-muted-foreground">Error 404</p>
+        <h1 className="mt-3 heading-text-md sm:heading-text-lg">Page not found</h1>
+        <p className="mt-3 paragraph-text-md text-muted-foreground">
           The page you’re looking for doesn’t exist or may have moved.
         </p>
-        <Link className={buttonVariants({ className: 'mt-6', size: 'lg' })} to="/">
+        <Link className={buttonVariants({ className: 'mt-6 rounded-full', size: 'lg' })} to="/">
           Back to home
         </Link>
       </section>
@@ -81,20 +79,22 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <ThemeProvider defaultTheme="system" storageKey="pastaui-theme">
-          <a
-            className="sr-only fixed top-3 left-3 z-10001 rounded-lg bg-background px-3 py-2 text-sm font-medium shadow-lg ring-1 ring-foreground/10 focus:not-sr-only"
-            href="#main-content"
-          >
-            Skip to content
-          </a>
-          {children}
-          {PageEditor && (
-            <Suspense fallback={null}>
-              <PageEditor />
-            </Suspense>
-          )}
-        </ThemeProvider>
+        <AnalyticsProvider>
+          <ThemeProvider defaultTheme="dark" storageKey={themeStorageKey}>
+            <a
+              className="sr-only fixed top-3 left-3 z-10001 rounded-lg bg-background px-3 py-2 text-[15px] font-medium shadow-lg ring-1 ring-foreground/10 focus:not-sr-only"
+              href="#main-content"
+            >
+              Skip to content
+            </a>
+            {children}
+            {DesignInspector ? (
+              <Suspense fallback={null}>
+                <DesignInspector />
+              </Suspense>
+            ) : null}
+          </ThemeProvider>
+        </AnalyticsProvider>
         <Scripts />
       </body>
     </html>

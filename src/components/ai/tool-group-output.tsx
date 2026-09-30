@@ -61,7 +61,7 @@ function ToolGroupOutput({ className, code, language = 'json', ...props }: ToolG
 
   return (
     <figure
-      className={cn('relative z-10 overflow-hidden rounded-md bg-card shadow-card', className)}
+      className={cn('relative z-10 overflow-hidden rounded-[16px] bg-card shadow-card', className)}
       {...props}
     >
       <figcaption className="flex h-10 items-center px-4 text-xs leading-5 font-[450] text-muted-foreground uppercase">

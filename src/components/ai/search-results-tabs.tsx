@@ -96,7 +96,7 @@ function SearchResultsTabs({
                   alt={item.imageAlt ?? item.title}
                   loading="lazy"
                   className={cn(
-                    'w-full rounded-[8px] object-cover',
+                    'w-full rounded-[16px] object-cover',
                     index % 3 === 0
                       ? 'aspect-[4/3]'
                       : index % 3 === 1

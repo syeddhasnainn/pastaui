@@ -31,13 +31,13 @@ function QuotaBanner({
     <aside
       data-slot="quota-banner"
       className={cn(
-        'rounded-md bg-card p-4 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',
+        'rounded-[16px] bg-card p-4 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',
         className,
       )}
       {...props}
     >
       <div className="flex items-start gap-3">
-        <span className="flex size-9 shrink-0 items-center justify-center rounded-md bg-card text-muted-foreground shadow-card">
+        <span className="flex size-9 shrink-0 items-center justify-center rounded-[10px] bg-card text-muted-foreground shadow-card">
           <GaugeIcon className="size-4" />
         </span>
         <div className="min-w-0 flex-1">

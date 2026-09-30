@@ -42,12 +42,12 @@ function LinkPreview({
     <article
       data-slot="link-preview"
       className={cn(
-        'flex items-center gap-4 rounded-md font-sans text-sm leading-5 font-[450] tracking-[-0.05px] text-muted-foreground sm:gap-6',
+        'flex items-center gap-4 rounded-[16px] font-sans text-sm leading-5 font-[450] tracking-[-0.05px] text-muted-foreground sm:gap-6',
         className,
       )}
       {...props}
     >
-      <div className="flex size-24 shrink-0 items-center justify-center overflow-hidden rounded-md bg-muted sm:size-40">
+      <div className="flex size-24 shrink-0 items-center justify-center overflow-hidden rounded-[16px] bg-muted sm:size-40">
         {imageSrc ? (
           <img
             alt=""

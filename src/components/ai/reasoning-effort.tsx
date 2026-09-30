@@ -63,7 +63,7 @@ function ReasoningEffort({ className, onChange, value }: ReasoningEffortProps) {
       />
       <PopoverContent
         align="end"
-        className="w-65 rounded-md border-0 bg-card p-2.5 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card ring-0"
+        className="w-65 rounded-[16px] border-0 bg-card p-2.5 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card ring-0"
       >
         <motion.div
           animate={{ opacity: 1, transform: 'translateY(0px) scale(1)' }}

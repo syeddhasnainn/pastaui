@@ -54,7 +54,7 @@ function EmailComposer({
     <form
       data-slot="email-composer"
       className={cn(
-        'overflow-hidden rounded-md bg-card font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',
+        'overflow-hidden rounded-[16px] bg-card font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',
         className,
       )}
       onSubmit={(event) => {
@@ -90,7 +90,7 @@ function EmailComposer({
             <ExpandIcon />
           </Button>
           <Button
-            className="ml-2 h-7 rounded-full border-0 bg-linear-to-b from-[color-mix(in_oklch,var(--color-neutral-900),var(--color-neutral-50)_30%)] to-neutral-900 px-3 text-neutral-50 shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.18)] shadow-none hover:brightness-110"
+            className="ml-2 h-7 rounded-full border-0 bg-primary bg-linear-to-b from-[color-mix(in_oklch,var(--primary),var(--primary-foreground)_30%)] to-primary px-3 text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.18)] shadow-none hover:brightness-110 dark:bg-none"
             size="sm"
             variant="default"
             type="submit"

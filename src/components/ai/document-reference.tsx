@@ -28,13 +28,13 @@ function DocumentReference({
     <article
       data-slot="document-reference"
       className={cn(
-        'rounded-md bg-card p-4 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',
+        'rounded-[16px] bg-card p-4 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',
         className,
       )}
       {...props}
     >
       <div className="flex items-start gap-3">
-        <span className="flex size-9 shrink-0 items-center justify-center rounded-md bg-muted text-muted-foreground">
+        <span className="flex size-9 shrink-0 items-center justify-center rounded-[10px] bg-muted text-muted-foreground">
           <FileTextIcon className="size-4" />
         </span>
         <div className="min-w-0 flex-1">
@@ -53,7 +53,7 @@ function DocumentReference({
         )}
       </div>
       {excerpt && (
-        <blockquote className="mt-3 rounded-md bg-muted/45 px-3 py-2.5 text-xs leading-5 text-muted-foreground">
+        <blockquote className="mt-3 rounded-[10px] bg-muted/45 px-3 py-2.5 text-xs leading-5 text-muted-foreground">
           {excerpt}
         </blockquote>
       )}

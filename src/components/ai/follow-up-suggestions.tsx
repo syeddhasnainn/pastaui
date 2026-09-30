@@ -101,7 +101,7 @@ function FollowUpSuggestions({
       data-slot="follow-up-suggestions"
       {...props}
     >
-      <Card className="gap-2 rounded-md pt-5 shadow-linear-surface ring-foreground/8" size="sm">
+      <Card className="gap-2 rounded-[16px] pt-5 shadow-linear-surface ring-foreground/8" size="sm">
         <CardHeader className="mb-2">
           <CardTitle
             className="pl-3 card-heading leading-[19.25px] text-muted-foreground group-data-[size=sm]/card:text-[15px]"
@@ -133,7 +133,7 @@ function FollowUpSuggestions({
                     if (element) itemElements.current.set(item.id, element)
                     else itemElements.current.delete(item.id)
                   }}
-                  className="group/suggestion h-auto min-h-10 w-full justify-start gap-3 rounded-md px-3 py-2 text-left text-sm leading-5 font-[450] text-muted-foreground hover:bg-muted/70 hover:text-muted-foreground data-pressed:bg-muted data-pressed:text-muted-foreground data-pressed:shadow-none"
+                  className="group/suggestion h-auto min-h-10 w-full justify-start gap-3 rounded-[10px] px-3 py-2 text-left text-sm leading-5 font-[450] text-muted-foreground hover:bg-muted/70 hover:text-muted-foreground data-pressed:bg-muted data-pressed:text-muted-foreground data-pressed:shadow-none"
                   value={item.id}
                 >
                   {isSelected ? (
@@ -166,14 +166,14 @@ function FollowUpSuggestions({
               </Button>
             )}
             <Button
-              className="h-7 rounded-full border-0 bg-linear-to-b from-[color-mix(in_oklch,var(--color-neutral-900),var(--color-neutral-50)_30%)] to-neutral-900 px-3 text-neutral-50 shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.18)] shadow-none hover:brightness-110"
+              className="h-7 rounded-full border-0 bg-primary bg-linear-to-b from-[color-mix(in_oklch,var(--primary),var(--primary-foreground)_30%)] to-primary px-3 text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.18)] shadow-none hover:brightness-110 dark:bg-none"
               disabled={!currentSelectedId}
               onClick={submitSelection}
               size="sm"
               variant="default"
             >
               Submit
-              <Kbd className="ml-0.5 size-4 min-h-4 min-w-4 bg-neutral-50/10 p-0 leading-none text-neutral-50 shadow-none">
+              <Kbd className="ml-0.5 size-4 min-h-4 min-w-4 bg-primary-foreground/10 p-0 leading-none text-primary-foreground shadow-none">
                 <svg aria-hidden="true" className="size-3" viewBox="0 0 24 24" fill="none">
                   <path
                     d="M20 5v10H4m5-5-5 5 5 5"

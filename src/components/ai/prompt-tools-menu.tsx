@@ -71,13 +71,6 @@ const promptTools = [
     icon: VisualizeIcon,
     color: 'text-pink-400',
   },
-  {
-    id: 'platform',
-    label: 'OpenAI Platform',
-    description: 'Manage OpenAI API keys and view organization billing and API usage.',
-    icon: null,
-    color: '',
-  },
 ] as const
 
 type PromptTool = (typeof promptTools)[number]['id']
@@ -111,7 +104,7 @@ function PromptToolsMenu({ onSelect }: { onSelect: (tool: PromptTool) => void })
           <Button
             aria-label="Add files and more"
             className="rounded-full"
-            size="icon-sm"
+            size="icon"
             type="button"
             variant="ghost"
           />
@@ -122,7 +115,7 @@ function PromptToolsMenu({ onSelect }: { onSelect: (tool: PromptTool) => void })
       <PopoverContent
         align="start"
         initialFocus={inputRef}
-        className="z-50 max-h-[var(--available-height)] w-[min(48rem,calc(100vw-2rem))] overflow-y-auto rounded-2xl bg-card p-2 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card ring-0"
+        className="z-50 max-h-[var(--available-height)] w-[min(48rem,calc(100vw-2rem))] overflow-y-auto rounded-[16px] bg-card p-2 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card ring-0"
       >
         <div id={listId} role="listbox" aria-label="Files and tools">
           {filtered.map((tool, index) => (
@@ -136,24 +129,17 @@ function PromptToolsMenu({ onSelect }: { onSelect: (tool: PromptTool) => void })
                 }
               }}
               aria-selected={active === index}
+              aria-label={tool.label}
               id={`${listId}-${index}`}
               key={tool.id}
               onMouseMove={() => setActive(index)}
               onClick={() => select(tool.id)}
               className={cn(
-                'flex min-h-9 cursor-pointer items-center gap-3 rounded-xl px-2 py-2',
+                'flex min-h-9 cursor-pointer items-center gap-3 rounded-md px-2 py-2',
                 active === index && 'bg-muted',
               )}
             >
-              {tool.icon ? (
-                <tool.icon aria-hidden="true" className={cn('size-4 shrink-0', tool.color)} />
-              ) : (
-                <img
-                  src="/icons/providers/openai.svg"
-                  alt=""
-                  className="size-4 shrink-0 scale-150 dark:invert"
-                />
-              )}
+              <tool.icon aria-hidden="true" className={cn('size-4 shrink-0', tool.color)} />
               <span className="flex min-w-0 flex-wrap items-baseline gap-x-3 gap-y-0.5">
                 <span className="shrink-0 text-foreground">{tool.label}</span>
                 <span className="text-xs leading-5">{tool.description}</span>

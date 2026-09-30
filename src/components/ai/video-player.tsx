@@ -81,7 +81,7 @@ function VideoPlayer({
       data-slot="video-player"
       aria-label="Video player"
       className={cn(
-        'relative isolate aspect-video min-h-64 overflow-hidden rounded-md bg-neutral-950 font-sans text-sm font-[450] tracking-[-0.05px] text-white shadow-card sm:min-h-80',
+        'relative isolate aspect-video min-h-64 overflow-hidden rounded-[16px] bg-neutral-950 font-sans text-sm font-[450] tracking-[-0.05px] text-white shadow-card sm:min-h-80',
         className,
       )}
       {...props}

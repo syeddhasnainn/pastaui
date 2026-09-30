@@ -47,7 +47,7 @@ function PlanApprovalCard({
       aria-labelledby={titleId}
       data-slot="plan-approval-card"
       className={cn(
-        'w-full rounded-md bg-card p-5 font-sans text-sm leading-5 font-[450] tracking-[-0.05px] text-muted-foreground shadow-card sm:p-6',
+        'w-full rounded-[16px] bg-card p-5 font-sans text-sm leading-5 font-[450] tracking-[-0.05px] text-muted-foreground shadow-card sm:p-6',
         className,
       )}
       {...props}
@@ -89,7 +89,7 @@ function PlanApprovalCard({
           <Button
             type="button"
             variant="default"
-            className="h-7 gap-2 rounded-full border-0 bg-linear-to-b from-[color-mix(in_oklch,var(--color-neutral-900),var(--color-neutral-50)_30%)] to-neutral-900 px-3 text-sm font-[450] text-neutral-50 shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.18)] shadow-none hover:brightness-110"
+            className="h-7 gap-2 rounded-full border-0 bg-primary bg-linear-to-b from-[color-mix(in_oklch,var(--primary),var(--primary-foreground)_30%)] to-primary px-3 text-sm font-[450] text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.18)] shadow-none hover:brightness-110 dark:bg-none"
             disabled={disabled || steps.length === 0}
             onClick={onStart}
           >

@@ -40,7 +40,7 @@ function ToolError({
         <DangerIcon aria-hidden="true" className="size-3.5 shrink-0" />
         <span>Needs a fix</span>
       </div>
-      <div className="rounded-md bg-muted/40 p-4 shadow-card">
+      <div className="rounded-[16px] bg-muted/40 p-4 shadow-card">
         <h3 className="text-sm leading-5 font-[450]">
           {title ?? `${tool} connection lost partway through`}
         </h3>
@@ -59,7 +59,7 @@ function ToolError({
                 onClick={onFix}
                 size="sm"
                 variant="default"
-                className="h-7 rounded-md border-0 bg-linear-to-b from-[color-mix(in_oklch,var(--color-neutral-900),var(--color-neutral-50)_30%)] to-neutral-900 px-3 text-sm font-[450] text-neutral-50 shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.18)] shadow-none hover:brightness-110"
+                className="h-7 rounded-md border-0 bg-primary bg-linear-to-b from-[color-mix(in_oklch,var(--primary),var(--primary-foreground)_30%)] to-primary px-3 text-sm font-[450] text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.18)] shadow-none hover:brightness-110 dark:bg-none"
               >
                 {fixLabel}
               </Button>

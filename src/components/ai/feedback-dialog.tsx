@@ -32,7 +32,7 @@ function FeedbackDialog({
     <form
       data-slot="feedback-dialog"
       className={cn(
-        'rounded-md bg-card p-5 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',
+        'rounded-[16px] bg-card p-5 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',
         className,
       )}
       onSubmit={(event) => {
@@ -42,7 +42,7 @@ function FeedbackDialog({
       {...props}
     >
       <header className="flex items-start gap-3">
-        <span className="flex size-9 shrink-0 items-center justify-center rounded-md bg-muted text-muted-foreground">
+        <span className="flex size-9 shrink-0 items-center justify-center rounded-[10px] bg-muted text-muted-foreground">
           <MessageSquareIcon className="size-4" />
         </span>
         <div>
@@ -78,7 +78,7 @@ function FeedbackDialog({
         <span className="text-xs leading-5 font-[450] text-muted-foreground">Optional</span>
       </label>
       <Textarea
-        className="mt-1.5 min-h-20 resize-none rounded-md bg-transparent px-3 text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-none dark:bg-transparent"
+        className="mt-1.5 min-h-20 resize-none rounded-[10px] bg-transparent px-3 text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-none dark:bg-transparent"
         id={commentId}
         onChange={(event) => onCommentChange?.(event.target.value)}
         placeholder="Tell us what was missing…"
@@ -87,7 +87,7 @@ function FeedbackDialog({
 
       <div className="mt-4 flex justify-end">
         <Button
-          className="h-7 rounded-full border-0 bg-linear-to-b from-[color-mix(in_oklch,var(--color-neutral-900),var(--color-neutral-50)_30%)] to-neutral-900 px-3 text-sm font-[450] tracking-[-0.05px] text-neutral-50 shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.18)] shadow-none hover:brightness-110"
+          className="h-7 rounded-full border-0 bg-primary bg-linear-to-b from-[color-mix(in_oklch,var(--primary),var(--primary-foreground)_30%)] to-primary px-3 text-sm font-[450] tracking-[-0.05px] text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.18)] shadow-none hover:brightness-110 dark:bg-none"
           disabled={!reason}
           size="sm"
           type="submit"

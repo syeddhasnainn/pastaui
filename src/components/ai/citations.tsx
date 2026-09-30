@@ -46,7 +46,7 @@ function Citations({ className, defaultOpen = false, items, ...props }: Citation
       </CollapsibleTrigger>
       <CollapsibleContent className="-mx-1">
         <div className="px-1 pt-3 pb-2">
-          <ol className="space-y-1 rounded-md bg-card p-2 shadow-card">
+          <ol className="space-y-1 rounded-[16px] bg-card p-2 shadow-card">
             {items.map((item) => (
               <li key={item.id}>
                 <a

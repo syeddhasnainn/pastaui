@@ -37,7 +37,7 @@ function VoiceInput({
       data-recording={isRecording}
       data-slot="voice-input"
       className={cn(
-        'flex w-full items-center gap-4 rounded-md bg-muted p-4 text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',
+        'flex w-full items-center gap-4 rounded-[16px] bg-muted p-4 text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',
         className,
       )}
       {...props}
@@ -48,7 +48,7 @@ function VoiceInput({
         type="button"
         variant="default"
         size="icon"
-        className="size-12 rounded-full bg-linear-to-b from-[color-mix(in_oklch,var(--color-neutral-900),var(--color-neutral-50)_30%)] to-neutral-900 text-neutral-50 shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.18)] hover:brightness-110"
+        className="size-12 rounded-full bg-primary bg-linear-to-b from-[color-mix(in_oklch,var(--primary),var(--primary-foreground)_30%)] to-primary text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.18)] hover:brightness-110 dark:bg-none"
         onClick={toggleRecording}
       >
         {isRecording ? (
@@ -59,7 +59,7 @@ function VoiceInput({
       </Button>
       <div
         aria-hidden="true"
-        className="relative h-20 min-w-0 flex-1 overflow-hidden rounded-md bg-muted"
+        className="relative h-20 min-w-0 flex-1 overflow-hidden rounded-[10px] bg-muted"
       >
         <div
           className="absolute inset-x-0 inset-y-[24%]"

@@ -1,11 +1,13 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
-@import '@fontsource-variable/inter';
+@import '@fontsource-variable/manrope';
 
 @custom-variant dark (&:is(.dark *));
 
-:root {
+:root,
+.light {
+  --shell: #1c1d1f;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -14,23 +16,25 @@
   --popover-foreground: oklch(0.145 0 0);
   --primary: oklch(0.205 0 0);
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
+  --secondary: oklch(0.965 0 0);
   --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
+  --muted: oklch(0.965 0 0);
+  --muted-foreground: oklch(0.515 0 0);
+  --surface: var(--background);
+  --accent: oklch(0.965 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
+  --border: oklch(0.918 0 0);
+  --input: oklch(0.918 0 0);
   --ring: oklch(0.708 0 0);
   --radius: 0.625rem;
   --linear-surface-shadow: 0 3px 6px -2px lch(0 0 0 / 2%), 0 1px 1px 0 lch(0 0 0 / 4%);
   --card-outline: lch(0 0 0 / 8.8%);
   --card-shadow:
     0 0 0 0.5px var(--card-outline), 0 3px 6px -2px lch(0 0 0 / 2%), 0 1px 1px 0 lch(0 0 0 / 4%);
-  --sidebar-item-hover: lch(91.64% 0.5 282);
+  --sidebar-item-hover: color-mix(in oklch, var(--foreground) 7%, transparent);
   --sidebar-item-active: lch(89.54% 0.5 282);
+  --search-item-active: lch(91.64% 0.5 282);
   --sidebar-glide-ease: cubic-bezier(0.23, 1, 0.32, 1);
   --syntax-comment: oklch(0.556 0 0);
   --syntax-keyword: oklch(0.49 0.2 292);
@@ -39,9 +43,6 @@
   --syntax-number: oklch(0.53 0.16 55);
   --syntax-property: oklch(0.48 0.14 20);
   --syntax-punctuation: oklch(0.4 0 0);
-  --charcoal-top: color-mix(in oklch, var(--charcoal-bottom), var(--charcoal-foreground) 30%);
-  --charcoal-bottom: #171717;
-  --charcoal-foreground: oklch(0.985 0 0);
   --audio-surface: var(--muted);
   --audio-track: var(--border);
   --audio-progress: var(--muted-foreground);
@@ -49,31 +50,34 @@
 }
 
 .dark {
+  --shell: #141517;
   --card-outline: lch(100 0 0 / 8.8%);
   --audio-surface: oklch(0.08 0 0);
   --audio-track: oklch(0.26 0 0);
   --audio-progress: oklch(0.62 0 0);
   --audio-shadow: oklch(0 0 0 / 35%);
-  --background: oklch(0.145 0 0);
+  --background: oklch(0.145 0.004 264.5);
   --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
+  --card: oklch(0.205 0.004 264.5);
   --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
+  --popover: oklch(0.205 0.004 264.5);
   --popover-foreground: oklch(0.985 0 0);
   --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
+  --primary-foreground: oklch(0.205 0.004 264.5);
+  --secondary: oklch(0.269 0.004 264.5);
   --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
+  --muted: oklch(0.269 0.004 264.5);
   --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
+  --surface: var(--background);
+  --accent: oklch(0.269 0.004 264.5);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
-  --sidebar-item-hover: oklch(1 0 0 / 8%);
+  --sidebar-item-hover: var(--muted);
   --sidebar-item-active: oklch(1 0 0 / 12%);
+  --search-item-active: oklch(1 0 0 / 8%);
   --syntax-comment: oklch(0.708 0 0);
   --syntax-keyword: oklch(0.75 0.16 292);
   --syntax-string: oklch(0.76 0.13 153);
@@ -83,9 +87,46 @@
   --syntax-punctuation: oklch(0.78 0 0);
 }
 
+:root,
+.light {
+  --code-tray: var(--muted);
+  --code-surface: var(--card);
+  --code-border: var(--border);
+  --code-control-border: color-mix(in oklch, var(--border), var(--foreground) 8%);
+  --code-hover: color-mix(in oklch, var(--foreground) 5%, transparent);
+  --code-ink: color-mix(in oklch, var(--foreground) 88%, transparent);
+  --code-muted: color-mix(in oklch, var(--foreground) 60%, transparent);
+  --code-label: color-mix(in oklch, var(--foreground) 44%, transparent);
+  --code-keyword: oklch(55% 0.12 255);
+  --code-component: oklch(45% 0.05 255);
+  --code-prop: oklch(50% 0.03 255);
+  --code-string: oklch(52% 0.07 150);
+  --code-number: oklch(55% 0.08 75);
+  --code-comment: oklch(56% 0 0);
+  --code-punctuation: oklch(55% 0 0);
+}
+
+.dark {
+  --code-tray: var(--muted);
+  --code-surface: var(--card);
+  --code-border: var(--border);
+  --code-control-border: var(--input);
+  --code-hover: color-mix(in oklch, var(--foreground) 6%, transparent);
+  --code-ink: color-mix(in oklch, var(--foreground) 90%, transparent);
+  --code-muted: color-mix(in oklch, var(--foreground) 60%, transparent);
+  --code-label: color-mix(in oklch, var(--foreground) 44%, transparent);
+  --code-keyword: oklch(75% 0.09 255);
+  --code-component: oklch(80% 0.04 255);
+  --code-prop: oklch(74% 0.025 255);
+  --code-string: oklch(78% 0.06 150);
+  --code-number: oklch(80% 0.07 75);
+  --code-comment: oklch(66% 0 0);
+  --code-punctuation: oklch(68% 0 0);
+}
+
 @theme inline {
   --font-heading: var(--font-sans);
-  --font-sans: 'Inter Variable', sans-serif;
+  --font-sans: 'Manrope Variable', Manrope, ui-sans-serif, system-ui, sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -98,6 +139,7 @@
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
+  --color-surface: var(--surface);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
@@ -106,7 +148,7 @@
   --color-ring: var(--ring);
   --color-sidebar-item-hover: var(--sidebar-item-hover);
   --color-sidebar-item-active: var(--sidebar-item-active);
-  --color-charcoal-foreground: var(--charcoal-foreground);
+  --color-search-item-active: var(--search-item-active);
   --shadow-linear-surface: var(--linear-surface-shadow);
   --shadow-card: var(--card-shadow);
   --radius-sm: calc(var(--radius) * 0.6);
@@ -116,6 +158,144 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/* Typography tokens: heading-text-*, paragraph-text-*, card-text-*, sidebar-text-* (sm, md, lg).
+ * Each utility sets font-size, line-height, letter-spacing and font-weight from its --<name>-* variables.
+ * Not text-* prefixed, so tailwind-merge never mistakes them for text colours and cn() keeps them. */
+@theme {
+  --heading-text-sm-size: 24px;
+  --heading-text-sm-leading: 1.2;
+  --heading-text-sm-tracking: -0.02em;
+  --heading-text-sm-weight: 450;
+  --heading-text-md-size: 36px;
+  --heading-text-md-leading: 1.1;
+  --heading-text-md-tracking: -0.03em;
+  --heading-text-md-weight: 450;
+  --heading-text-lg-size: 48px;
+  --heading-text-lg-leading: 1.05;
+  --heading-text-lg-tracking: -0.03em;
+  --heading-text-lg-weight: 450;
+  --paragraph-text-sm-size: 13px;
+  --paragraph-text-sm-leading: 1.5;
+  --paragraph-text-sm-tracking: 0;
+  --paragraph-text-sm-weight: 400;
+  --paragraph-text-md-size: 15px;
+  --paragraph-text-md-leading: 1.6;
+  --paragraph-text-md-tracking: 0;
+  --paragraph-text-md-weight: 400;
+  --paragraph-text-lg-size: 17px;
+  --paragraph-text-lg-leading: 1.55;
+  --paragraph-text-lg-tracking: 0;
+  --paragraph-text-lg-weight: 400;
+  --card-text-sm-size: 15px;
+  --card-text-sm-leading: 1.35;
+  --card-text-sm-tracking: -0.01em;
+  --card-text-sm-weight: 550;
+  --card-text-md-size: 17px;
+  --card-text-md-leading: 1.3;
+  --card-text-md-tracking: -0.015em;
+  --card-text-md-weight: 550;
+  --card-text-lg-size: 20px;
+  --card-text-lg-leading: 1.25;
+  --card-text-lg-tracking: -0.02em;
+  --card-text-lg-weight: 550;
+  --sidebar-text-sm-size: 12px;
+  --sidebar-text-sm-leading: 1.4;
+  --sidebar-text-sm-tracking: 0;
+  --sidebar-text-sm-weight: 500;
+  --sidebar-text-md-size: 14px;
+  --sidebar-text-md-leading: 1.4;
+  --sidebar-text-md-tracking: 0;
+  --sidebar-text-md-weight: 450;
+  --sidebar-text-lg-size: 15px;
+  --sidebar-text-lg-leading: 1.4;
+  --sidebar-text-lg-tracking: 0;
+  --sidebar-text-lg-weight: 500;
+}
+
+@utility heading-text-sm {
+  font-size: var(--heading-text-sm-size);
+  line-height: var(--heading-text-sm-leading);
+  letter-spacing: var(--heading-text-sm-tracking);
+  font-weight: var(--heading-text-sm-weight);
+}
+
+@utility heading-text-md {
+  font-size: var(--heading-text-md-size);
+  line-height: var(--heading-text-md-leading);
+  letter-spacing: var(--heading-text-md-tracking);
+  font-weight: var(--heading-text-md-weight);
+}
+
+@utility heading-text-lg {
+  font-size: var(--heading-text-lg-size);
+  line-height: var(--heading-text-lg-leading);
+  letter-spacing: var(--heading-text-lg-tracking);
+  font-weight: var(--heading-text-lg-weight);
+}
+
+@utility paragraph-text-sm {
+  font-size: var(--paragraph-text-sm-size);
+  line-height: var(--paragraph-text-sm-leading);
+  letter-spacing: var(--paragraph-text-sm-tracking);
+  font-weight: var(--paragraph-text-sm-weight);
+}
+
+@utility paragraph-text-md {
+  font-size: var(--paragraph-text-md-size);
+  line-height: var(--paragraph-text-md-leading);
+  letter-spacing: var(--paragraph-text-md-tracking);
+  font-weight: var(--paragraph-text-md-weight);
+}
+
+@utility paragraph-text-lg {
+  font-size: var(--paragraph-text-lg-size);
+  line-height: var(--paragraph-text-lg-leading);
+  letter-spacing: var(--paragraph-text-lg-tracking);
+  font-weight: var(--paragraph-text-lg-weight);
+}
+
+@utility card-text-sm {
+  font-size: var(--card-text-sm-size);
+  line-height: var(--card-text-sm-leading);
+  letter-spacing: var(--card-text-sm-tracking);
+  font-weight: var(--card-text-sm-weight);
+}
+
+@utility card-text-md {
+  font-size: var(--card-text-md-size);
+  line-height: var(--card-text-md-leading);
+  letter-spacing: var(--card-text-md-tracking);
+  font-weight: var(--card-text-md-weight);
+}
+
+@utility card-text-lg {
+  font-size: var(--card-text-lg-size);
+  line-height: var(--card-text-lg-leading);
+  letter-spacing: var(--card-text-lg-tracking);
+  font-weight: var(--card-text-lg-weight);
+}
+
+@utility sidebar-text-sm {
+  font-size: var(--sidebar-text-sm-size);
+  line-height: var(--sidebar-text-sm-leading);
+  letter-spacing: var(--sidebar-text-sm-tracking);
+  font-weight: var(--sidebar-text-sm-weight);
+}
+
+@utility sidebar-text-md {
+  font-size: var(--sidebar-text-md-size);
+  line-height: var(--sidebar-text-md-leading);
+  letter-spacing: var(--sidebar-text-md-tracking);
+  font-weight: var(--sidebar-text-md-weight);
+}
+
+@utility sidebar-text-lg {
+  font-size: var(--sidebar-text-lg-size);
+  line-height: var(--sidebar-text-lg-leading);
+  letter-spacing: var(--sidebar-text-lg-tracking);
+  font-weight: var(--sidebar-text-lg-weight);
 }
 
 @utility card-heading {
@@ -134,11 +314,10 @@
   color: var(--muted-foreground);
 }
 
-@utility bg-charcoal-black {
-  background-image: linear-gradient(180deg, var(--charcoal-top) 0%, var(--charcoal-bottom) 100%);
-}
-
 @layer base {
+  textarea {
+    resize: none;
+  }
   * {
     @apply border-border outline-ring/50;
   }
@@ -151,19 +330,56 @@
     color-scheme: dark;
   }
 
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--background);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in oklch, var(--muted-foreground) 45%, transparent);
+    border-radius: 50px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in oklch, var(--muted-foreground) 70%, transparent);
+  }
+
+  [data-inset-scroll]::-webkit-scrollbar {
+    width: 11px;
+  }
+
+  [data-inset-scroll]::-webkit-scrollbar-track {
+    background: transparent;
+    margin-block: 12px;
+  }
+
+  [data-inset-scroll]::-webkit-scrollbar-thumb {
+    border: 3px solid transparent;
+    background-clip: padding-box;
+  }
+
+  @supports not selector(::-webkit-scrollbar) {
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: color-mix(in oklch, var(--muted-foreground) 45%, transparent)
+        var(--background);
+    }
+  }
+
   body {
     @apply bg-background text-foreground antialiased;
+    font-size: var(--paragraph-text-md-size);
+    line-height: var(--paragraph-text-md-leading);
   }
 
   button:not(:disabled),
   [role='button']:not(:disabled) {
     cursor: pointer;
   }
-}
-
-html:has(.docs-page) {
-  overflow: hidden;
-  overscroll-behavior: none;
 }
 
 .sidebar-hover-indicator[data-ready='true'] {
@@ -224,5 +440,45 @@ html:has(.docs-page) {
 @media (prefers-reduced-motion: reduce) {
   .voice-input-waveform {
     animation: none;
+  }
+}
+
+@supports (view-transition-name: none) {
+  #main-content {
+    view-transition-name: main-content;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+
+  ::view-transition-old(main-content) {
+    animation: page-leave 120ms cubic-bezier(0.4, 0, 1, 1) both;
+  }
+
+  ::view-transition-new(main-content) {
+    animation: page-enter 240ms cubic-bezier(0.22, 1, 0.36, 1) 60ms both;
+  }
+}
+
+@keyframes page-leave {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
   }
 }

@@ -39,7 +39,7 @@ function TaskCard({
     <article
       data-slot="task-card"
       className={cn(
-        'overflow-hidden rounded-md bg-card font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',
+        'overflow-hidden rounded-[16px] bg-card font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',
         className,
       )}
       {...props}
@@ -58,7 +58,7 @@ function TaskCard({
           <span className="text-[10px] text-muted-foreground capitalize">{status}</span>
         </header>
         {result && (
-          <div className="mt-4 rounded-md bg-muted/45 p-3 text-xs leading-5">{result}</div>
+          <div className="mt-4 rounded-[10px] bg-muted/45 p-3 text-xs leading-5">{result}</div>
         )}
       </div>
       <footer className="flex items-center gap-2 bg-muted/30 px-4 py-3">

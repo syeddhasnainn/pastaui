@@ -43,14 +43,14 @@ function InlineCitation({
         {index}
       </button>
       {open && (
-        <span className="absolute bottom-full left-1/2 z-20 mb-2 w-72 max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-md bg-card p-4 text-muted-foreground shadow-card">
+        <span className="absolute bottom-full left-1/2 z-20 mb-2 w-72 max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-[16px] bg-card p-4 text-muted-foreground shadow-card">
           <span className="block card-heading leading-5">{title}</span>
           <span className="mt-1 block text-xs leading-5 text-muted-foreground">{source}</span>
           {excerpt && (
             <span className="mt-2 block text-xs leading-5 text-muted-foreground">{excerpt}</span>
           )}
           <Button
-            className="mt-3 h-7 gap-2 rounded-full border-0 bg-linear-to-b from-[color-mix(in_oklch,var(--color-neutral-900),var(--color-neutral-50)_30%)] to-neutral-900 px-3 text-sm font-[450] tracking-[-0.05px] text-neutral-50 shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.18)] shadow-none hover:brightness-110"
+            className="mt-3 h-7 gap-2 rounded-full border-0 bg-primary bg-linear-to-b from-[color-mix(in_oklch,var(--primary),var(--primary-foreground)_30%)] to-primary px-3 text-sm font-[450] tracking-[-0.05px] text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.18)] shadow-none hover:brightness-110 dark:bg-none"
             onClick={onOpenSource}
             size="sm"
             type="button"

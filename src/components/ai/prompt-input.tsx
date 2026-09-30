@@ -59,7 +59,7 @@ function PromptInput({
 
   function resizeTextarea(element: HTMLTextAreaElement) {
     element.style.height = '0px'
-    element.style.height = `${Math.min(element.scrollHeight, 160)}px`
+    element.style.height = `${Math.min(element.scrollHeight, 240)}px`
   }
 
   function submitPrompt() {
@@ -76,7 +76,7 @@ function PromptInput({
     <form
       data-slot="prompt-input"
       className={cn(
-        'w-full rounded-md bg-background p-2 shadow-sm ring-1 ring-foreground/12',
+        'w-full rounded-[16px] border-[0.5px] border-border bg-background p-2.5 shadow-[0_1px_0_rgb(0_0_0/0.04),0_6px_8px_-6px_rgb(0_0_0/0.08)]',
         className,
       )}
       onSubmit={(event) => {
@@ -135,7 +135,7 @@ function PromptInput({
       <Textarea
         ref={textareaRef}
         aria-label="Message"
-        className="min-h-12 resize-none rounded-md border-0 bg-transparent px-2 py-2 text-[15px]/5 font-[450] tracking-normal shadow-none focus-visible:ring-0 md:text-[15px]/5 dark:bg-transparent"
+        className="min-h-18 resize-none rounded-md border-0 bg-transparent px-2 py-1.5 text-[15px]/6 font-[450] tracking-normal shadow-none placeholder:font-normal focus-visible:ring-0 md:text-[15px]/6 dark:bg-transparent"
         onChange={(event) => {
           setValue(event.target.value)
           resizeTextarea(event.target)
@@ -150,7 +150,7 @@ function PromptInput({
         rows={1}
         value={value}
       />
-      <div className="flex items-center justify-between gap-2 pt-1">
+      <div className="flex items-center justify-between gap-2 pt-2">
         <div className="flex items-center gap-1">
           <PromptToolsMenu
             onSelect={(tool) => {
@@ -176,10 +176,10 @@ function PromptInput({
         </div>
         <Button
           aria-label={pending ? 'Stop response' : 'Send message'}
-          className="rounded-full border-0 bg-linear-to-b from-[color-mix(in_oklch,var(--color-neutral-900),var(--color-neutral-50)_30%)] to-neutral-900 text-neutral-50 shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.18)] shadow-none hover:brightness-110"
+          className="rounded-full border-0 bg-primary bg-linear-to-b from-[color-mix(in_oklch,var(--primary),var(--primary-foreground)_30%)] to-primary text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.18)] shadow-none hover:brightness-110 dark:bg-none"
           variant="default"
           disabled={!pending && !value.trim()}
-          size="icon"
+          size="icon-lg"
           type={pending ? 'button' : 'submit'}
         >
           {pending ? <SquareIcon className="size-3 fill-current" /> : <ArrowUpIcon />}

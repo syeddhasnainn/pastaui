@@ -15,7 +15,7 @@ function AlertDialogContent({ className, ...props }: AlertDialogPrimitive.Popup.
         <AlertDialogPrimitive.Popup
           data-slot="alert-dialog-content"
           className={cn(
-            'w-full max-w-md rounded-md bg-background p-6 shadow-xl ring-1 ring-foreground/10 transition-[opacity,transform] data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0',
+            'w-full max-w-md rounded-[16px] bg-background p-6 shadow-xl ring-1 ring-foreground/10 transition-[opacity,transform] data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0',
             className,
           )}
           {...props}

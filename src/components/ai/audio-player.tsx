@@ -49,16 +49,16 @@ function AudioPlayer({
     <section
       data-slot="audio-player"
       className={cn(
-        'rounded-md bg-card p-6 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card sm:p-7',
+        'rounded-[16px] bg-card p-6 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card sm:p-7',
         className,
       )}
       {...props}
     >
       <div className="flex items-center gap-5">
         {artworkUrl ? (
-          <img src={artworkUrl} alt="" className="size-20 shrink-0 rounded-md object-cover" />
+          <img src={artworkUrl} alt="" className="size-20 shrink-0 rounded-[10px] object-cover" />
         ) : (
-          <span className="flex size-20 shrink-0 items-center justify-center rounded-md bg-muted">
+          <span className="flex size-20 shrink-0 items-center justify-center rounded-[10px] bg-muted">
             <AudioLinesIcon aria-hidden="true" className="size-8 text-muted-foreground" />
           </span>
         )}

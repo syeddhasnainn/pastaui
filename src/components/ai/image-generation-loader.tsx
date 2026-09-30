@@ -36,7 +36,7 @@ function ImageGenerationLoader({
 
   return (
     <figure data-slot="image-generation-loader" className={cn('w-full', className)} {...props}>
-      <div className="relative aspect-square overflow-hidden rounded-md border-[0.5px] border-border bg-background">
+      <div className="relative aspect-square overflow-hidden rounded-[16px] border-[0.5px] border-border bg-background">
         {isComplete ? (
           <CompletedImage alt={alt} imageUrl={imageUrl} onEdit={onEdit} onShare={onShare} />
         ) : showGame ? (
@@ -49,7 +49,7 @@ function ImageGenerationLoader({
                   ? 'Play Snake while your image is generating'
                   : 'Image generation in progress'
               }
-              className="relative min-h-0 flex-1 overflow-hidden rounded-md text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-default"
+              className="relative min-h-0 flex-1 overflow-hidden rounded-[16px] text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-default"
               disabled={!playable || status === 'queued'}
               onClick={() => setIsPlaying(true)}
               type="button"

@@ -20,7 +20,7 @@ function CommitPreview() {
         onOpen={() => setShowDiff((current) => !current)}
       />
       {showDiff && (
-        <div className="space-y-3 rounded-md bg-card p-4 text-xs shadow-card">
+        <div className="space-y-3 rounded-[16px] bg-card p-4 text-xs shadow-card">
           <p className="font-mono text-muted-foreground">src/components/ai/permission-grant.tsx</p>
           <pre className="overflow-x-auto leading-6">
             <code>

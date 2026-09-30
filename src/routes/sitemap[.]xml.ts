@@ -1,13 +1,14 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { componentCatalog } from '#/components/docs/component-catalog'
-import { marketingPages } from '#/components/landing/marketing-pages'
+import { marketingPages } from '#/site/landing/marketing-pages'
 import { siteUrl } from '#/lib/seo'
 
 const paths = [
   '/',
   '/docs/installation',
   ...componentCatalog.map((component) => `/docs/component/${component.slug}`),
+  '/privacy',
   ...Object.keys(marketingPages).map((page) => `/${page}`),
 ]
 

@@ -25,7 +25,7 @@ function RetrievalChunks({ className, items, onOpen, query, ...props }: Retrieva
     <section
       data-slot="retrieval-chunks"
       className={cn(
-        'rounded-md bg-card p-3 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',
+        'rounded-[16px] bg-card p-3 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',
         className,
       )}
       {...props}
@@ -37,20 +37,22 @@ function RetrievalChunks({ className, items, onOpen, query, ...props }: Retrieva
           {items.length} matches
         </span>
       </header>
-      <div className="mt-3 flex items-center gap-2 rounded-md bg-muted/55 px-3 py-2 text-xs leading-5">
+      <div className="mt-3 flex items-center gap-2 rounded-[10px] bg-muted/55 px-3 py-2 text-xs leading-5">
         <SearchIcon className="size-3.5 shrink-0 text-muted-foreground" />
         <span className="truncate">{query}</span>
       </div>
       <ol className="mt-2 space-y-2">
         {items.map((item, index) => (
-          <li className="rounded-md bg-muted/30 p-3" key={item.id}>
+          <li className="rounded-[10px] bg-muted/30 p-3" key={item.id}>
             <div className="flex items-center gap-2 text-xs leading-5">
-              <span className="flex size-5 items-center justify-center rounded-md bg-card font-mono text-[10px] shadow-card">
+              <span className="flex size-5 shrink-0 items-center justify-center rounded-md bg-card font-mono text-[11px] shadow-card">
                 {index + 1}
               </span>
-              <span className="min-w-0 flex-1 truncate font-[450]">{item.source}</span>
-              {item.location && <span className="text-muted-foreground">{item.location}</span>}
-              <span className="font-mono text-[10px] text-muted-foreground tabular-nums">
+              <span className="min-w-0 flex-1 truncate text-[13px] font-medium">{item.source}</span>
+              {item.location && (
+                <span className="shrink-0 text-muted-foreground">{item.location}</span>
+              )}
+              <span className="shrink-0 font-mono text-[11px] text-muted-foreground tabular-nums">
                 {Math.round(item.score * 100)}%
               </span>
             </div>

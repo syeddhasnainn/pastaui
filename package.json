@@ -1,14 +1,17 @@
 {
   "name": "pastaui",
-  "license": "MIT",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "imports": {
     "#/*": "./src/*"
   },
   "scripts": {
     "build": "vite build",
+    "cf-typegen": "wrangler types",
     "check": "pnpm lint && pnpm typecheck && pnpm format:check",
+    "deploy": "pnpm registry:build && pnpm build && wrangler deploy",
+    "deploy:relay": "wrangler deploy --config workers/relay/wrangler.jsonc",
     "dev": "vite dev --port 3000",
     "format": "oxfmt --write .",
     "format:check": "oxfmt --check .",
@@ -16,14 +19,14 @@
     "lint": "oxlint --type-aware --react-plugin --jsx-a11y-plugin --import-plugin --ignore-pattern src/routeTree.gen.ts .",
     "lint:fix": "pnpm lint --fix",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit",
-    "deploy": "pnpm registry:build && pnpm build && wrangler deploy",
-    "cf-typegen": "wrangler types",
-    "registry:build": "node scripts/build-registry.mjs && shadcn build"
+    "registry:build": "node scripts/build-registry.mjs && shadcn build",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
     "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/manrope": "^5.3.0",
+    "@posthog/react": "^1.11.2",
     "@solar-icons/react": "^2.2.0",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-router": "latest",
@@ -31,6 +34,7 @@
     "class-variance-authority": "^0.7.1",
     "cn": "^0.3.0",
     "motion": "^13.4.0",
+    "posthog-js": "^1.434.18",
     "prism-react-renderer": "^2.4.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

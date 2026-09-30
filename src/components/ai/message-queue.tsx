@@ -107,7 +107,7 @@ function MessageQueue({
       aria-label="Queued messages"
       data-slot="message-queue"
       className={cn(
-        'rounded-md bg-card p-3 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',
+        'rounded-[16px] bg-card p-3 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',
         className,
       )}
       {...props}
@@ -170,9 +170,9 @@ function MessageQueue({
                 </Menu.Trigger>
                 <Menu.Portal>
                   <Menu.Positioner side="bottom" align="end" sideOffset={6} className="z-50">
-                    <Menu.Popup className="min-w-36 rounded-md bg-card p-1 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card outline-none">
+                    <Menu.Popup className="min-w-36 rounded-[16px] bg-card p-1 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card outline-none">
                       <Menu.Item
-                        className="cursor-pointer rounded-sm px-3 py-2 outline-none data-highlighted:bg-muted"
+                        className="cursor-pointer rounded-[12px] px-3 py-2 outline-none data-highlighted:bg-muted"
                         onClick={() => navigator.clipboard.writeText(item.content)}
                       >
                         Copy message
@@ -180,7 +180,7 @@ function MessageQueue({
                       {onMoveToTop && (
                         <Menu.Item
                           disabled={index === 0}
-                          className="cursor-pointer rounded-sm px-3 py-2 outline-none data-highlighted:bg-muted data-disabled:opacity-40"
+                          className="cursor-pointer rounded-[12px] px-3 py-2 outline-none data-highlighted:bg-muted data-disabled:opacity-40"
                           onClick={() => onMoveToTop(item.id)}
                         >
                           Move to top

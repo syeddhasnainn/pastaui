@@ -32,13 +32,13 @@ function AgentStatus({ className, detail, tasks = [], title, ...props }: AgentSt
     <section
       data-slot="agent-status"
       className={cn(
-        'rounded-md bg-card p-3 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',
+        'rounded-[16px] bg-card p-3 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',
         className,
       )}
       {...props}
     >
       <header className="flex items-start gap-3">
-        <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-muted text-muted-foreground">
+        <span className="flex size-8 shrink-0 items-center justify-center rounded-[10px] bg-muted text-muted-foreground">
           <ListTodoIcon className="size-4" />
         </span>
         <div className="min-w-0 flex-1">
@@ -53,7 +53,7 @@ function AgentStatus({ className, detail, tasks = [], title, ...props }: AgentSt
       </header>
 
       {tasks.length > 0 && (
-        <ul className="mt-3 flex flex-col gap-1 rounded-md bg-muted/40 p-2">
+        <ul className="mt-3 flex flex-col gap-1 rounded-[10px] bg-muted/40 p-2">
           {tasks.map((task) => (
             <li
               className="flex items-center gap-2 rounded-md px-2 py-1.5 text-xs leading-5"

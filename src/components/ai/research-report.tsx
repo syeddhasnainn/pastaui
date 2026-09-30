@@ -113,7 +113,7 @@ function ResearchReport({
           id={contentsId}
           aria-label="Table of contents"
           hidden={!contentsOpen}
-          className="absolute top-0 left-0 w-64 overflow-hidden rounded-md bg-card shadow-card sm:w-72"
+          className="absolute top-0 left-0 w-64 overflow-hidden rounded-[16px] bg-card shadow-card sm:w-72"
         >
           <div className="max-h-[min(32rem,70vh)] [scrollbar-width:thin] overflow-y-auto overscroll-contain px-5 py-3">
             <p className="mb-4 text-[11px] font-[450] text-muted-foreground">Table of contents</p>

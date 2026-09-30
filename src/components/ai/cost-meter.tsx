@@ -25,7 +25,7 @@ function CostMeter({ budget, className, currency = '$', items, ...props }: CostM
     <section
       data-slot="cost-meter"
       className={cn(
-        'rounded-md bg-card p-5 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',
+        'rounded-[16px] bg-card p-5 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',
         className,
       )}
       {...props}

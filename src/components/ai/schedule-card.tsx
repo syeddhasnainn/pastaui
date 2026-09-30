@@ -34,13 +34,13 @@ function ScheduleCard({
     <article
       data-slot="schedule-card"
       className={cn(
-        'rounded-md bg-card p-5 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',
+        'rounded-[16px] bg-card p-5 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',
         className,
       )}
       {...props}
     >
       <header className="flex items-start gap-3">
-        <span className="flex size-9 shrink-0 items-center justify-center rounded-md bg-muted text-muted-foreground">
+        <span className="flex size-9 shrink-0 items-center justify-center rounded-[10px] bg-muted text-muted-foreground">
           <CalendarClockIcon className="size-4" />
         </span>
         <div className="min-w-0 flex-1">
@@ -56,7 +56,7 @@ function ScheduleCard({
         </div>
       </header>
 
-      <dl className="mt-5 grid gap-3 rounded-md bg-muted/45 p-3 sm:grid-cols-2">
+      <dl className="mt-5 grid gap-3 rounded-[10px] bg-muted/45 p-3 sm:grid-cols-2">
         <div>
           <dt className="text-xs leading-5 font-[450] text-muted-foreground">Schedule</dt>
           <dd className="mt-1 text-sm font-[450]">{schedule}</dd>
@@ -85,7 +85,7 @@ function ScheduleCard({
             Edit
           </Button>
           <Button
-            className="h-7 gap-2 rounded-full border-0 bg-linear-to-b from-[color-mix(in_oklch,var(--color-neutral-900),var(--color-neutral-50)_30%)] to-neutral-900 px-3 text-sm font-[450] tracking-[-0.05px] text-neutral-50 shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.18)] shadow-none hover:brightness-110"
+            className="h-7 gap-2 rounded-full border-0 bg-primary bg-linear-to-b from-[color-mix(in_oklch,var(--primary),var(--primary-foreground)_30%)] to-primary px-3 text-sm font-[450] tracking-[-0.05px] text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.18)] shadow-none hover:brightness-110 dark:bg-none"
             onClick={onToggle}
             size="sm"
             type="button"
