@@ -29,6 +29,18 @@ pnpm dlx shadcn@latest add https://pastaui.com/r/plan-approval-card.json
 
 The component is copied into your project. Import it, follow the usage example, and edit it to match your product.
 
+## Agent skills
+
+Skills that teach coding agents like Claude Code how to use Pasta UI live in [`skills/`](skills):
+
+- [`pastaui-pro`](skills/pastaui-pro/SKILL.md): sign up for [Pasta UI Pro](https://pro.pastaui.com) and install its blocks from the private registry.
+
+Install them with the [skills](https://skills.sh) CLI:
+
+```bash
+npx skills add syeddhasnainn/pastaui
+```
+
 ## Development
 
 ```bash
