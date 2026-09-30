@@ -40,7 +40,7 @@ function PlanResearchCard({
       aria-labelledby={titleId}
       data-slot="plan-research-card"
       className={cn(
-        'w-full rounded-[16px] bg-card p-5 font-sans text-sm leading-5 font-[450] tracking-[-0.05px] text-muted-foreground shadow-card sm:p-6',
+        'w-fit max-w-full rounded-[16px] bg-card p-5 font-sans text-sm leading-5 font-[450] tracking-[-0.05px] text-muted-foreground shadow-card sm:p-6',
         className,
       )}
       {...props}

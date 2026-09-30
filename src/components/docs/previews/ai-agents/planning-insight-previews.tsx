@@ -30,7 +30,7 @@ function PlanApprovalCardPreview() {
   const [status, setStatus] = useState('')
 
   return (
-    <div className="w-full max-w-2xl space-y-4">
+    <div className="flex w-full max-w-2xl flex-col items-center gap-4">
       <PlanApprovalCard
         title="Research a topic"
         steps={steps}
@@ -41,7 +41,7 @@ function PlanApprovalCardPreview() {
       />
       {editing && (
         <form
-          className="space-y-3"
+          className="w-full space-y-3"
           onSubmit={(event) => {
             event.preventDefault()
             setEditing(false)
@@ -68,7 +68,7 @@ function PlanApprovalCardPreview() {
         </form>
       )}
       {status && (
-        <div className="flex items-center justify-between gap-3">
+        <div className="flex w-full items-center justify-between gap-3">
           <output className="text-sm text-muted-foreground">{status}</output>
           <Button
             variant="outline"
@@ -91,7 +91,7 @@ function PlanResearchCardPreview() {
   const [updated, setUpdated] = useState(false)
 
   return (
-    <section className="pt-6">
+    <section className="w-fit max-w-full pt-6">
       <h3 className="mb-4 text-sm font-[450] tracking-[-0.05px] text-muted-foreground">
         Researching
       </h3>

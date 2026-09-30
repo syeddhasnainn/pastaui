@@ -8,7 +8,7 @@ interface PreviewProps {
 }
 
 function InlineCitationPreview() {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
 
   return (
     <p className="w-full max-w-lg pt-40 pb-4 text-sm leading-7 font-[450] tracking-[-0.05px] text-muted-foreground">
