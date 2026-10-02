@@ -13,6 +13,7 @@ import { SearchProvider, useOpenSearch } from '#/site/docs/component-search'
 import { ComponentSidebarNav } from '#/site/docs/component-sidebar'
 import { focusRing } from '#/site/landing/focus-ring'
 import { BrandLink, BrandMenu, useShortcutLabel } from '#/site/landing/brand-menu'
+import { ComponentViewToggle } from '#/site/landing/component-view-toggle'
 import { SidebarFooter } from '#/site/landing/sidebar-footer'
 import { SidebarThemeToggle } from '#/site/theme-toggle'
 import { githubUrl } from '#/lib/seo'
@@ -161,9 +162,10 @@ function SidebarDrawer({ activeSlug }: { activeSlug: string }) {
 interface LandingShellProps {
   activeSlug: string
   children: ReactNode
+  heading?: { title: string; description: string }
 }
 
-export function LandingShell({ activeSlug, children }: LandingShellProps) {
+export function LandingShell({ activeSlug, children, heading }: LandingShellProps) {
   const content = (
     <div className="relative mx-auto w-full max-w-[1280px] px-4 md:px-6 lg:px-8">
       <div className="flex h-15 items-center gap-1 lg:hidden">
@@ -186,14 +188,31 @@ export function LandingShell({ activeSlug, children }: LandingShellProps) {
         >
           <SidebarContent activeSlug={activeSlug} headerClassName="mr-2 h-8" />
         </aside>
-        <main
-          className="min-w-0 flex-1 overflow-y-auto overscroll-contain bg-[color-mix(in_oklab,var(--background),var(--muted)_55%)] lg:my-2 lg:mr-2 lg:rounded-[16px] lg:shadow-[0_1px_2px_rgb(0_0_0/0.2)] dark:lg:shadow-[0_0_0_1px_rgb(255_255_255/0.04)]"
-          data-inset-scroll
-          data-scroll-restoration-id="main-content"
-          id="main-content"
-        >
-          {content}
-        </main>
+        <div className="flex min-w-0 flex-1 flex-col lg:pl-4">
+          {heading && (
+            <div className="hidden h-14 shrink-0 items-center gap-2.5 pt-4 pr-2 pb-2 lg:flex">
+              <h1 className="shrink-0 truncate text-[16px] leading-[1.3] font-[550] tracking-[-0.015em] text-foreground">
+                {heading.title}
+              </h1>
+              <span aria-hidden="true" className="h-3.5 w-px shrink-0 bg-border" />
+              <p className="min-w-0 truncate paragraph-text-sm font-[500] text-muted-foreground">
+                {heading.description}
+              </p>
+              <ComponentViewToggle className="ml-auto shrink-0" />
+            </div>
+          )}
+          <main
+            className={cn(
+              'min-w-0 flex-1 overflow-y-auto overscroll-contain bg-[color-mix(in_oklab,var(--background),var(--muted)_55%)] lg:mr-2 lg:mb-2 lg:rounded-[16px] lg:shadow-[0_1px_2px_rgb(0_0_0/0.2)] dark:bg-neutral-950 dark:lg:shadow-[0_0_0_1px_rgb(255_255_255/0.04)]',
+              !heading && 'lg:mt-2',
+            )}
+            data-inset-scroll
+            data-scroll-restoration-id="main-content"
+            id="main-content"
+          >
+            {content}
+          </main>
+        </div>
       </div>
     </SearchProvider>
   )

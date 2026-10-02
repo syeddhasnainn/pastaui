@@ -50,26 +50,26 @@
 }
 
 .dark {
-  --shell: #141517;
+  --shell: #171717;
   --card-outline: lch(100 0 0 / 8.8%);
   --audio-surface: oklch(0.08 0 0);
   --audio-track: oklch(0.26 0 0);
   --audio-progress: oklch(0.62 0 0);
   --audio-shadow: oklch(0 0 0 / 35%);
-  --background: oklch(0.145 0.004 264.5);
+  --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0.004 264.5);
+  --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0.004 264.5);
+  --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
   --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0.004 264.5);
-  --secondary: oklch(0.269 0.004 264.5);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0.004 264.5);
+  --muted: oklch(0.269 0 0);
   --muted-foreground: oklch(0.708 0 0);
   --surface: var(--background);
-  --accent: oklch(0.269 0.004 264.5);
+  --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
@@ -303,6 +303,22 @@
   font-size: 15px;
   font-weight: 500;
   letter-spacing: -0.05px;
+}
+
+@utility preview-stage {
+  @variant dark {
+    --background: var(--color-neutral-900);
+    --card: var(--color-neutral-900);
+    background-color: var(--color-neutral-950);
+
+    & [data-slot='prompt-input'] {
+      border-color: transparent;
+    }
+
+    & [data-slot='message-bubble'][data-from='assistant'] {
+      background-color: var(--color-neutral-900);
+    }
+  }
 }
 
 @utility metadata-label {

@@ -13,7 +13,7 @@ import { cn } from '#/lib/utils'
 const collapsedLines = 18
 
 const slidingPillClass =
-  'absolute top-(--active-tab-top) left-(--active-tab-left) h-(--active-tab-height) w-(--active-tab-width) bg-(--code-surface) shadow-[0_0_0_0.5px_var(--code-control-border)] transition-[left,width] duration-250 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none'
+  'absolute top-(--active-tab-top) left-(--active-tab-left) h-(--active-tab-height) w-(--active-tab-width) bg-(--code-tray) shadow-[0_0_0_0.5px_var(--code-control-border)] transition-[left,width] duration-250 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none'
 
 const pillTabClass = cn(
   'relative z-10 flex cursor-pointer items-center text-[13px] leading-5 font-medium whitespace-nowrap text-muted-foreground transition-[color] hover:text-(--code-ink) data-active:text-(--code-ink)',
@@ -23,14 +23,14 @@ const pillTabClass = cn(
 const trayCopyClass =
   'text-muted-foreground transition-[color,background-color] hover:bg-(--code-hover) hover:text-(--code-ink)'
 
-export const trayClass = 'min-w-0 rounded-[16px] bg-(--code-tray) px-1.5 pb-1.5'
+export const trayClass =
+  'min-w-0 overflow-hidden rounded-[16px] border-[0.5px] border-(--code-border) bg-(--code-surface)'
 
-export const trayHeaderClass = 'flex h-10 items-center justify-between gap-2 pr-0.5 pl-1'
+export const trayHeaderClass = 'flex h-10 items-center justify-between gap-2 pr-2 pl-2.5'
 
 export const trayLabelClass = 'px-1.5 sidebar-text-sm text-muted-foreground'
 
-export const innerCardClass =
-  'min-w-0 overflow-hidden rounded-[10px] border-[0.5px] border-(--code-border) bg-(--code-surface)'
+export const innerCardClass = 'min-w-0'
 
 interface CopyButtonProps {
   className?: string
@@ -178,17 +178,27 @@ export function CodePanel({
   label,
   code,
   language = 'tsx',
+  showLabel = true,
 }: {
   label: string
   code: string
   language?: string
+  showLabel?: boolean
 }) {
   return (
-    <div className={trayClass}>
-      <div className={trayHeaderClass}>
-        <span className={trayLabelClass}>{label}</span>
-        <CopyButton className={trayCopyClass} label={`Copy ${label}`} text={code} />
-      </div>
+    <div className={cn(trayClass, !showLabel && 'relative')}>
+      {showLabel ? (
+        <div className={trayHeaderClass}>
+          <span className={trayLabelClass}>{label}</span>
+          <CopyButton className={trayCopyClass} label={`Copy ${label}`} text={code} />
+        </div>
+      ) : (
+        <CopyButton
+          className={cn(trayCopyClass, 'absolute top-2.5 right-2 z-10')}
+          label={`Copy ${label}`}
+          text={code}
+        />
+      )}
       <div className={innerCardClass}>
         <CollapsibleCode code={code} language={language} />
       </div>
@@ -197,7 +207,7 @@ export function CodePanel({
 }
 
 export function UsageCode({ usage }: { usage: string }) {
-  return <CodePanel code={usage} label="Usage" />
+  return <CodePanel code={usage} label="Usage" showLabel={false} />
 }
 
 export interface SourceFile {

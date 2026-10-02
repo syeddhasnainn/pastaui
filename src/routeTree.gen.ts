@@ -9,11 +9,11 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as ShellRouteImport } from './routes/_shell'
 import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as ShellIndexRouteImport } from './routes/_shell/index'
 import { Route as ShellPageRouteImport } from './routes/_shell/$page'
 import { Route as ShellPrivacyRouteImport } from './routes/_shell/privacy'
 import { Route as ComponentsIndexRouteImport } from './routes/components/index'
@@ -23,6 +23,11 @@ import { Route as ShellDocsInstallationRouteImport } from './routes/_shell/docs/
 import { Route as DocsComponentIndexRouteImport } from './routes/docs/component/index'
 import { Route as ShellDocsComponentSlugRouteImport } from './routes/_shell/docs/component/$slug'
 
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ShellRoute = ShellRouteImport.update({
   id: '/_shell',
   getParentRoute: () => rootRouteImport,
@@ -41,11 +46,6 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
-} as any)
-const ShellIndexRoute = ShellIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => ShellRoute,
 } as any)
 const ShellPageRoute = ShellPageRouteImport.update({
   id: '/$page',
@@ -89,7 +89,7 @@ const ShellDocsComponentSlugRoute = ShellDocsComponentSlugRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof ShellIndexRoute
+  '/': typeof IndexRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -103,13 +103,13 @@ export interface FileRoutesByFullPath {
   '/docs/component/$slug': typeof ShellDocsComponentSlugRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/$page': typeof ShellPageRoute
   '/privacy': typeof ShellPrivacyRoute
   '/components/$slug': typeof ComponentsSlugRoute
-  '/': typeof ShellIndexRoute
   '/components': typeof ComponentsIndexRoute
   '/docs': typeof DocsIndexRoute
   '/docs/installation': typeof ShellDocsInstallationRoute
@@ -118,6 +118,7 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
   '/_shell': typeof ShellRouteWithChildren
   '/llms.txt': typeof LlmsDottxtRoute
   '/robots.txt': typeof RobotsDottxtRoute
@@ -125,7 +126,6 @@ export interface FileRoutesById {
   '/_shell/$page': typeof ShellPageRoute
   '/_shell/privacy': typeof ShellPrivacyRoute
   '/components/$slug': typeof ComponentsSlugRoute
-  '/_shell/': typeof ShellIndexRoute
   '/components/': typeof ComponentsIndexRoute
   '/docs/': typeof DocsIndexRoute
   '/_shell/docs/installation': typeof ShellDocsInstallationRoute
@@ -149,13 +149,13 @@ export interface FileRouteTypes {
     | '/docs/component/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/'
     | '/llms.txt'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/$page'
     | '/privacy'
     | '/components/$slug'
-    | '/'
     | '/components'
     | '/docs'
     | '/docs/installation'
@@ -163,6 +163,7 @@ export interface FileRouteTypes {
     | '/docs/component/$slug'
   id:
     | '__root__'
+    | '/'
     | '/_shell'
     | '/llms.txt'
     | '/robots.txt'
@@ -170,7 +171,6 @@ export interface FileRouteTypes {
     | '/_shell/$page'
     | '/_shell/privacy'
     | '/components/$slug'
-    | '/_shell/'
     | '/components/'
     | '/docs/'
     | '/_shell/docs/installation'
@@ -179,6 +179,7 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
   ShellRoute: typeof ShellRouteWithChildren
   LlmsDottxtRoute: typeof LlmsDottxtRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
@@ -191,6 +192,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_shell': {
       id: '/_shell'
       path: ''
@@ -218,13 +226,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
-    }
-    '/_shell/': {
-      id: '/_shell/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof ShellIndexRouteImport
-      parentRoute: typeof ShellRoute
     }
     '/_shell/$page': {
       id: '/_shell/$page'
@@ -288,7 +289,6 @@ declare module '@tanstack/react-router' {
 interface ShellRouteChildren {
   ShellPageRoute: typeof ShellPageRoute
   ShellPrivacyRoute: typeof ShellPrivacyRoute
-  ShellIndexRoute: typeof ShellIndexRoute
   ShellDocsInstallationRoute: typeof ShellDocsInstallationRoute
   ShellDocsComponentSlugRoute: typeof ShellDocsComponentSlugRoute
 }
@@ -296,7 +296,6 @@ interface ShellRouteChildren {
 const ShellRouteChildren: ShellRouteChildren = {
   ShellPageRoute: ShellPageRoute,
   ShellPrivacyRoute: ShellPrivacyRoute,
-  ShellIndexRoute: ShellIndexRoute,
   ShellDocsInstallationRoute: ShellDocsInstallationRoute,
   ShellDocsComponentSlugRoute: ShellDocsComponentSlugRoute,
 }
@@ -304,6 +303,7 @@ const ShellRouteChildren: ShellRouteChildren = {
 const ShellRouteWithChildren = ShellRoute._addFileChildren(ShellRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
   ShellRoute: ShellRouteWithChildren,
   LlmsDottxtRoute: LlmsDottxtRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,

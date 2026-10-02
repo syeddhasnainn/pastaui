@@ -6,6 +6,8 @@ import { componentHead } from '#/lib/component-head'
 
 export const Route = createFileRoute('/_shell/docs/component/$slug')({
   component: ComponentRoute,
+  validateSearch: (search: Record<string, unknown>): { view?: 'code' } =>
+    search.view === 'code' ? { view: 'code' } : {},
   loader: ({ params }) => {
     const component = getComponentDocument(params.slug)
 

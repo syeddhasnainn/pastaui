@@ -122,10 +122,7 @@ function MessageScroller({
   return (
     <TooltipProvider>
       <section
-        className={cn(
-          'relative flex h-60 w-full overflow-hidden rounded-[16px] bg-background',
-          className,
-        )}
+        className={cn('relative flex h-60 w-full overflow-hidden', className)}
         data-slot="message-scroller"
         {...props}
       >
@@ -168,7 +165,7 @@ function MessageScroller({
                   sideOffset={12}
                 >
                   <MessageBubble
-                    className="max-w-full px-3 py-2 text-xs leading-5 shadow-md"
+                    className="max-w-full rounded-[12px] px-3 py-2 text-xs leading-5"
                     from={message.from ?? 'user'}
                   >
                     {message.content}
@@ -181,7 +178,7 @@ function MessageScroller({
 
         <div
           ref={viewportRef}
-          className="h-full min-w-0 flex-1 [scrollbar-width:none] overflow-y-auto overscroll-contain py-20 pr-4 pl-18 [&::-webkit-scrollbar]:hidden"
+          className="h-full min-w-0 flex-1 [scrollbar-width:none] overflow-y-auto overscroll-contain [mask-image:linear-gradient(to_bottom,transparent,#000_3rem,#000_calc(100%-3rem),transparent)] py-20 pr-4 pl-18 [&::-webkit-scrollbar]:hidden"
           data-slot="message-scroller-viewport"
         >
           <div className="flex flex-col gap-3">
@@ -195,7 +192,7 @@ function MessageScroller({
                 data-message-id={message.id}
               >
                 <MessageBubble
-                  className="px-3 py-2 text-xs leading-5"
+                  className="rounded-[12px] px-3 py-2 text-xs leading-5"
                   from={message.from ?? 'user'}
                 >
                   {message.content}
