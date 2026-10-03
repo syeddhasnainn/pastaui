@@ -51,11 +51,16 @@ function VoiceInput({
         className="size-12 rounded-full bg-primary bg-linear-to-b from-[color-mix(in_oklch,var(--primary),var(--primary-foreground)_30%)] to-primary text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.18)] hover:brightness-110 dark:bg-none"
         onClick={toggleRecording}
       >
-        {isRecording ? (
-          <PauseIcon aria-hidden="true" className="size-5" />
-        ) : (
-          <MicIcon aria-hidden="true" className="size-5" />
-        )}
+        <span className="grid *:col-start-1 *:row-start-1 *:transition-[opacity,scale] *:duration-150 *:ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:*:transition-opacity">
+          <MicIcon
+            aria-hidden="true"
+            className={cn('size-5', isRecording && 'scale-75 opacity-0')}
+          />
+          <PauseIcon
+            aria-hidden="true"
+            className={cn('size-5', !isRecording && 'scale-75 opacity-0')}
+          />
+        </span>
       </Button>
       <div
         aria-hidden="true"

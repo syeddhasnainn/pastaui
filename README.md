@@ -36,6 +36,7 @@ The component is copied into your project. Import it, follow the usage example, 
 Skills that teach coding agents like Claude Code how to use Pasta UI live in [`skills/`](skills):
 
 - [`pastaui-pro`](skills/pastaui-pro/SKILL.md): sign up for [Pasta UI Pro](https://pro.pastaui.com) and install its blocks from the private registry.
+- [`ui-design`](skills/ui-design/SKILL.md): design polished pages by composing Pasta UI's ready-made blocks, with a catalog of every block to pick from.
 
 Install them with the [skills](https://skills.sh) CLI:
 

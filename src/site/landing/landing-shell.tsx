@@ -190,7 +190,7 @@ export function LandingShell({ activeSlug, children, heading }: LandingShellProp
         </aside>
         <div className="flex min-w-0 flex-1 flex-col lg:pl-4">
           {heading && (
-            <div className="hidden h-14 shrink-0 items-center gap-2.5 pt-4 pr-2 pb-2 lg:flex">
+            <div className="dark hidden h-14 shrink-0 items-center gap-2.5 pt-4 pr-2 pb-2 lg:flex">
               <h1 className="shrink-0 truncate text-[16px] leading-[1.3] font-[550] tracking-[-0.015em] text-foreground">
                 {heading.title}
               </h1>
@@ -204,7 +204,7 @@ export function LandingShell({ activeSlug, children, heading }: LandingShellProp
           <main
             className={cn(
               'min-w-0 flex-1 overflow-y-auto overscroll-contain bg-[color-mix(in_oklab,var(--background),var(--muted)_55%)] lg:mr-2 lg:mb-2 lg:rounded-[16px] lg:shadow-[0_1px_2px_rgb(0_0_0/0.2)] dark:bg-neutral-950 dark:lg:shadow-[0_0_0_1px_rgb(255_255_255/0.04)]',
-              !heading && 'lg:mt-2',
+              heading ? 'bg-background dark:bg-black' : 'lg:mt-2',
             )}
             data-inset-scroll
             data-scroll-restoration-id="main-content"

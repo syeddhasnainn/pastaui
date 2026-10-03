@@ -74,11 +74,6 @@ const AiToolOutputPreview = lazy(() =>
     default: module.AiToolOutputPreview,
   })),
 )
-const AiWorkspacePreview = lazy(() =>
-  import('#/components/docs/previews/ai-agents/workspace-previews').then((module) => ({
-    default: module.AiWorkspacePreview,
-  })),
-)
 
 const aiPreviewCollections: Record<string, ComponentType<PreviewProps>> = {
   'message-bubble': AiConversationPreview,
@@ -116,7 +111,6 @@ const aiPreviewCollections: Record<string, ComponentType<PreviewProps>> = {
   'research-report': AiRichOutputPreview,
   'audio-player': AiStructuredOutputPreview,
   'link-preview': AiRichOutputPreview,
-  'ai-sidebar': AiWorkspacePreview,
   commit: AiDeveloperOutputPreview,
   'environment-variables': AiDeveloperOutputPreview,
   'reasoning-effort': AiOperationsPreview,

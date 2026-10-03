@@ -11,10 +11,34 @@
   "files": [
     {
       "path": "src/components/ai/thinking-shimmer.tsx",
-      "content": "import { StarsMinimalisticIcon as SparklesIcon } from '@solar-icons/react/linear/stars-minimalistic'\nimport * as React from 'react'\n\nimport { cn } from 'cn'\n\ninterface ThinkingShimmerProps extends React.ComponentProps<'div'> {\n  label?: string\n}\n\nfunction ThinkingShimmer({ className, label = 'Thinking', ...props }: ThinkingShimmerProps) {\n  return (\n    <div\n      aria-live=\"polite\"\n      data-slot=\"thinking-shimmer\"\n      className={cn(\n        'flex items-center gap-2 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground',\n        className,\n      )}\n      {...props}\n    >\n      <SparklesIcon className=\"size-4 animate-pulse\" />\n      <span className=\"animate-pulse bg-gradient-to-r from-muted-foreground via-foreground to-muted-foreground bg-[length:200%_100%] bg-clip-text text-transparent\">\n        {label}\n      </span>\n    </div>\n  )\n}\n\nexport { ThinkingShimmer }\nexport type { ThinkingShimmerProps }\n",
+      "content": "import { StarsMinimalisticIcon as SparklesIcon } from '@solar-icons/react/linear/stars-minimalistic'\nimport * as React from 'react'\n\nimport { cn } from 'cn'\n\ninterface ThinkingShimmerProps extends React.ComponentProps<'div'> {\n  label?: string\n}\n\nfunction ThinkingShimmer({ className, label = 'Thinking', ...props }: ThinkingShimmerProps) {\n  return (\n    <div\n      aria-live=\"polite\"\n      data-slot=\"thinking-shimmer\"\n      className={cn(\n        'flex items-center gap-2 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground',\n        className,\n      )}\n      {...props}\n    >\n      <SparklesIcon className=\"size-4 animate-pulse motion-reduce:animate-none\" />\n      <span className=\"agent-text-shimmer\">{label}</span>\n    </div>\n  )\n}\n\nexport { ThinkingShimmer }\nexport type { ThinkingShimmerProps }\n",
       "type": "registry:component",
       "target": "@components/ai/thinking-shimmer.tsx"
     }
   ],
+  "css": {
+    ".agent-text-shimmer": {
+      "color": "transparent",
+      "background-image": "linear-gradient( 90deg, var(--muted-foreground), var(--foreground), var(--muted-foreground) )",
+      "background-size": "200% 100%",
+      "background-clip": "text",
+      "animation": "agent-text-shimmer 1.6s linear infinite"
+    },
+    "@keyframes agent-text-shimmer": {
+      "from": {
+        "background-position": "200% 0"
+      },
+      "to": {
+        "background-position": "-200% 0"
+      }
+    },
+    "@media (prefers-reduced-motion: reduce)": {
+      ".agent-text-shimmer": {
+        "color": "var(--muted-foreground)",
+        "background-image": "none",
+        "animation": "none"
+      }
+    }
+  },
   "type": "registry:component"
 }

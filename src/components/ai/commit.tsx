@@ -106,7 +106,12 @@ function Commit({ className, files, onOpen, ...props }: CommitProps) {
             size="icon-sm"
             variant="ghost"
           >
-            <ChevronDownIcon className={cn('size-4', !expanded && '-rotate-90')} />
+            <ChevronDownIcon
+              className={cn(
+                'size-4 transition-[rotate] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none',
+                !expanded && '-rotate-90',
+              )}
+            />
           </Button>
           <Button
             className="h-7 rounded-full px-2 text-sm font-[450] tracking-[-0.05px] text-muted-foreground hover:text-foreground"
@@ -119,7 +124,11 @@ function Commit({ className, files, onOpen, ...props }: CommitProps) {
           </Button>
         </div>
       </header>
-      <div id={contentId} hidden={!expanded} className="py-2">
+      <div
+        id={contentId}
+        hidden={!expanded}
+        className="py-2 transition-opacity duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] starting:opacity-0"
+      >
         {files.length === 0 && <p className="px-4 py-2 text-xs leading-5">No changed files.</p>}
         {Array.from(groups, ([folder, groupFiles]) =>
           folder ? (
@@ -132,7 +141,10 @@ function Commit({ className, files, onOpen, ...props }: CommitProps) {
               >
                 <ChevronDownIcon
                   aria-hidden="true"
-                  className={cn('size-3.5 shrink-0', collapsedFolders.has(folder) && '-rotate-90')}
+                  className={cn(
+                    'size-3.5 shrink-0 transition-[rotate] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none',
+                    collapsedFolders.has(folder) && '-rotate-90',
+                  )}
                 />
                 <FolderIcon aria-hidden="true" className="size-4 shrink-0" />
                 <span className="min-w-0 truncate font-mono" title={folder}>
@@ -144,7 +156,7 @@ function Commit({ className, files, onOpen, ...props }: CommitProps) {
                 />
               </button>
               {!collapsedFolders.has(folder) && (
-                <ul>
+                <ul className="transition-opacity duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] starting:opacity-0">
                   {groupFiles.map((file) => (
                     <CommitFileRow key={file.path} file={file} nested />
                   ))}

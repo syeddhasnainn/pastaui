@@ -37,20 +37,28 @@ function ReasoningEffort({ className, onChange, value }: ReasoningEffortProps) {
         className={className}
         render={
           <button
-            className="inline-flex h-9 items-center gap-1.5 rounded-full bg-muted px-3 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground transition-[background-color,transform] duration-150 hover:bg-muted/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none active:scale-[0.97]"
+            className="inline-flex h-9 items-center gap-1.5 rounded-full bg-muted px-3 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground transition-[background-color,scale] duration-150 hover:bg-muted/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none active:scale-[0.97]"
             type="button"
           >
-            <AnimatePresence initial={false} mode="popLayout">
-              <motion.span
-                animate={{ filter: 'blur(0px)', opacity: 1, transform: 'translateY(0px)' }}
-                exit={{ filter: 'blur(2px)', opacity: 0, transform: 'translateY(2px)' }}
-                initial={{ filter: 'blur(2px)', opacity: 0, transform: 'translateY(-2px)' }}
-                key={isOpen ? 'open' : effortLevels[selectedLevel]}
-                transition={textMotion}
-              >
-                {isOpen ? 'Thinking effort' : effortLevels[selectedLevel]}
-              </motion.span>
-            </AnimatePresence>
+            <span className="relative grid justify-items-center">
+              {['Thinking effort', ...effortLevels].map((label) => (
+                <span aria-hidden="true" className="invisible col-start-1 row-start-1" key={label}>
+                  {label}
+                </span>
+              ))}
+              <AnimatePresence initial={false} mode="popLayout">
+                <motion.span
+                  animate={{ filter: 'blur(0px)', opacity: 1, transform: 'translateY(0px)' }}
+                  className="col-start-1 row-start-1"
+                  exit={{ filter: 'blur(2px)', opacity: 0, transform: 'translateY(2px)' }}
+                  initial={{ filter: 'blur(2px)', opacity: 0, transform: 'translateY(-2px)' }}
+                  key={isOpen ? 'open' : effortLevels[selectedLevel]}
+                  transition={textMotion}
+                >
+                  {isOpen ? 'Thinking effort' : effortLevels[selectedLevel]}
+                </motion.span>
+              </AnimatePresence>
+            </span>
             <motion.span
               animate={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}
               className="flex"
@@ -91,22 +99,28 @@ function ReasoningEffort({ className, onChange, value }: ReasoningEffortProps) {
               aria-hidden="true"
               className="pointer-events-none absolute -inset-x-3.5 top-1/2 h-6 -translate-y-1/2 overflow-hidden rounded-full bg-foreground/10"
             >
-              <motion.div
-                animate={{
-                  width: `calc(14px + (100% - 28px) * ${draftLevel / (effortLevels.length - 1)})`,
-                }}
-                className="h-full bg-blue-500"
-                initial={false}
-                transition={textMotion}
-              />
+              <div className="absolute inset-y-0 right-3.5 left-3.5">
+                <motion.div
+                  animate={{
+                    transform: `translateX(${(draftLevel / (effortLevels.length - 1) - 1) * 50}%)`,
+                  }}
+                  className="absolute inset-y-0 right-0 w-[200%] bg-blue-500"
+                  initial={false}
+                  transition={textMotion}
+                />
+              </div>
             </div>
             <motion.div
               aria-hidden="true"
-              animate={{ left: `${(draftLevel / (effortLevels.length - 1)) * 100}%` }}
-              className="pointer-events-none absolute top-1/2 z-30 size-7 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white shadow-md"
+              animate={{
+                transform: `translateX(${(draftLevel / (effortLevels.length - 1)) * 100}%)`,
+              }}
+              className="pointer-events-none absolute inset-x-0 top-1/2 z-30"
               initial={false}
               transition={textMotion}
-            />
+            >
+              <span className="absolute top-0 left-0 size-7 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white shadow-md" />
+            </motion.div>
             <div className="pointer-events-none absolute inset-x-0 top-1/2 z-20">
               {effortLevels.map((level, index) => (
                 <span

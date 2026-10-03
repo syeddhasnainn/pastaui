@@ -12,7 +12,6 @@ import { aiRichOutputComponents } from './rich-output-components'
 import { aiStructuredOutputComponents } from './structured-output-components'
 import { aiTaskDetailComponents } from './task-detail-components'
 import { aiToolOutputComponents } from './tool-output-components'
-import { aiWorkspaceComponents } from './workspace-components'
 import type { ComponentDocument } from '../types'
 
 function withCategory(category: string, components: ComponentDocument[]) {
@@ -34,6 +33,5 @@ export const aiAgentComponents = [
   ...withCategory('Rich output', aiRichOutputComponents),
   ...withCategory('Rich output', aiStructuredOutputComponents),
   ...withCategory('Rich output', aiToolOutputComponents),
-  ...withCategory('Developer', aiWorkspaceComponents),
   ...withCategory('Developer', aiDeveloperOutputComponents),
 ]

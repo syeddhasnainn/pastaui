@@ -47,9 +47,9 @@ function TodoList({
         <span className="ml-auto shrink-0 text-xs leading-5 font-[450] text-muted-foreground">
           {complete}/{items.length}
         </span>
-        <ChevronDownIcon className="size-4 shrink-0 text-muted-foreground transition-transform group-data-panel-open:rotate-180 motion-reduce:transition-none" />
+        <ChevronDownIcon className="size-4 shrink-0 text-muted-foreground transition-[rotate] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-data-panel-open:rotate-180 motion-reduce:transition-none" />
       </CollapsibleTrigger>
-      <CollapsibleContent>
+      <CollapsibleContent className="h-(--collapsible-panel-height) overflow-hidden transition-[height,opacity] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] data-ending-style:h-0 data-ending-style:opacity-0 data-starting-style:h-0 data-starting-style:opacity-0 motion-reduce:transition-opacity">
         <ol className="mt-4 space-y-3">
           {items.map((item) => (
             <li className="flex gap-3" key={item.id}>
@@ -79,7 +79,12 @@ function TodoList({
 
 function TodoStatus({ status }: Pick<AgentTodoItem, 'status'>) {
   if (status === 'complete') {
-    return <CheckCircleIcon aria-label="Complete" className="mt-0.5 size-4 shrink-0" />
+    return (
+      <CheckCircleIcon
+        aria-label="Complete"
+        className="mt-0.5 size-4 shrink-0 transition-[opacity,scale] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] starting:scale-90 starting:opacity-0 motion-reduce:starting:scale-100"
+      />
+    )
   }
 
   if (status === 'in-progress') {

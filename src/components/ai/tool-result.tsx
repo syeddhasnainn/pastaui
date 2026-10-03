@@ -47,11 +47,11 @@ function ToolResult({
         </div>
         {duration && <span className="text-xs leading-5 text-muted-foreground">{duration}</span>}
         {output && (
-          <ChevronDownIcon className="size-4 text-muted-foreground transition-transform group-data-panel-open:rotate-180" />
+          <ChevronDownIcon className="size-4 text-muted-foreground transition-[rotate] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-data-panel-open:rotate-180 motion-reduce:transition-none" />
         )}
       </CollapsibleTrigger>
       {output && (
-        <CollapsibleContent>
+        <CollapsibleContent className="h-(--collapsible-panel-height) overflow-hidden transition-[height,opacity] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] data-ending-style:h-0 data-ending-style:opacity-0 data-starting-style:h-0 data-starting-style:opacity-0 motion-reduce:transition-opacity">
           <div className="border-t border-foreground/8 p-3 font-mono text-xs leading-5 text-muted-foreground">
             {output}
           </div>
@@ -61,12 +61,30 @@ function ToolResult({
   )
 }
 
+const statusEnterClass =
+  'transition-[opacity,scale] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] starting:scale-90 starting:opacity-0 motion-reduce:starting:scale-100'
+
 function ToolStatus({ status }: Pick<ToolResultProps, 'status'>) {
   if (status === 'running')
-    return <LoaderCircleIcon aria-label="Running" className="size-4 animate-spin" />
+    return (
+      <LoaderCircleIcon
+        aria-label="Running"
+        className="size-4 animate-spin motion-reduce:animate-none"
+      />
+    )
   if (status === 'error')
-    return <CircleAlertIcon aria-label="Failed" className="size-4 text-destructive" />
-  return <CheckCircle2Icon aria-label="Complete" className="size-4 text-emerald-600" />
+    return (
+      <CircleAlertIcon
+        aria-label="Failed"
+        className={cn('size-4 text-destructive', statusEnterClass)}
+      />
+    )
+  return (
+    <CheckCircle2Icon
+      aria-label="Complete"
+      className={cn('size-4 text-emerald-600', statusEnterClass)}
+    />
+  )
 }
 
 function ToolResultIcon() {

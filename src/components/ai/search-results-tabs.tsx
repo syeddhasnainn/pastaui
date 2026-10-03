@@ -1,6 +1,7 @@
 import { GlobalIcon as GlobeIcon } from '@solar-icons/react/linear/global'
 import { GalleryIcon as ImageIcon } from '@solar-icons/react/linear/gallery'
 import { DocumentTextIcon as NewsIcon } from '@solar-icons/react/linear/document-text'
+import { motion, useReducedMotion } from 'motion/react'
 import * as React from 'react'
 
 import { cn } from 'cn'
@@ -29,6 +30,11 @@ interface SearchResultsTabsProps extends React.ComponentProps<'section'> {
   showTabs?: boolean
 }
 
+function domainOf(url?: string) {
+  if (!url || !/^https?:\/\//.test(url)) return undefined
+  return url.replace(/^https?:\/\/(www\.)?/, '').split('/')[0]
+}
+
 function SearchResultsTabs({
   activeType = 'web',
   className,
@@ -40,6 +46,8 @@ function SearchResultsTabs({
   ...props
 }: SearchResultsTabsProps) {
   const visibleItems = items.filter((item) => item.type === activeType)
+  const underlineId = React.useId()
+  const reducedMotion = useReducedMotion()
 
   return (
     <section
@@ -59,8 +67,8 @@ function SearchResultsTabs({
               type="button"
               aria-pressed={activeType === type}
               className={cn(
-                'inline-flex cursor-pointer items-center gap-2 border-b border-transparent bg-transparent px-0 py-2 text-sm font-[450] capitalize transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring',
-                activeType === type && 'border-foreground text-foreground',
+                'relative inline-flex cursor-pointer items-center gap-2 bg-transparent px-0 py-2 text-sm font-[450] capitalize transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring',
+                activeType === type && 'text-foreground',
               )}
               onClick={() => onActiveTypeChange?.(type)}
             >
@@ -72,14 +80,28 @@ function SearchResultsTabs({
                 <NewsIcon aria-hidden="true" className="size-4" />
               )}
               {type}
+              {activeType === type && (
+                <motion.span
+                  aria-hidden="true"
+                  className="absolute inset-x-0 bottom-0 h-px bg-foreground"
+                  layoutId={underlineId}
+                  transition={
+                    reducedMotion ? { duration: 0 } : { duration: 0.25, ease: [0.77, 0, 0.175, 1] }
+                  }
+                />
+              )}
             </button>
           ))}
         </div>
       )}
       <ol
-        className={
-          activeType === 'images' ? 'columns-1 gap-4 sm:columns-2 lg:columns-3' : 'space-y-5'
-        }
+        className={cn(
+          'transition-opacity duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] starting:opacity-0',
+          activeType === 'images'
+            ? 'columns-1 gap-4 sm:columns-2 lg:columns-3'
+            : 'flex max-w-[65ch] flex-col gap-2',
+        )}
+        key={activeType}
       >
         {visibleItems.map((item, index) =>
           item.type === 'images' && item.image ? (
@@ -121,55 +143,57 @@ function SearchResultsTabs({
               </a>
             </li>
           ) : (
-            <li key={item.id}>
-              <div className="flex items-start gap-3">
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2 text-sm text-foreground">
-                    <span
-                      aria-hidden="true"
-                      className="flex size-4 shrink-0 items-center justify-center overflow-hidden rounded-sm"
-                    >
-                      {item.icon ?? <GlobeIcon className="size-4" />}
-                    </span>
-                    <span>
-                      {item.source ??
-                        item.meta ??
-                        item.url?.replace(/^https?:\/\/(www\.)?/, '').split('/')[0]}
-                    </span>
-                  </div>
-                  <h3 className="mt-2 card-heading leading-6 text-foreground">
-                    {item.type === 'news' ? (
-                      item.title
-                    ) : item.url ? (
-                      <a
-                        href={item.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="hover:underline"
-                        onClick={() => onOpen?.(item.id)}
-                      >
-                        {item.title}
-                      </a>
-                    ) : (
-                      <button
-                        type="button"
-                        className="text-left hover:underline"
-                        onClick={() => onOpen?.(item.id)}
-                      >
-                        {item.title}
-                      </button>
-                    )}
-                  </h3>
-                  {item.description && (
-                    <p className="mt-2 line-clamp-2 text-xs leading-5">{item.description}</p>
-                  )}
-                  {item.type === 'news' && item.publishedLabel && (
-                    <time dateTime={item.publishedAt} className="mt-2 block text-xs leading-5">
-                      {item.publishedLabel}
-                    </time>
-                  )}
-                </div>
+            <li
+              className="group relative -mx-3 rounded-[12px] p-3 transition-colors duration-150 ease-out hover:bg-foreground/4"
+              key={item.id}
+            >
+              <div className="flex items-center gap-2 text-[13px] leading-5 text-muted-foreground">
+                <span
+                  aria-hidden="true"
+                  className="flex size-5 shrink-0 items-center justify-center overflow-hidden rounded-[5px] bg-foreground/6 [&_img]:size-3.5 [&_img]:object-contain [&_svg]:size-3.5"
+                >
+                  {item.icon ?? <GlobeIcon />}
+                </span>
+                <span className="truncate">
+                  {[item.source ?? item.meta, domainOf(item.url)].filter(Boolean).join(' · ')}
+                </span>
               </div>
+              <h3 className="mt-1 text-base leading-6 font-medium text-foreground">
+                {item.type === 'news' ? (
+                  item.title
+                ) : item.url ? (
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="decoration-foreground/40 underline-offset-4 outline-none group-hover:underline after:absolute after:inset-0 after:rounded-[12px] visited:text-foreground/70 focus-visible:after:ring-2 focus-visible:after:ring-ring"
+                    onClick={() => onOpen?.(item.id)}
+                  >
+                    {item.title}
+                  </a>
+                ) : (
+                  <button
+                    type="button"
+                    className="text-left decoration-foreground/40 underline-offset-4 outline-none group-hover:underline after:absolute after:inset-0 after:rounded-[12px] focus-visible:after:ring-2 focus-visible:after:ring-ring"
+                    onClick={() => onOpen?.(item.id)}
+                  >
+                    {item.title}
+                  </button>
+                )}
+              </h3>
+              {item.description && (
+                <p className="mt-1.5 line-clamp-2 text-sm leading-5 text-muted-foreground">
+                  {item.description}
+                </p>
+              )}
+              {item.type === 'news' && item.publishedLabel && (
+                <time
+                  dateTime={item.publishedAt}
+                  className="mt-1.5 block text-[13px] leading-5 text-muted-foreground/70"
+                >
+                  {item.publishedLabel}
+                </time>
+              )}
             </li>
           ),
         )}

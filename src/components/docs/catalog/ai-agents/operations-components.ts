@@ -55,7 +55,8 @@ export function Example() {
         name: 'stages',
         type: 'JobStage[]',
         defaultValue: '—',
-        description: 'Defines weighted pending, running, and completed stages.',
+        description:
+          'Defines weighted stages. A running stage can add progress (0–1) and a detail line.',
       },
       {
         name: 'eta',
@@ -230,9 +231,15 @@ export function Example() {
       },
       {
         name: 'scope',
-        type: 'string[]',
+        type: 'ReactNode[]',
         defaultValue: '—',
-        description: 'Spells out the reach of the grant.',
+        description: 'Lists what the grant allows. Wrap paths and commands in <code>.',
+      },
+      {
+        name: 'restrictions',
+        type: 'ReactNode[]',
+        defaultValue: '[]',
+        description: 'Lists what the grant does not allow.',
       },
       {
         name: 'duration',

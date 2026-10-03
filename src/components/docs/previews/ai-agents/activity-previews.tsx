@@ -67,22 +67,20 @@ function AgentActivityPreview() {
           id: '1',
           label: 'Inspected the component inventory',
           status: 'complete',
-          type: 'reasoning',
         },
         {
           id: '2',
           label: 'Searched AI-focused registries',
           detail: '576 directory items compared',
           status: 'complete',
-          type: 'search',
         },
         {
           id: '3',
           label: 'Authoring approval and execution surfaces',
+          detail: '4 of 7 surfaces drafted',
           status: 'running',
-          type: 'tool',
         },
-        { id: '4', label: 'Run production verification', status: 'waiting', type: 'terminal' },
+        { id: '4', label: 'Run production verification', status: 'waiting' },
       ]}
     />
   )

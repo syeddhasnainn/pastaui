@@ -17,21 +17,21 @@ function BackgroundInboxPreview() {
       title: 'Registry audit complete',
       detail: '8 new product patterns are ready to review.',
       status: 'ready' as const,
-      time: 'Now',
+      time: 'Just now',
     },
     {
       id: 'visual',
       title: 'Visual regression pass',
       detail: 'Comparing 116 documentation routes.',
       status: 'running' as const,
-      time: '2m',
+      time: '2m elapsed',
     },
     {
       id: 'report',
       title: 'Market report',
       detail: 'Waiting for two remaining sources.',
       status: 'waiting' as const,
-      time: '8m',
+      time: 'Queued 8m',
     },
   ].filter((item) => !hiddenIds.includes(item.id))
 
@@ -74,7 +74,7 @@ function ToolTimelinePreview() {
         },
         { id: 'preview', verb: 'Preview', target: 'visual states', status: 'pending' },
       ]}
-      summary="2 files · 1 check running"
+      summary="1 file · 1 check running"
     />
   )
 }

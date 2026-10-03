@@ -153,7 +153,7 @@ function MessageScroller({
                   <span
                     aria-hidden="true"
                     className={cn(
-                      'block h-0.5 w-3 origin-left rounded-full bg-muted-foreground/35 opacity-80 transition-[transform,background-color,opacity] duration-200 [transition-timing-function:var(--sidebar-glide-ease)] will-change-transform motion-reduce:transition-none',
+                      'block h-0.5 w-3 origin-left rounded-full bg-muted-foreground/35 opacity-80 transition-[transform,background-color,opacity] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] will-change-transform motion-reduce:transition-[background-color,opacity]',
                       (isVisible || isActive || isHovered) && 'bg-foreground opacity-100',
                     )}
                     style={{ transform: `scaleX(${scaleX}) scaleY(${scaleY})` }}

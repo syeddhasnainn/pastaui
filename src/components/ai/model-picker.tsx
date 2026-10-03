@@ -35,7 +35,7 @@ interface ModelPickerProps {
 }
 
 const surface =
-  'w-80 max-h-[var(--available-height)] max-w-[calc(100vw-2rem)] overflow-y-auto rounded-[16px] bg-card p-1.5 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card outline-none'
+  'w-80 max-h-[var(--available-height)] max-w-[calc(100vw-2rem)] overflow-y-auto rounded-[16px] bg-card p-1.5 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card outline-none origin-(--transform-origin) transition-[opacity,scale] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] data-starting-style:scale-95 data-starting-style:opacity-0 data-ending-style:scale-95 data-ending-style:opacity-0 motion-reduce:transition-opacity'
 const row =
   'flex w-full cursor-pointer items-center gap-3 rounded-[10px] px-3 py-2 text-left outline-none data-highlighted:bg-muted data-disabled:cursor-default data-disabled:opacity-50'
 const effortLabels: Record<ModelEffort, string> = {
@@ -147,7 +147,7 @@ function ModelPicker({
         <ModelProviderIcon provider={selectedModel?.provider} />
         <span className="max-w-40 truncate">{selectedModel?.name ?? 'Select model'}</span>
         <span className="text-muted-foreground/80">{effortLabels[selectedEffort]}</span>
-        <ChevronDownIcon className="size-3.5" />
+        <ChevronDownIcon className="size-3.5 transition-[rotate] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] in-data-popup-open:rotate-180" />
       </Menu.Trigger>
       <Menu.Portal>
         <Menu.Positioner side="bottom" align="end" sideOffset={8} className="z-50">

@@ -52,7 +52,7 @@ function Attachments({
         }
         return (
           <li
-            className="relative flex min-w-0 items-center gap-3 overflow-hidden rounded-[16px] bg-card p-3 shadow-card"
+            className="relative flex min-w-0 items-center gap-3 overflow-hidden rounded-[16px] bg-card p-3 shadow-card transition-[opacity,scale] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] starting:scale-[0.97] starting:opacity-0 motion-reduce:starting:scale-100"
             key={item.id}
           >
             <AttachmentPreview item={item} />
@@ -94,8 +94,8 @@ function Attachments({
             {item.status === 'uploading' && (
               <span className="absolute inset-x-0 bottom-0 h-0.5 bg-muted">
                 <span
-                  className="block h-full bg-foreground transition-[width] motion-reduce:transition-none"
-                  style={{ width: `${item.progress ?? 0}%` }}
+                  className="block h-full origin-left bg-foreground transition-[scale] duration-300 ease-linear"
+                  style={{ scale: `${(item.progress ?? 0) / 100} 1` }}
                 />
               </span>
             )}

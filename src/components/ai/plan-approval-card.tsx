@@ -47,7 +47,7 @@ function PlanApprovalCard({
       aria-labelledby={titleId}
       data-slot="plan-approval-card"
       className={cn(
-        'w-fit max-w-full rounded-[16px] bg-card p-5 font-sans text-sm leading-5 font-[450] tracking-[-0.05px] text-muted-foreground shadow-card sm:p-6',
+        'w-fit max-w-full rounded-[16px] bg-card p-5 font-sans text-sm leading-5 font-[450] tracking-[-0.05px] text-muted-foreground shadow-card transition-[opacity,translate] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] sm:p-6 starting:translate-y-1 starting:opacity-0 motion-reduce:starting:translate-y-0',
         className,
       )}
       {...props}
@@ -113,6 +113,7 @@ function PlanApprovalCard({
                     strokeLinecap="round"
                     pathLength="1"
                     strokeDasharray={`${progress} 1`}
+                    className="transition-[stroke-dasharray] duration-1000 ease-linear motion-reduce:transition-none"
                   />
                 </svg>
                 {seconds}

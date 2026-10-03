@@ -75,7 +75,10 @@ function EmailComposer({
             variant="ghost"
             className="text-muted-foreground"
           >
-            {copyStatus === 'Copied' ? <CheckIcon /> : <CopyIcon />}
+            <span className="grid *:col-start-1 *:row-start-1 *:transition-[opacity,scale] *:duration-150 *:ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:*:transition-opacity">
+              <CopyIcon className={cn(copyStatus === 'Copied' && 'scale-75 opacity-0')} />
+              <CheckIcon className={cn(copyStatus !== 'Copied' && 'scale-75 opacity-0')} />
+            </span>
           </Button>
           <Button
             aria-label={expanded ? 'Collapse email' : 'Expand email'}
@@ -139,7 +142,7 @@ function EmailComposer({
         <textarea
           aria-label="Email message"
           className={cn(
-            'block w-full resize-none rounded-sm bg-transparent pt-4 pb-5 text-sm leading-[1.6] text-muted-foreground outline-none placeholder:text-muted-foreground/60',
+            'block w-full resize-none rounded-sm bg-transparent pt-4 pb-5 text-sm leading-[1.6] text-muted-foreground transition-[min-height] duration-250 ease-[cubic-bezier(0.23,1,0.32,1)] outline-none placeholder:text-muted-foreground/60 motion-reduce:transition-none',
             expanded ? 'min-h-[32rem]' : 'min-h-64',
           )}
           onChange={(event) => onBodyChange?.(event.target.value)}

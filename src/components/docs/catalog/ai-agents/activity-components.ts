@@ -84,12 +84,6 @@ export function Example() {
         defaultValue: '—',
         description: 'Provides chronological activity and status.',
       },
-      {
-        name: 'type',
-        type: 'reasoning | search | terminal | tool',
-        defaultValue: 'reasoning',
-        description: 'Selects contextual iconography.',
-      },
     ],
   }),
   createAiDocument({

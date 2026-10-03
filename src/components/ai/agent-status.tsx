@@ -19,9 +19,20 @@ interface AgentStatusProps extends React.ComponentProps<'section'> {
 }
 
 function TaskStatus({ status }: Pick<AgentStatusTask, 'status'>) {
-  if (status === 'complete') return <CheckIcon aria-label="Complete" className="size-3" />
+  if (status === 'complete')
+    return (
+      <CheckIcon
+        aria-label="Complete"
+        className="size-3 transition-[opacity,scale] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] starting:scale-90 starting:opacity-0 motion-reduce:starting:scale-100"
+      />
+    )
   if (status === 'running')
-    return <LoaderCircleIcon aria-label="Running" className="size-3 animate-spin" />
+    return (
+      <LoaderCircleIcon
+        aria-label="Running"
+        className="size-3 animate-spin motion-reduce:animate-none"
+      />
+    )
   return <CircleIcon aria-label="Pending" className="size-2.5 text-muted-foreground" />
 }
 

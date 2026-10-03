@@ -142,11 +142,11 @@ function ScheduleCardPreview() {
     <ScheduleCard
       className="w-full max-w-lg"
       description="Research new agent-interface patterns and summarize meaningful changes."
-      nextRun="Monday at 09:00"
+      nextRun="Mon, Oct 5 · in 2 days"
       onToggle={() => setStatus((current) => (current === 'active' ? 'paused' : 'active'))}
-      schedule="Every Monday"
+      schedule="Every Monday at 09:00"
       status={status}
-      timezone="Europe/London"
+      timezone="London"
       title="Weekly component landscape"
     />
   )

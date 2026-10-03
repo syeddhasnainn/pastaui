@@ -40,6 +40,12 @@ export function Example() {
         defaultValue: '—',
         description: 'Submits the structured feedback.',
       },
+      {
+        name: 'onCancel',
+        type: '() => void',
+        defaultValue: '—',
+        description: 'Shows a Cancel button that dismisses the form.',
+      },
     ],
   }),
 ]

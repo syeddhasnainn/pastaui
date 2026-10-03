@@ -29,6 +29,9 @@ interface PromptInputProps extends Omit<React.ComponentProps<'form'>, 'onSubmit'
   placeholder?: string
 }
 
+const chipEnterClass =
+  'transition-[opacity,scale,background-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] starting:scale-95 starting:opacity-0 motion-reduce:starting:scale-100'
+
 function PromptInput({
   className,
   defaultValue = '',
@@ -76,7 +79,7 @@ function PromptInput({
     <form
       data-slot="prompt-input"
       className={cn(
-        'w-full rounded-[16px] border-[0.5px] border-border bg-background p-2.5 shadow-[0_1px_0_rgb(0_0_0/0.04),0_6px_8px_-6px_rgb(0_0_0/0.08)]',
+        'w-full rounded-[16px] border-[0.5px] border-border bg-card p-2.5 dark:border-transparent shadow-[0_1px_0_rgb(0_0_0/0.04),0_6px_8px_-6px_rgb(0_0_0/0.08)]',
         className,
       )}
       onSubmit={(event) => {
@@ -105,6 +108,7 @@ function PromptInput({
               type="button"
               variant="secondary"
               size="xs"
+              className={chipEnterClass}
               onClick={() => setSelectedTool(undefined)}
               aria-label="Clear selected tool"
             >
@@ -118,7 +122,7 @@ function PromptInput({
               type="button"
               variant="secondary"
               size="xs"
-              className="max-w-48"
+              className={cn('max-w-48', chipEnterClass)}
               aria-label={`Remove ${file.name}`}
               onClick={() => {
                 const next = files.filter((_, fileIndex) => fileIndex !== index)
@@ -182,7 +186,19 @@ function PromptInput({
           size="icon-lg"
           type={pending ? 'button' : 'submit'}
         >
-          {pending ? <SquareIcon className="size-3 fill-current" /> : <ArrowUpIcon />}
+          <span className="grid *:col-start-1 *:row-start-1 *:transition-[opacity,scale] *:duration-150 *:ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:*:transition-opacity">
+            <ArrowUpIcon
+              aria-hidden="true"
+              className={cn('place-self-center', pending && 'scale-75 opacity-0')}
+            />
+            <SquareIcon
+              aria-hidden="true"
+              className={cn(
+                'size-3 place-self-center fill-current',
+                !pending && 'scale-75 opacity-0',
+              )}
+            />
+          </span>
         </Button>
       </div>
     </form>

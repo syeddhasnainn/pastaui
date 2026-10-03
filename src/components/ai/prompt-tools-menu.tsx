@@ -110,7 +110,7 @@ function PromptToolsMenu({ onSelect }: { onSelect: (tool: PromptTool) => void })
           />
         }
       >
-        <PlusIcon className="size-5" />
+        <PlusIcon className="size-5 transition-[rotate] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] in-data-popup-open:rotate-45" />
       </PopoverTrigger>
       <PopoverContent
         align="start"

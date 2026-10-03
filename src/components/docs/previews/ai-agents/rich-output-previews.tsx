@@ -57,6 +57,7 @@ function RetrievalChunksPreview() {
             'Approval surfaces should explain the proposed action, scope, and likely consequence in plain language.',
         },
       ]}
+      onOpen={() => undefined}
       query="How should agent permissions be presented?"
     />
   )

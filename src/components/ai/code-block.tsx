@@ -84,7 +84,7 @@ function CodeBlock({
         {(/\.tsx?$/i.test(filename ?? '') || ['ts', 'tsx', 'typescript'].includes(language)) && (
           <TypeScriptIcon aria-hidden="true" className="size-4 shrink-0 text-[#3178c6]" />
         )}
-        <span className="min-w-0 truncate">{filename ?? language}</span>
+        <span className="min-w-0 truncate text-[13px]">{filename ?? language}</span>
         <Button
           aria-label="Copy code"
           className="ml-auto"
@@ -93,7 +93,10 @@ function CodeBlock({
           type="button"
           variant="ghost"
         >
-          {copied ? <CheckIcon /> : <CopyIcon />}
+          <span className="grid *:col-start-1 *:row-start-1 *:transition-[opacity,scale] *:duration-150 *:ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:*:transition-opacity">
+            <CopyIcon className={cn(copied && 'scale-75 opacity-0')} />
+            <CheckIcon className={cn(!copied && 'scale-75 opacity-0')} />
+          </span>
         </Button>
       </figcaption>
       <Highlight code={code.trim()} language={syntaxLanguage} theme={codeTheme}>

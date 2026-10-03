@@ -80,18 +80,32 @@ interface CompletedImageProps {
   onShare?: () => void
 }
 
+const revealClass =
+  'transition-[opacity,scale] duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] starting:scale-[1.03] starting:opacity-0 motion-reduce:starting:scale-100'
+
 function CompletedImage({ alt, imageUrl, onEdit, onShare }: CompletedImageProps) {
   return (
-    <div className="group relative size-full animate-in duration-500 fade-in">
+    <div className="group relative size-full">
       {imageUrl ? (
-        <img alt={alt} className="size-full object-cover" height={480} src={imageUrl} width={480} />
+        <img
+          alt={alt}
+          className={cn('size-full object-cover', revealClass)}
+          height={480}
+          src={imageUrl}
+          width={480}
+        />
       ) : (
-        <div className="size-full bg-[radial-gradient(circle_at_50%_30%,var(--background),var(--muted)_48%,var(--foreground)_160%)]" />
+        <div
+          className={cn(
+            'size-full bg-[radial-gradient(circle_at_50%_30%,var(--background),var(--muted)_48%,var(--foreground)_160%)]',
+            revealClass,
+          )}
+        />
       )}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-foreground/45 to-transparent" />
       {onEdit && (
         <Button
-          className="absolute bottom-4 left-4 border-0 bg-background/16 text-primary-foreground shadow-sm backdrop-blur-md hover:bg-background/25"
+          className="absolute bottom-4 left-4 border-0 bg-background/16 text-primary-foreground shadow-sm backdrop-blur-md transition-[opacity,translate,background-color] duration-300 [transition-delay:150ms,150ms,0ms] ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-background/25 starting:translate-y-1 starting:opacity-0 motion-reduce:starting:translate-y-0"
           onClick={onEdit}
           size="sm"
           variant="outline"
@@ -102,7 +116,7 @@ function CompletedImage({ alt, imageUrl, onEdit, onShare }: CompletedImageProps)
       {onShare && (
         <Button
           aria-label="Share generated image"
-          className="absolute right-4 bottom-4 border-0 bg-background/16 text-primary-foreground shadow-sm backdrop-blur-md hover:bg-background/25"
+          className="absolute right-4 bottom-4 border-0 bg-background/16 text-primary-foreground shadow-sm backdrop-blur-md transition-[opacity,translate,background-color] duration-300 [transition-delay:200ms,200ms,0ms] ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-background/25 starting:translate-y-1 starting:opacity-0 motion-reduce:starting:translate-y-0"
           onClick={onShare}
           size="icon-sm"
           variant="outline"

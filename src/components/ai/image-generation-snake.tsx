@@ -195,7 +195,7 @@ function ImageGenerationSnake({ className, onExit, ...props }: ImageGenerationSn
       {state.snake.map((cell, index) => (
         <span
           className={cn(
-            'absolute rounded-full bg-foreground shadow-sm transition-[left,top] duration-100',
+            'absolute rounded-full bg-foreground shadow-sm',
             index === 0 &&
               "before:absolute before:top-[28%] before:right-[28%] before:size-[12%] before:rounded-full before:bg-background before:content-[''] after:absolute after:top-[28%] after:left-[28%] after:size-[12%] after:rounded-full after:bg-background after:content-['']",
           )}

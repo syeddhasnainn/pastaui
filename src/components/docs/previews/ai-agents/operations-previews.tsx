@@ -1,5 +1,5 @@
 import type { ComponentType } from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { BackgroundRuns } from '#/components/ai/background-runs'
 import { ConnectionState } from '#/components/ai/connection-state'
@@ -25,14 +25,14 @@ function BackgroundRunsPreview() {
           detail: 'Reviewing 18 routes and 42 server functions',
           progress: 64,
           status: 'running',
-          updatedAt: 'Now',
+          updatedAt: '1m 12s',
         },
         {
           id: 'index',
           label: 'Index the component catalog',
           detail: '70 pages indexed',
           status: 'complete',
-          updatedAt: '4m',
+          updatedAt: '4m ago',
         },
         {
           id: 'tests',
@@ -46,16 +46,60 @@ function BackgroundRunsPreview() {
   )
 }
 
+const TOTAL_FILES = 3700
+const START_FILES = 1240
+const FILES_PER_TICK = 140
+const VERIFY_PER_TICK = 0.08
+
 function JobProgressPreview() {
+  const [files, setFiles] = useState(START_FILES)
+  const [verify, setVerify] = useState(0)
+  const done = files >= TOTAL_FILES && verify >= 1
+
+  useEffect(() => {
+    const timer = window.setTimeout(
+      () => {
+        if (done) {
+          setFiles(START_FILES)
+          setVerify(0)
+        } else if (files < TOTAL_FILES) {
+          setFiles((current) => Math.min(current + FILES_PER_TICK, TOTAL_FILES))
+        } else {
+          setVerify((current) => Math.min(current + VERIFY_PER_TICK, 1))
+        }
+      },
+      done ? 2000 : 300,
+    )
+    return () => window.clearTimeout(timer)
+  }, [done, files, verify])
+
+  const embedding = files < TOTAL_FILES
+  const remainingWeight = 4 * (1 - files / TOTAL_FILES) + 2 * (1 - verify)
+  const minutes = Math.ceil(remainingWeight / 2)
+
   return (
     <JobProgress
       className="w-full max-w-lg"
-      eta="2 min"
+      eta={done ? undefined : `${Math.max(1, minutes)} min`}
       stages={[
         { id: 'scan', label: 'Scan the repository', status: 'complete', weight: 1 },
         { id: 'index', label: 'Build the semantic index', status: 'complete', weight: 2 },
-        { id: 'embed', label: 'Generate embeddings', status: 'running', weight: 4 },
-        { id: 'verify', label: 'Verify retrieval quality', status: 'pending', weight: 2 },
+        {
+          id: 'embed',
+          label: 'Generate embeddings',
+          status: embedding ? 'running' : 'complete',
+          weight: 4,
+          progress: files / TOTAL_FILES,
+          detail: `${files.toLocaleString()} of ${TOTAL_FILES.toLocaleString()} files`,
+        },
+        {
+          id: 'verify',
+          label: 'Verify retrieval quality',
+          status: embedding ? 'pending' : verify >= 1 ? 'complete' : 'running',
+          weight: 2,
+          progress: verify,
+          detail: `${Math.round(verify * 24)} of 24 test queries`,
+        },
       ]}
       title="Index repository"
     />
@@ -129,6 +173,16 @@ function MemoryPreview() {
     <Memory
       className="w-full max-w-lg"
       items={items}
+      onAdd={() =>
+        setItems((current) => [
+          ...current,
+          {
+            id: `memory-${current.length + 1}`,
+            category: 'Style',
+            value: 'Avoids borders on buttons',
+          },
+        ])
+      }
       onRemove={(id) => setItems((current) => current.filter((item) => item.id !== id))}
     />
   )
@@ -141,10 +195,14 @@ function PermissionGrantPreview() {
       className="w-full max-w-lg"
       description="The coding agent needs permission to edit the files required for this task."
       duration="Until this task ends"
+      restrictions={['Access anything outside this repository']}
       scope={[
-        'Read and edit files in src/components',
-        'Run pnpm validation commands',
-        'No access outside this repository',
+        <>
+          Read and edit files in <code>src/components</code>
+        </>,
+        <>
+          Run <code>pnpm</code> validation commands
+        </>,
       ]}
     />
   )

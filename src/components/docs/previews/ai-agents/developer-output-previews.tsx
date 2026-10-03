@@ -41,34 +41,35 @@ function CommitPreview() {
 }
 
 function EnvironmentVariablesPreview() {
-  const [revealedIds, setRevealedIds] = useState<string[]>([])
-
-  function toggleVariable(id: string) {
-    setRevealedIds((current) =>
-      current.includes(id) ? current.filter((item) => item !== id) : [...current, id],
-    )
-  }
+  const [items, setItems] = useState([
+    {
+      id: 'database',
+      key: 'DATABASE_URL',
+      value: 'postgres://pasta:s3cret@db.internal:5432/app_a3f2',
+      scope: 'Production',
+    },
+    {
+      id: 'openai',
+      key: 'OPENAI_API_KEY',
+      value: 'sk-proj-7Hq2Lx9vKd4w9b1c',
+      scope: 'All environments',
+    },
+    {
+      id: 'site',
+      key: 'PUBLIC_SITE_URL',
+      value: 'https://pastaui.dev',
+      scope: 'All environments',
+      public: true,
+    },
+  ])
 
   return (
     <EnvironmentVariables
       className="w-full max-w-lg"
-      items={[
-        {
-          id: 'database',
-          key: 'DATABASE_URL',
-          value: 'postgres://pasta:••••@db.internal',
-          scope: 'Production',
-        },
-        {
-          id: 'openai',
-          key: 'OPENAI_API_KEY',
-          value: 'sk-proj-••••••••',
-          scope: 'All environments',
-        },
-        { id: 'site', key: 'PUBLIC_SITE_URL', value: 'https://pastaui.dev', scope: 'Public' },
-      ]}
-      onToggle={toggleVariable}
-      revealedIds={revealedIds}
+      items={items}
+      onAdd={() => undefined}
+      onDelete={(id) => setItems((current) => current.filter((item) => item.id !== id))}
+      onEdit={() => undefined}
     />
   )
 }

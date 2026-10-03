@@ -42,7 +42,7 @@ export function Example() {
     usage: `import { EnvironmentVariables } from "@/components/ai/environment-variables"
 
 export function Example() {
-  return <EnvironmentVariables items={variables} revealedIds={revealed} />
+  return <EnvironmentVariables items={variables} onAdd={addVariable} onDelete={removeVariable} />
 }`,
     source: `<section>
   {items.map(item => <MaskedVariable item={item} revealed={revealedIds.includes(item.id)} />)}
@@ -52,25 +52,39 @@ export function Example() {
         name: 'items',
         type: 'EnvironmentVariable[]',
         defaultValue: '—',
-        description: 'Provides keys, secret values, and environment scopes.',
+        description:
+          'Provides keys, values, environment scope, and a public flag. Public values are never masked.',
       },
       {
         name: 'revealedIds',
         type: 'string[]',
-        defaultValue: '[]',
-        description: 'Controls which values are visible.',
+        defaultValue: '—',
+        description:
+          'Controls which values are visible. When omitted, one value can be revealed at a time and it re-masks after 10 seconds.',
       },
       {
         name: 'onToggle',
         type: '(id: string) => void',
         defaultValue: '—',
-        description: 'Reveals or masks a selected value.',
+        description: 'Reveals or masks a value when revealedIds is controlled.',
       },
       {
         name: 'onCopy',
         type: '(id: string) => void',
         defaultValue: '—',
-        description: 'Copies a selected value.',
+        description: 'Runs after a value is copied to the clipboard.',
+      },
+      {
+        name: 'onAdd',
+        type: '() => void',
+        defaultValue: '—',
+        description: 'Shows an Add button in the header.',
+      },
+      {
+        name: 'onEdit / onDelete',
+        type: '(id: string) => void',
+        defaultValue: '—',
+        description: 'Adds Edit and Delete to the row menu.',
       },
     ],
   }),

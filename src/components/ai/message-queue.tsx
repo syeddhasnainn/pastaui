@@ -1,5 +1,5 @@
 import { Menu } from '@base-ui/react/menu'
-import { Reorder, useDragControls, useReducedMotion } from 'motion/react'
+import { AnimatePresence, Reorder, useDragControls, useReducedMotion } from 'motion/react'
 import { Forward2Icon } from '@solar-icons/react/bold-duotone/forward-2'
 import { ListArrowDownMinimalisticIcon as QueueIcon } from '@solar-icons/react/linear/list-arrow-down-minimalistic'
 import { TrashBinMinimalisticIcon as TrashIcon } from '@solar-icons/react/linear/trash-bin-minimalistic'
@@ -44,7 +44,13 @@ function QueueRow({
       dragControls={controls}
       className="group/queue-row relative flex items-center gap-3 rounded-md bg-card py-1.5"
       whileDrag={{ zIndex: 10 }}
-      transition={reducedMotion ? { duration: 0 } : { type: 'spring', stiffness: 500, damping: 40 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{
+        default: reducedMotion ? { duration: 0 } : { type: 'spring', stiffness: 500, damping: 40 },
+        opacity: { duration: 0.15, ease: [0.23, 1, 0.32, 1] },
+      }}
     >
       <button
         type="button"
@@ -65,13 +71,13 @@ function QueueRow({
         <QueueIcon
           aria-hidden="true"
           className={cn(
-            'absolute size-4 opacity-100 transition-opacity duration-150 ease-out motion-reduce:transition-none',
+            'absolute size-4 opacity-100 transition-opacity duration-150 ease-out',
             enabled && 'group-focus-within/queue-row:opacity-0 group-hover/queue-row:opacity-0',
           )}
         />
         <svg
           className={cn(
-            'absolute size-4 opacity-0 transition-opacity duration-150 ease-out motion-reduce:transition-none',
+            'absolute size-4 opacity-0 transition-opacity duration-150 ease-out',
             enabled && 'group-focus-within/queue-row:opacity-100 group-hover/queue-row:opacity-100',
           )}
           aria-hidden="true"
@@ -113,86 +119,88 @@ function MessageQueue({
       {...props}
     >
       <Reorder.Group as="ol" axis="y" values={items} onReorder={(next) => onReorder?.(next)}>
-        {items.map((item, index) => (
-          <QueueRow
-            key={item.id}
-            item={item}
-            enabled={!!onReorder}
-            onMove={(direction) => {
-              const target = index + direction
-              if (target < 0 || target >= items.length) return
-              const next = [...items]
-              ;[next[index], next[target]] = [next[target], next[index]]
-              onReorder?.(next)
-            }}
-          >
-            <p className="line-clamp-2 min-w-0 flex-1 text-sm leading-5 font-[450] text-muted-foreground">
-              {item.content}
-            </p>
-            {item.attachments ? (
-              <span className="shrink-0 text-xs leading-5 font-[450] text-muted-foreground">
-                {item.attachments} files
-              </span>
-            ) : null}
-            <div className="flex shrink-0 items-center gap-1">
-              <Button
-                type="button"
-                disabled={item.status === 'sending'}
-                onClick={() => onSendNow?.(item.id)}
-                size="sm"
-                variant="ghost"
-                className="gap-1.5 text-sm font-[450] tracking-[-0.05px] text-muted-foreground"
-              >
-                <Forward2Icon className="size-4" />
-                {item.status === 'sending' ? 'Steering…' : 'Steer'}
-              </Button>
-              <Button
-                type="button"
-                aria-label={`Remove queued message: ${item.content}`}
-                onClick={() => onRemove?.(item.id)}
-                size="icon-sm"
-                variant="ghost"
-              >
-                <TrashIcon className="size-4" />
-              </Button>
-              <Menu.Root>
-                <Menu.Trigger
-                  render={
-                    <Button
-                      type="button"
-                      aria-label={`More actions for: ${item.content}`}
-                      size="icon-sm"
-                      variant="ghost"
-                    />
-                  }
+        <AnimatePresence initial={false}>
+          {items.map((item, index) => (
+            <QueueRow
+              key={item.id}
+              item={item}
+              enabled={!!onReorder}
+              onMove={(direction) => {
+                const target = index + direction
+                if (target < 0 || target >= items.length) return
+                const next = [...items]
+                ;[next[index], next[target]] = [next[target], next[index]]
+                onReorder?.(next)
+              }}
+            >
+              <p className="line-clamp-2 min-w-0 flex-1 text-sm leading-5 font-[450] text-muted-foreground">
+                {item.content}
+              </p>
+              {item.attachments ? (
+                <span className="shrink-0 text-xs leading-5 font-[450] text-muted-foreground">
+                  {item.attachments} files
+                </span>
+              ) : null}
+              <div className="flex shrink-0 items-center gap-1">
+                <Button
+                  type="button"
+                  disabled={item.status === 'sending'}
+                  onClick={() => onSendNow?.(item.id)}
+                  size="sm"
+                  variant="ghost"
+                  className="gap-1.5 text-sm font-[450] tracking-[-0.05px] text-muted-foreground"
                 >
-                  <MoreIcon className="size-4" />
-                </Menu.Trigger>
-                <Menu.Portal>
-                  <Menu.Positioner side="bottom" align="end" sideOffset={6} className="z-50">
-                    <Menu.Popup className="min-w-36 rounded-[16px] bg-card p-1 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card outline-none">
-                      <Menu.Item
-                        className="cursor-pointer rounded-[12px] px-3 py-2 outline-none data-highlighted:bg-muted"
-                        onClick={() => navigator.clipboard.writeText(item.content)}
-                      >
-                        Copy message
-                      </Menu.Item>
-                      {onMoveToTop && (
+                  <Forward2Icon className="size-4" />
+                  {item.status === 'sending' ? 'Steering…' : 'Steer'}
+                </Button>
+                <Button
+                  type="button"
+                  aria-label={`Remove queued message: ${item.content}`}
+                  onClick={() => onRemove?.(item.id)}
+                  size="icon-sm"
+                  variant="ghost"
+                >
+                  <TrashIcon className="size-4" />
+                </Button>
+                <Menu.Root>
+                  <Menu.Trigger
+                    render={
+                      <Button
+                        type="button"
+                        aria-label={`More actions for: ${item.content}`}
+                        size="icon-sm"
+                        variant="ghost"
+                      />
+                    }
+                  >
+                    <MoreIcon className="size-4" />
+                  </Menu.Trigger>
+                  <Menu.Portal>
+                    <Menu.Positioner side="bottom" align="end" sideOffset={6} className="z-50">
+                      <Menu.Popup className="min-w-36 origin-(--transform-origin) rounded-[16px] bg-card p-1 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card transition-[opacity,scale] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] outline-none data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0 motion-reduce:transition-opacity">
                         <Menu.Item
-                          disabled={index === 0}
-                          className="cursor-pointer rounded-[12px] px-3 py-2 outline-none data-highlighted:bg-muted data-disabled:opacity-40"
-                          onClick={() => onMoveToTop(item.id)}
+                          className="cursor-pointer rounded-[12px] px-3 py-2 outline-none data-highlighted:bg-muted"
+                          onClick={() => navigator.clipboard.writeText(item.content)}
                         >
-                          Move to top
+                          Copy message
                         </Menu.Item>
-                      )}
-                    </Menu.Popup>
-                  </Menu.Positioner>
-                </Menu.Portal>
-              </Menu.Root>
-            </div>
-          </QueueRow>
-        ))}
+                        {onMoveToTop && (
+                          <Menu.Item
+                            disabled={index === 0}
+                            className="cursor-pointer rounded-[12px] px-3 py-2 outline-none data-highlighted:bg-muted data-disabled:opacity-40"
+                            onClick={() => onMoveToTop(item.id)}
+                          >
+                            Move to top
+                          </Menu.Item>
+                        )}
+                      </Menu.Popup>
+                    </Menu.Positioner>
+                  </Menu.Portal>
+                </Menu.Root>
+              </div>
+            </QueueRow>
+          ))}
+        </AnimatePresence>
       </Reorder.Group>
       {!items.length && (
         <p className="px-2 py-3 text-xs leading-5 font-[450] text-muted-foreground">

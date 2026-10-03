@@ -37,12 +37,23 @@ function componentFiles(slug: string): SourceFile[] {
   })
 }
 
-function PreviewFrame({ slug, tall = true }: { slug: string; tall?: boolean }) {
+const previewFrameSizes = {
+  full: 'min-h-[520px] p-5 sm:p-8 lg:h-[calc(100dvh-7rem)] lg:min-h-0',
+  compact: 'min-h-48 p-5 sm:p-8',
+}
+
+function PreviewFrame({
+  slug,
+  size = 'full',
+}: {
+  slug: string
+  size?: keyof typeof previewFrameSizes
+}) {
   return (
     <div
       className={cn(
-        'flex items-center justify-center overflow-hidden rounded-[16px] border-[0.5px] border-border bg-surface p-5 sm:p-8 dark:border-transparent',
-        tall ? 'min-h-[520px] lg:h-[calc(100dvh-7rem)] lg:min-h-0' : 'min-h-48',
+        'flex items-center-safe justify-center-safe overflow-y-auto overscroll-contain rounded-[16px] bg-surface dark:bg-black',
+        previewFrameSizes[size],
       )}
       data-preview-frame
     >
@@ -91,7 +102,7 @@ export function ComponentPage({ component }: { component: ComponentDocument }) {
                 </p>
               )}
               <div className="mt-2.5 flex flex-col gap-4">
-                <PreviewFrame slug={example.previewSlug} tall={false} />
+                <PreviewFrame slug={example.previewSlug} size="compact" />
                 {example.usage && <UsageCode usage={example.usage} />}
               </div>
             </section>

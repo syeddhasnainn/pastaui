@@ -31,6 +31,7 @@ function LinkPreview({
   url,
   ...props
 }: LinkPreviewProps) {
+  const [imageLoaded, setImageLoaded] = React.useState(false)
   let hostname = url
   try {
     hostname = new URL(url).hostname.replace('www.', '')
@@ -51,9 +52,16 @@ function LinkPreview({
         {imageSrc ? (
           <img
             alt=""
-            className="size-full object-cover"
+            className={cn(
+              'size-full object-cover transition-opacity duration-200 ease-[cubic-bezier(0.23,1,0.32,1)]',
+              !imageLoaded && 'opacity-0',
+            )}
             height={160}
             loading="lazy"
+            onLoad={() => setImageLoaded(true)}
+            ref={(image) => {
+              if (image?.complete) setImageLoaded(true)
+            }}
             src={imageSrc}
             width={160}
           />

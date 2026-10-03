@@ -69,35 +69,36 @@ function PromptInputPreview() {
 
 function CitationsPreview() {
   return (
-    <Citations
-      className="w-fit max-w-lg"
-      items={[
-        {
-          id: 'figma',
-          title: 'Figma',
-          domain: 'figma.com',
-          description: 'Collaborative interface design and prototyping.',
-          url: 'https://www.figma.com/',
-          icon: <img src="/icons/companies/figma.svg" alt="" />,
-        },
-        {
-          id: 'linear',
-          title: 'Linear',
-          domain: 'linear.app',
-          description: 'Project planning and issue tracking for product teams.',
-          url: 'https://linear.app/',
-          icon: <img src="/icons/companies/linear.svg" alt="" />,
-        },
-        {
-          id: 'notion',
-          title: 'Notion',
-          domain: 'notion.so',
-          description: 'A shared workspace for documents and team knowledge.',
-          url: 'https://www.notion.so/',
-          icon: <img src="/icons/companies/notion.svg" alt="" className="bg-white" />,
-        },
-      ]}
-    />
+    <div className="relative h-7 w-full max-w-sm *:absolute *:inset-x-0 *:top-0">
+      <Citations
+        items={[
+          {
+            id: 'figma',
+            title: 'Figma',
+            domain: 'figma.com',
+            description: 'Collaborative interface design and prototyping.',
+            url: 'https://www.figma.com/',
+            icon: <img src="/icons/companies/figma.svg" alt="" />,
+          },
+          {
+            id: 'linear',
+            title: 'Linear',
+            domain: 'linear.app',
+            description: 'Project planning and issue tracking for product teams.',
+            url: 'https://linear.app/',
+            icon: <img src="/icons/companies/linear.svg" alt="" />,
+          },
+          {
+            id: 'notion',
+            title: 'Notion',
+            domain: 'notion.so',
+            description: 'A shared workspace for documents and team knowledge.',
+            url: 'https://www.notion.so/',
+            icon: <img src="/icons/companies/notion.svg" alt="" className="bg-white" />,
+          },
+        ]}
+      />
+    </div>
   )
 }
 

@@ -54,6 +54,11 @@
           "path": "src/components/ai/agent-activity.tsx",
           "type": "registry:component",
           "target": "@components/ai/agent-activity.tsx"
+        },
+        {
+          "path": "src/components/ai/timeline-status.tsx",
+          "type": "registry:component",
+          "target": "@components/ai/timeline-status.tsx"
         }
       ]
     },
@@ -74,26 +79,6 @@
           "path": "src/components/ai/agent-status.tsx",
           "type": "registry:component",
           "target": "@components/ai/agent-status.tsx"
-        }
-      ]
-    },
-    {
-      "name": "ai-sidebar",
-      "type": "registry:component",
-      "title": "AI Sidebar",
-      "description": "A compact agent workspace navigator for projects, folders, files, and saved references.",
-      "dependencies": [
-        "@solar-icons/react@^2.2.0",
-        "cn@^0.3.0"
-      ],
-      "registryDependencies": [
-        "https://pastaui.com/r/pastaui-styles.json"
-      ],
-      "files": [
-        {
-          "path": "src/components/ai/ai-sidebar.tsx",
-          "type": "registry:component",
-          "target": "@components/ai/ai-sidebar.tsx"
         }
       ]
     },
@@ -430,6 +415,7 @@
       "title": "Environment Variables",
       "description": "A secret-aware configuration surface with masked values and explicit reveal or copy actions.",
       "dependencies": [
+        "@base-ui/react@^1.8.0",
         "@solar-icons/react@^2.2.0",
         "cn@^0.3.0"
       ],
@@ -921,7 +907,6 @@
         "cn@^0.3.0"
       ],
       "registryDependencies": [
-        "button",
         "https://pastaui.com/r/pastaui-styles.json"
       ],
       "files": [
@@ -960,7 +945,8 @@
       "description": "Ranked search results with site icons, titles, source URLs, and plain text category tabs.",
       "dependencies": [
         "@solar-icons/react@^2.2.0",
-        "cn@^0.3.0"
+        "cn@^0.3.0",
+        "motion@^13.4.0"
       ],
       "registryDependencies": [
         "https://pastaui.com/r/pastaui-styles.json"
@@ -1010,7 +996,31 @@
           "type": "registry:component",
           "target": "@components/ai/thinking-shimmer.tsx"
         }
-      ]
+      ],
+      "css": {
+        ".agent-text-shimmer": {
+          "color": "transparent",
+          "background-image": "linear-gradient( 90deg, var(--muted-foreground), var(--foreground), var(--muted-foreground) )",
+          "background-size": "200% 100%",
+          "background-clip": "text",
+          "animation": "agent-text-shimmer 1.6s linear infinite"
+        },
+        "@keyframes agent-text-shimmer": {
+          "from": {
+            "background-position": "200% 0"
+          },
+          "to": {
+            "background-position": "-200% 0"
+          }
+        },
+        "@media (prefers-reduced-motion: reduce)": {
+          ".agent-text-shimmer": {
+            "color": "var(--muted-foreground)",
+            "background-image": "none",
+            "animation": "none"
+          }
+        }
+      }
     },
     {
       "name": "todo-list",
@@ -1165,6 +1175,11 @@
           "path": "src/components/ai/tool-timeline.tsx",
           "type": "registry:component",
           "target": "@components/ai/tool-timeline.tsx"
+        },
+        {
+          "path": "src/components/ai/timeline-status.tsx",
+          "type": "registry:component",
+          "target": "@components/ai/timeline-status.tsx"
         }
       ]
     },

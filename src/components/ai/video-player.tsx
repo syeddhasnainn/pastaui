@@ -33,7 +33,7 @@ function formatTime(seconds: number) {
 
 const controlSurface = 'bg-black/45'
 const control =
-  'flex shrink-0 items-center justify-center rounded-md transition-colors hover:bg-black/65 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white'
+  'flex shrink-0 items-center justify-center rounded-md transition-[background-color,scale] duration-150 ease-out hover:bg-black/65 active:scale-[0.96] motion-reduce:active:scale-100 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white'
 const slider =
   'block cursor-pointer appearance-none rounded-full outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-black/40 [&::-webkit-slider-thumb]:size-2.5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-moz-range-thumb]:size-2.5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-white'
 
@@ -126,11 +126,10 @@ function VideoPlayer({
             onClick={() => changeVolume(volume === 0 ? 0.7 : 0)}
             type="button"
           >
-            {volume === 0 ? (
-              <VolumeMutedIcon className="size-4" />
-            ) : (
-              <Volume2Icon className="size-4" />
-            )}
+            <span className="grid *:col-start-1 *:row-start-1 *:transition-[opacity,scale] *:duration-150 *:ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:*:transition-opacity">
+              <Volume2Icon className={cn('size-4', volume === 0 && 'scale-75 opacity-0')} />
+              <VolumeMutedIcon className={cn('size-4', volume !== 0 && 'scale-75 opacity-0')} />
+            </span>
           </button>
         </div>
       </div>
@@ -150,11 +149,12 @@ function VideoPlayer({
           onClick={() => onPlayingChange?.(!playing)}
           type="button"
         >
-          {playing ? (
-            <PauseIcon className="size-6 fill-current" />
-          ) : (
-            <PlayIcon className="ml-0.5 size-6 fill-current" />
-          )}
+          <span className="grid *:col-start-1 *:row-start-1 *:transition-[opacity,scale] *:duration-150 *:ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:*:transition-opacity">
+            <PlayIcon
+              className={cn('ml-0.5 size-6 fill-current', playing && 'scale-75 opacity-0')}
+            />
+            <PauseIcon className={cn('size-6 fill-current', !playing && 'scale-75 opacity-0')} />
+          </span>
         </button>
         <button
           aria-label="Forward 10 seconds"

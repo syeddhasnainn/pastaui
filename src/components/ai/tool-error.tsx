@@ -31,7 +31,7 @@ function ToolError({
     <section
       data-slot="tool-error"
       className={cn(
-        'font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground',
+        'font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground transition-[opacity,translate] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] starting:translate-y-1 starting:opacity-0 motion-reduce:starting:translate-y-0',
         className,
       )}
       {...props}

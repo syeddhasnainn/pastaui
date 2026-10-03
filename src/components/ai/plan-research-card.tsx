@@ -66,7 +66,7 @@ function PlanResearchCard({
               <svg
                 aria-hidden="true"
                 viewBox="0 0 16 16"
-                className="mt-0.5 size-4 shrink-0 text-muted-foreground"
+                className="mt-0.5 size-4 shrink-0 text-muted-foreground transition-[opacity,scale] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] starting:scale-90 starting:opacity-0 motion-reduce:starting:scale-100"
               >
                 <circle cx="8" cy="8" r="8" fill="currentColor" />
                 <path

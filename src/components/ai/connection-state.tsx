@@ -27,7 +27,7 @@ function ConnectionState({ className, detail, onRetry, state, ...props }: Connec
       aria-live="polite"
       data-slot="connection-state"
       className={cn(
-        'flex items-center gap-3 rounded-[16px] bg-card p-3 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',
+        'flex items-center gap-3 rounded-[16px] bg-card p-3 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card transition-colors duration-200 ease-out',
         state === 'offline' && 'text-destructive',
         className,
       )}
@@ -39,7 +39,12 @@ function ConnectionState({ className, detail, onRetry, state, ...props }: Connec
         {detail && <p className="mt-0.5 truncate text-xs leading-5 opacity-70">{detail}</p>}
       </div>
       {state === 'offline' && onRetry && (
-        <Button onClick={onRetry} size="sm" variant="outline">
+        <Button
+          className="transition-[opacity,background-color] duration-150 ease-out starting:opacity-0"
+          onClick={onRetry}
+          size="sm"
+          variant="outline"
+        >
           <RefreshCwIcon data-icon="inline-start" /> Retry
         </Button>
       )}
@@ -47,11 +52,16 @@ function ConnectionState({ className, detail, onRetry, state, ...props }: Connec
   )
 }
 
+const iconEnterClass =
+  'transition-[opacity,scale] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] starting:scale-90 starting:opacity-0 motion-reduce:starting:scale-100'
+
 function ConnectionIcon({ state }: Pick<ConnectionStateProps, 'state'>) {
-  if (state === 'offline') return <CloudOffIcon className="size-4" />
-  if (state === 'reconnecting') return <LoaderCircleIcon className="size-4 animate-spin" />
-  if (state === 'reconnected') return <CheckCircle2Icon className="size-4 text-emerald-600" />
-  return <WifiIcon className="size-4 text-muted-foreground" />
+  if (state === 'offline') return <CloudOffIcon className={cn('size-4', iconEnterClass)} />
+  if (state === 'reconnecting')
+    return <LoaderCircleIcon className="size-4 animate-spin motion-reduce:animate-none" />
+  if (state === 'reconnected')
+    return <CheckCircle2Icon className={cn('size-4 text-emerald-600', iconEnterClass)} />
+  return <WifiIcon className={cn('size-4 text-muted-foreground', iconEnterClass)} />
 }
 
 export { ConnectionState }

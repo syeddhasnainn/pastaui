@@ -94,7 +94,7 @@ function ResearchReport({
             <span
               key={index}
               className={cn(
-                'h-0.5 rounded-full transition-colors motion-reduce:transition-none',
+                'h-0.5 rounded-full transition-colors',
                 entry.level === 3 ? 'w-2.5' : 'w-4',
                 index === activeIndex ? 'bg-foreground' : 'bg-foreground/20',
               )}
@@ -113,7 +113,7 @@ function ResearchReport({
           id={contentsId}
           aria-label="Table of contents"
           hidden={!contentsOpen}
-          className="absolute top-0 left-0 w-64 overflow-hidden rounded-[16px] bg-card shadow-card sm:w-72"
+          className="absolute top-0 left-0 w-64 origin-top-left overflow-hidden rounded-[16px] bg-card shadow-card transition-[opacity,scale] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] sm:w-72 starting:scale-95 starting:opacity-0 motion-reduce:starting:scale-100"
         >
           <div className="max-h-[min(32rem,70vh)] [scrollbar-width:thin] overflow-y-auto overscroll-contain px-5 py-3">
             <p className="mb-4 text-[11px] font-[450] text-muted-foreground">Table of contents</p>

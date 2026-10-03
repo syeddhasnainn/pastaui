@@ -76,7 +76,7 @@ function AudioPlayer({
         </span>
         <Slider
           aria-label="Audio position"
-          className="min-w-0 flex-1 [--muted:var(--audio-track)] [--primary:var(--audio-progress)] [&_[data-slot=slider-thumb]]:size-4 [&_[data-slot=slider-thumb]]:opacity-0 [&_[data-slot=slider-thumb]:has(:focus-visible)]:opacity-100 [&_[data-slot=slider-track]]:h-1.5 [&:hover_[data-slot=slider-thumb]]:opacity-100"
+          className="min-w-0 flex-1 [--muted:var(--audio-track)] [--primary:var(--audio-progress)] [&_[data-slot=slider-thumb]]:size-4 [&_[data-slot=slider-thumb]]:opacity-0 [&_[data-slot=slider-thumb]]:transition-opacity [&_[data-slot=slider-thumb]]:duration-150 [&_[data-slot=slider-thumb]:has(:focus-visible)]:opacity-100 [&_[data-slot=slider-track]]:h-1.5 [&:hover_[data-slot=slider-thumb]]:opacity-100"
           max={duration}
           min={0}
           onValueChange={(value) => onChange?.(Array.isArray(value) ? value[0] : value)}
@@ -105,7 +105,10 @@ function AudioPlayer({
           size="icon"
           variant="ghost"
         >
-          {isPlaying ? <PauseIcon className="size-10" /> : <PlayIcon className="size-10" />}
+          <span className="grid *:col-start-1 *:row-start-1 *:transition-[opacity,scale] *:duration-150 *:ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:*:transition-opacity">
+            <PlayIcon className={cn('size-10', isPlaying && 'scale-75 opacity-0')} />
+            <PauseIcon className={cn('size-10', !isPlaying && 'scale-75 opacity-0')} />
+          </span>
         </Button>
         <Button
           aria-label={onNext ? 'Next track' : 'Forward 10 seconds'}

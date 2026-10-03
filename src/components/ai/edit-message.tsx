@@ -24,7 +24,10 @@ function EditMessage({
   return (
     <section
       data-slot="edit-message"
-      className={cn('rounded-[16px] border-0 bg-muted/45 p-3 shadow-none ring-0', className)}
+      className={cn(
+        'rounded-[16px] border-0 bg-muted/45 p-3 shadow-none ring-0 transition-[opacity,scale] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] starting:scale-[0.98] starting:opacity-0 motion-reduce:starting:scale-100',
+        className,
+      )}
       {...props}
     >
       <label className="sr-only" htmlFor="edit-message-value">

@@ -1,5 +1,4 @@
 import { CheckCircleIcon as CheckIcon } from '@solar-icons/react/linear/check-circle'
-import { AltArrowDownIcon as ChevronDownIcon } from '@solar-icons/react/linear/alt-arrow-down'
 import { AltArrowRightIcon as ChevronRightIcon } from '@solar-icons/react/linear/alt-arrow-right'
 import { FilePenIcon } from '@solar-icons/react/linear/file-pen'
 import { StarsMinimalisticIcon as SparklesIcon } from '@solar-icons/react/linear/stars-minimalistic'
@@ -69,11 +68,12 @@ function ToolGroup({
           type="button"
           variant="ghost"
         >
-          {open ? (
-            <ChevronDownIcon className="size-4 [&_*]:[stroke-width:1.5]" />
-          ) : (
-            <ChevronRightIcon className="size-4 [&_*]:[stroke-width:1.5]" />
-          )}
+          <ChevronRightIcon
+            className={cn(
+              'size-4 transition-[rotate] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none [&_*]:[stroke-width:1.5]',
+              open && 'rotate-90',
+            )}
+          />
         </Button>
         {duration && (
           <span className="min-w-14 text-right text-xs leading-5 text-muted-foreground tabular-nums">

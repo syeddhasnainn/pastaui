@@ -18,10 +18,8 @@ function ThinkingShimmer({ className, label = 'Thinking', ...props }: ThinkingSh
       )}
       {...props}
     >
-      <SparklesIcon className="size-4 animate-pulse" />
-      <span className="animate-pulse bg-gradient-to-r from-muted-foreground via-foreground to-muted-foreground bg-[length:200%_100%] bg-clip-text text-transparent">
-        {label}
-      </span>
+      <SparklesIcon className="size-4 animate-pulse motion-reduce:animate-none" />
+      <span className="agent-text-shimmer">{label}</span>
     </div>
   )
 }

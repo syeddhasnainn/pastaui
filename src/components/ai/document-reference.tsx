@@ -48,7 +48,7 @@ function DocumentReference({
         </div>
         {onOpen && (
           <Button aria-label={`Open ${title}`} onClick={onOpen} size="icon-sm" variant="ghost">
-            <ArrowUpRightIcon />
+            <ArrowUpRightIcon className="transition-[translate] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover/button:translate-x-px group-hover/button:-translate-y-px motion-reduce:transition-none" />
           </Button>
         )}
       </div>

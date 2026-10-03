@@ -44,7 +44,7 @@ function Citations({ className, defaultOpen = false, items, ...props }: Citation
           {items.length} {items.length === 1 ? 'source' : 'sources'}
         </span>
       </CollapsibleTrigger>
-      <CollapsibleContent className="-mx-1">
+      <CollapsibleContent className="-mx-1 h-(--collapsible-panel-height) overflow-hidden transition-[height,opacity] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] data-ending-style:h-0 data-ending-style:opacity-0 data-starting-style:h-0 data-starting-style:opacity-0 motion-reduce:transition-opacity">
         <div className="px-1 pt-3 pb-2">
           <ol className="space-y-1 rounded-[16px] bg-card p-2 shadow-card">
             {items.map((item) => (

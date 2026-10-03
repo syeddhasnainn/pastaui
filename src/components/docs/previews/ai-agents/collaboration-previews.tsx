@@ -15,6 +15,10 @@ function FeedbackDialogPreview() {
     <FeedbackDialog
       className="w-full max-w-lg"
       comment={comment}
+      onCancel={() => {
+        setComment('')
+        setReason(undefined)
+      }}
       onCommentChange={setComment}
       onReasonChange={setReason}
       reason={reason}

@@ -145,6 +145,32 @@
           }
         }
       }
+    },
+    "thinking-shimmer": {
+      "css": {
+        ".agent-text-shimmer": {
+          "color": "transparent",
+          "background-image": "linear-gradient( 90deg, var(--muted-foreground), var(--foreground), var(--muted-foreground) )",
+          "background-size": "200% 100%",
+          "background-clip": "text",
+          "animation": "agent-text-shimmer 1.6s linear infinite"
+        },
+        "@keyframes agent-text-shimmer": {
+          "from": {
+            "background-position": "200% 0"
+          },
+          "to": {
+            "background-position": "-200% 0"
+          }
+        },
+        "@media (prefers-reduced-motion: reduce)": {
+          ".agent-text-shimmer": {
+            "color": "var(--muted-foreground)",
+            "background-image": "none",
+            "animation": "none"
+          }
+        }
+      }
     }
   }
 }

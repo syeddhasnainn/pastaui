@@ -156,7 +156,7 @@ const searchItems: SearchResultItem[] = [
 function SearchResultsTabsPreview() {
   const [activeType, setActiveType] = useState<SearchResultItem['type']>('web')
   return (
-    <div className="w-full max-w-3xl">
+    <div className="min-h-[37rem] w-full max-w-3xl">
       <SearchResultsTabs
         showTabs
         activeType={activeType}

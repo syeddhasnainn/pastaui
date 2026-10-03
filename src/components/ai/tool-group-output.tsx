@@ -75,11 +75,14 @@ function ToolGroupOutput({ className, code, language = 'json', ...props }: ToolG
           type="button"
           variant="ghost"
         >
-          {copied ? (
-            <CheckIcon className="size-4 [&_*]:[stroke-width:1.5]" />
-          ) : (
-            <CopyIcon className="size-4 [&_*]:[stroke-width:1.5]" />
-          )}
+          <span className="grid *:col-start-1 *:row-start-1 *:transition-[opacity,scale] *:duration-150 *:ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:*:transition-opacity">
+            <CopyIcon
+              className={cn('size-4 [&_*]:[stroke-width:1.5]', copied && 'scale-75 opacity-0')}
+            />
+            <CheckIcon
+              className={cn('size-4 [&_*]:[stroke-width:1.5]', !copied && 'scale-75 opacity-0')}
+            />
+          </span>
         </Button>
       </figcaption>
       <Highlight code={code.trim()} language={syntaxLanguage} theme={codeTheme}>

@@ -36,7 +36,7 @@ function ApprovalCard({
     <section
       data-slot="approval-card"
       className={cn(
-        'rounded-[16px] bg-card p-5 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',
+        'rounded-[16px] bg-card p-5 font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card transition-[opacity,translate] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] starting:translate-y-1 starting:opacity-0 motion-reduce:starting:translate-y-0',
         className,
       )}
       {...props}
@@ -49,7 +49,7 @@ function ApprovalCard({
           <div className="flex items-start justify-between gap-3">
             <h3 className="card-heading">{title}</h3>
             {status !== 'pending' && (
-              <span className="rounded-full bg-muted px-2 py-1 text-sm font-[450] text-muted-foreground capitalize">
+              <span className="rounded-full bg-muted px-2 py-1 text-sm font-[450] text-muted-foreground capitalize transition-[opacity,scale] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] starting:scale-95 starting:opacity-0 motion-reduce:starting:scale-100">
                 {status}
               </span>
             )}

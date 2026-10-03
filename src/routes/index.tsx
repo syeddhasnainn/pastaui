@@ -28,9 +28,9 @@ const MAX_TILES = 6
 
 const featuredSlugs = [
   'prompt-input',
-  'file-diff',
+  'job-progress',
   'context-breakdown',
-  'voice-input',
+  'cost-meter',
   'background-runs',
   'email-composer',
 ]
@@ -66,7 +66,7 @@ function HomePage() {
   ).slice(0, MAX_TILES)
 
   return (
-    <div className="dark flex min-h-dvh bg-neutral-900 text-foreground">
+    <div className="dark flex min-h-dvh bg-black text-foreground">
       <main className="min-w-0 flex-1 px-6 pt-4 pb-24" id="main-content">
         <DemoNav className="mb-28" />
         <span className="mx-auto mb-6 flex w-fit items-center gap-2 text-sm font-medium text-foreground">
@@ -92,7 +92,7 @@ function HomePage() {
                   'h-8 shrink-0 rounded-full px-4 text-[13px] font-semibold whitespace-nowrap transition-colors',
                   active === chip.value
                     ? 'bg-foreground text-background'
-                    : 'bg-muted text-foreground hover:bg-muted/70',
+                    : 'bg-foreground/8 text-foreground hover:bg-foreground/12',
                 )}
                 onClick={() => setActive(chip.value)}
                 type="button"
@@ -106,19 +106,19 @@ function HomePage() {
           ))}
         </nav>
 
-        <ul className="mt-8 grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-8 grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
           {visible.map((component) => (
             <li key={component.slug}>
               <p className="mb-2 metadata-label font-medium">{component.name}</p>
               <Link
                 aria-label={component.name}
-                className="flex aspect-[4/3] w-full overflow-hidden rounded-md preview-stage shadow-card transition-opacity hover:opacity-90"
+                className="flex aspect-[4/3] w-full overflow-hidden rounded-md preview-stage transition-opacity hover:opacity-90"
                 params={{ slug: component.slug }}
                 to="/docs/component/$slug"
               >
                 <span
                   aria-hidden="true"
-                  className="pointer-events-none flex size-full items-center justify-center p-4 [:where(&>*)]:max-h-full [:where(&>*)]:max-w-full"
+                  className="pointer-events-none flex size-full items-center justify-center p-4 [zoom:0.8] [:where(&>*)]:max-h-full [:where(&>*)]:max-w-full"
                   inert
                 >
                   <Suspense fallback={null}>
