@@ -69,13 +69,27 @@ function HomePage() {
     <div className="dark flex min-h-dvh bg-black text-foreground">
       <main className="min-w-0 flex-1 px-6 pt-4 pb-24" id="main-content">
         <DemoNav className="mb-28" />
-        <span className="mx-auto mb-6 flex w-fit items-center gap-2 text-sm font-medium text-foreground">
+        <span className="relative z-10 mx-auto mb-6 flex w-fit items-center gap-2 text-sm font-medium text-foreground">
           <LogoMark size={22} />
           Pasta UI
         </span>
-        <h1 className="mx-auto max-w-md text-center heading-text-md font-medium text-balance text-foreground">
-          Beautifully crafted interfaces for AI agents
-        </h1>
+        <div className="relative isolate -mx-6">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 top-1/2 -z-10 h-64 -translate-y-1/2 [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)]"
+            style={{
+              background: [
+                'radial-gradient(28% 34% at 50% 50%, #000 40%, transparent 100%)',
+                'radial-gradient(60% 56% at 50% 0%, #000 0%, #030a1c 50%, #0c2a66 72%, #3b82f6 87%, rgb(59 130 246 / 0) 100%)',
+                'radial-gradient(60% 56% at 50% 100%, #000 0%, #030a1c 50%, #0c2a66 72%, #3b82f6 87%, rgb(59 130 246 / 0) 100%)',
+                '#eef4ff',
+              ].join(', '),
+            }}
+          />
+          <h1 className="mx-auto max-w-md text-center heading-text-md font-medium text-balance text-foreground">
+            Beautifully crafted interfaces for AI agents
+          </h1>
+        </div>
 
         <nav
           aria-label="Filter components"
@@ -118,7 +132,7 @@ function HomePage() {
               >
                 <span
                   aria-hidden="true"
-                  className="pointer-events-none flex size-full items-center justify-center p-4 [zoom:0.8] [:where(&>*)]:max-h-full [:where(&>*)]:max-w-full"
+                  className="pointer-events-none flex size-full items-center justify-center p-4 [:where(&>*)]:max-h-full [:where(&>*)]:max-w-full"
                   inert
                 >
                   <Suspense fallback={null}>

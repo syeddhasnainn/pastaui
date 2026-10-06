@@ -43,7 +43,7 @@ function InlineCitation({
         {index}
       </button>
       {open && (
-        <span className="absolute bottom-full left-1/2 z-20 mb-2 w-72 max-w-[calc(100vw-2rem)] -translate-x-1/2 origin-bottom rounded-[16px] bg-card p-4 text-muted-foreground shadow-card transition-[opacity,scale] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] starting:scale-95 starting:opacity-0 motion-reduce:starting:scale-100">
+        <span className="absolute bottom-full left-1/2 z-20 mb-2 w-72 max-w-[calc(100vw-2rem)] origin-bottom -translate-x-1/2 rounded-[16px] bg-card p-4 text-muted-foreground shadow-card transition-[opacity,scale] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] starting:scale-95 starting:opacity-0 motion-reduce:starting:scale-100">
           <span className="block card-heading leading-5">{title}</span>
           <span className="mt-1 block text-xs leading-5 text-muted-foreground">{source}</span>
           {excerpt && (

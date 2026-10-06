@@ -79,7 +79,7 @@ function PromptInput({
     <form
       data-slot="prompt-input"
       className={cn(
-        'w-full rounded-[16px] border-[0.5px] border-border bg-card p-2.5 dark:border-transparent shadow-[0_1px_0_rgb(0_0_0/0.04),0_6px_8px_-6px_rgb(0_0_0/0.08)]',
+        'w-full rounded-[16px] border-[0.5px] border-border bg-card p-2.5 shadow-[0_1px_0_rgb(0_0_0/0.04),0_6px_8px_-6px_rgb(0_0_0/0.08)] dark:border-transparent',
         className,
       )}
       onSubmit={(event) => {

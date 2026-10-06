@@ -82,7 +82,7 @@ export function Example() {
         name: 'items',
         type: 'AgentActivityItem[]',
         defaultValue: '—',
-        description: 'Provides chronological activity and status.',
+        description: 'Provides chronological activity, status, and an optional per-step icon.',
       },
     ],
   }),

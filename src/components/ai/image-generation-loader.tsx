@@ -105,7 +105,7 @@ function CompletedImage({ alt, imageUrl, onEdit, onShare }: CompletedImageProps)
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-foreground/45 to-transparent" />
       {onEdit && (
         <Button
-          className="absolute bottom-4 left-4 border-0 bg-background/16 text-primary-foreground shadow-sm backdrop-blur-md transition-[opacity,translate,background-color] duration-300 [transition-delay:150ms,150ms,0ms] ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-background/25 starting:translate-y-1 starting:opacity-0 motion-reduce:starting:translate-y-0"
+          className="absolute bottom-4 left-4 border-0 bg-background/16 text-primary-foreground shadow-sm backdrop-blur-md transition-[opacity,translate,background-color] [transition-delay:150ms,150ms,0ms] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-background/25 starting:translate-y-1 starting:opacity-0 motion-reduce:starting:translate-y-0"
           onClick={onEdit}
           size="sm"
           variant="outline"
@@ -116,7 +116,7 @@ function CompletedImage({ alt, imageUrl, onEdit, onShare }: CompletedImageProps)
       {onShare && (
         <Button
           aria-label="Share generated image"
-          className="absolute right-4 bottom-4 border-0 bg-background/16 text-primary-foreground shadow-sm backdrop-blur-md transition-[opacity,translate,background-color] duration-300 [transition-delay:200ms,200ms,0ms] ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-background/25 starting:translate-y-1 starting:opacity-0 motion-reduce:starting:translate-y-0"
+          className="absolute right-4 bottom-4 border-0 bg-background/16 text-primary-foreground shadow-sm backdrop-blur-md transition-[opacity,translate,background-color] [transition-delay:200ms,200ms,0ms] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-background/25 starting:translate-y-1 starting:opacity-0 motion-reduce:starting:translate-y-0"
           onClick={onShare}
           size="icon-sm"
           variant="outline"

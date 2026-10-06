@@ -11,6 +11,7 @@ import { cn } from 'cn'
 
 interface AgentActivityItem {
   detail?: string
+  icon?: React.ReactNode
   id: string
   label: string
   status: 'complete' | 'running' | 'waiting'
@@ -18,6 +19,32 @@ interface AgentActivityItem {
 
 interface AgentActivityProps extends React.ComponentProps<'ol'> {
   items: AgentActivityItem[]
+}
+
+const iconTone: Record<TimelineStatus, string> = {
+  complete: 'text-muted-foreground',
+  pending: 'text-muted-foreground/45',
+  running: 'animate-pulse text-blue-500 motion-reduce:animate-none dark:text-blue-400',
+}
+
+const statusLabel: Record<TimelineStatus, string> = {
+  complete: 'Complete',
+  pending: 'Pending',
+  running: 'Running',
+}
+
+function AgentActivityIcon({ icon, status }: { icon: React.ReactNode; status: TimelineStatus }) {
+  return (
+    <span
+      className={cn(
+        'mt-0.5 flex size-4 shrink-0 items-center justify-center transition-colors duration-200 ease-out [&>svg]:size-3.5',
+        iconTone[status],
+      )}
+    >
+      {icon}
+      <span className="sr-only">{statusLabel[status]}</span>
+    </span>
+  )
 }
 
 const toTimelineStatus = (status: AgentActivityItem['status']): TimelineStatus =>
@@ -43,7 +70,11 @@ function AgentActivity({ className, items, ...props }: AgentActivityProps) {
             key={item.id}
           >
             {next && <TimelineConnector reached={next.status !== 'waiting'} />}
-            <TimelineStatusIcon className="mt-0.5" status={status} />
+            {item.icon ? (
+              <AgentActivityIcon icon={item.icon} status={status} />
+            ) : (
+              <TimelineStatusIcon className="mt-0.5" status={status} />
+            )}
             <div className="min-w-0 flex-1">
               <p className={cn('text-sm leading-5', timelineLabelTone[status])}>{item.label}</p>
               {item.detail && (

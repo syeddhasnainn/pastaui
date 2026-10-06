@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react'
 import type { ComponentType } from 'react'
 
+import { GlobalIcon } from '@solar-icons/react/linear/global'
+import { PenNewSquareIcon } from '@solar-icons/react/linear/pen-new-square'
+import { ShieldCheckIcon } from '@solar-icons/react/linear/shield-check'
+import { Widget4Icon } from '@solar-icons/react/linear/widget-4'
 import { AgentActivity } from '#/components/ai/agent-activity'
 import { ImageGenerationLoader } from '#/components/ai/image-generation-loader'
 import { ReasoningText } from '#/components/ai/reasoning-text'
@@ -65,22 +69,30 @@ function AgentActivityPreview() {
       items={[
         {
           id: '1',
+          icon: <Widget4Icon />,
           label: 'Inspected the component inventory',
           status: 'complete',
         },
         {
           id: '2',
+          icon: <GlobalIcon />,
           label: 'Searched AI-focused registries',
           detail: '576 directory items compared',
           status: 'complete',
         },
         {
           id: '3',
+          icon: <PenNewSquareIcon />,
           label: 'Authoring approval and execution surfaces',
           detail: '4 of 7 surfaces drafted',
           status: 'running',
         },
-        { id: '4', label: 'Run production verification', status: 'waiting' },
+        {
+          id: '4',
+          icon: <ShieldCheckIcon />,
+          label: 'Run production verification',
+          status: 'waiting',
+        },
       ]}
     />
   )

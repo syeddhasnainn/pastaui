@@ -55,7 +55,9 @@ function FeedbackDialog({
             <path d="m3.5 8.5 3 3 6-7" />
           </svg>
         </span>
-        <span className="text-[15px] leading-6 text-foreground">Thanks, your feedback was sent.</span>
+        <span className="text-[15px] leading-6 text-foreground">
+          Thanks, your feedback was sent.
+        </span>
       </output>
     )
   }

@@ -16,7 +16,13 @@ interface CostMeterProps extends React.ComponentProps<'section'> {
   items: CostItem[]
 }
 
-const segmentTones = ['bg-sky-500', 'bg-violet-500', 'bg-amber-400', 'bg-emerald-500', 'bg-pink-500']
+const segmentTones = [
+  'bg-sky-500',
+  'bg-violet-500',
+  'bg-amber-400',
+  'bg-emerald-500',
+  'bg-pink-500',
+]
 
 function CostMeter({ budget, className, currency = '$', items, ...props }: CostMeterProps) {
   const total = items.reduce((sum, item) => sum + item.cost, 0)
