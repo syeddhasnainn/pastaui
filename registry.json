@@ -347,6 +347,27 @@
       ]
     },
     {
+      "name": "data-table",
+      "type": "registry:component",
+      "title": "Data Table",
+      "description": "A virtualized, sortable table with resizable columns, a sticky header, and left or right pinned columns for scanning dozens of fields at once.",
+      "dependencies": [
+        "@base-ui/react@^1.8.0",
+        "@solar-icons/react@^2.2.0",
+        "cn@^0.3.0"
+      ],
+      "registryDependencies": [
+        "https://pastaui.com/r/pastaui-styles.json"
+      ],
+      "files": [
+        {
+          "path": "src/components/ai/data-table.tsx",
+          "type": "registry:component",
+          "target": "@components/ai/data-table.tsx"
+        }
+      ]
+    },
+    {
       "name": "document-reference",
       "type": "registry:component",
       "title": "Document Reference",

@@ -110,6 +110,7 @@ const aiPreviewCollections: Record<string, ComponentType<PreviewProps>> = {
   'document-reference': AiRichOutputPreview,
   'research-report': AiRichOutputPreview,
   'audio-player': AiStructuredOutputPreview,
+  'data-table': AiStructuredOutputPreview,
   'link-preview': AiRichOutputPreview,
   commit: AiDeveloperOutputPreview,
   'environment-variables': AiDeveloperOutputPreview,
