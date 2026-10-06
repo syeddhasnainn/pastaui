@@ -9,7 +9,7 @@ import { aiExecutionComponents } from './execution-components'
 import { aiOperationsComponents } from './operations-components'
 import { aiPlanningInsightComponents } from './planning-insight-components'
 import { aiRichOutputComponents } from './rich-output-components'
-import { aiStructuredOutputComponents } from './structured-output-components'
+import { aiStructuredOutputComponents, dataTableComponent } from './structured-output-components'
 import { aiTaskDetailComponents } from './task-detail-components'
 import { aiToolOutputComponents } from './tool-output-components'
 import type { ComponentDocument } from '../types'
@@ -19,7 +19,7 @@ function withCategory(category: string, components: ComponentDocument[]) {
 }
 
 export const aiAgentComponents = [
-  ...withCategory('New & featured', [imageGenerationLoaderComponent]),
+  ...withCategory('Featured', [dataTableComponent, imageGenerationLoaderComponent]),
   ...withCategory('Conversation', aiConversationComponents),
   ...withCategory('Conversation', aiConversationUtilityComponents),
   ...withCategory('Tools & execution', aiExecutionComponents),
