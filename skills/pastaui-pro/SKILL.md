@@ -112,7 +112,7 @@ Install with `@pastaui-pro/<name>` using any name below. Browse previews at http
 - Integrations: `integrations-03`, `integrations-02`, `integrations-01`
 - Logo Cloud: `logo-cloud-01`
 - 404: `not-found-04`, `not-found-03`, `not-found-02`, `not-found-01`
-- Features: `features-03`, `features-02`
+- Features: `features-05`, `features-04`, `features-03`, `features-02`
 - Navbar: `navbar-03`, `navbar-02`, `navbar-01`
 - Sidebar: `sidebar-01`
 - Sign In: `sign-in-03`, `sign-in-02`, `sign-in-01`
