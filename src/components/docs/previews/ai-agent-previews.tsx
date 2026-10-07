@@ -44,6 +44,11 @@ const AiExecutionPreview = lazy(() =>
     default: module.AiExecutionPreview,
   })),
 )
+const AiInputPreview = lazy(() =>
+  import('#/components/docs/previews/ai-agents/input-previews').then((module) => ({
+    default: module.AiInputPreview,
+  })),
+)
 const AiOperationsPreview = lazy(() =>
   import('#/components/docs/previews/ai-agents/operations-previews').then((module) => ({
     default: module.AiOperationsPreview,
@@ -111,6 +116,8 @@ const aiPreviewCollections: Record<string, ComponentType<PreviewProps>> = {
   'research-report': AiRichOutputPreview,
   'audio-player': AiStructuredOutputPreview,
   'data-table': AiStructuredOutputPreview,
+  'color-picker': AiInputPreview,
+  'color-picker-popover': AiInputPreview,
   'link-preview': AiRichOutputPreview,
   commit: AiDeveloperOutputPreview,
   'environment-variables': AiDeveloperOutputPreview,
