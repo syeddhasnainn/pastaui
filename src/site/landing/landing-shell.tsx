@@ -4,6 +4,7 @@ import { useState, type ReactNode } from 'react'
 import CloseIcon from '~icons/solar/close-linear'
 import GithubIcon from '~icons/simple-icons/github'
 import DownloadIcon from '~icons/solar/download-minimalistic-bold'
+import BlogIcon from '~icons/solar/document-text-bold'
 import HomeIcon from '~icons/solar/home-2-bold'
 import MenuIcon from '~icons/solar/hamburger-menu-linear'
 import SearchBoldIcon from '~icons/solar/magnifier-bold'
@@ -61,6 +62,10 @@ function QuickLinks({ onSearchOpen }: { onSearchOpen?: () => void }) {
       <Link className={quickLinkClass} to="/docs/installation">
         <DownloadIcon aria-hidden="true" />
         Installation
+      </Link>
+      <Link className={quickLinkClass} to="/blog">
+        <BlogIcon aria-hidden="true" />
+        Blog
       </Link>
       <a className={quickLinkClass} href={githubUrl} rel="noreferrer" target="_blank">
         <GithubIcon aria-hidden="true" />

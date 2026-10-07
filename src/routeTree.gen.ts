@@ -19,6 +19,8 @@ import { Route as ShellPrivacyRouteImport } from './routes/_shell/privacy'
 import { Route as ComponentsIndexRouteImport } from './routes/components/index'
 import { Route as ComponentsSlugRouteImport } from './routes/components/$slug'
 import { Route as DocsIndexRouteImport } from './routes/docs/index'
+import { Route as ShellBlogIndexRouteImport } from './routes/_shell/blog/index'
+import { Route as ShellBlogPostRouteImport } from './routes/_shell/blog/$post'
 import { Route as ShellDocsInstallationRouteImport } from './routes/_shell/docs/installation'
 import { Route as DocsComponentIndexRouteImport } from './routes/docs/component/index'
 import { Route as ShellDocsComponentSlugRouteImport } from './routes/_shell/docs/component/$slug'
@@ -72,6 +74,16 @@ const DocsIndexRoute = DocsIndexRouteImport.update({
   path: '/docs/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ShellBlogIndexRoute = ShellBlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellBlogPostRoute = ShellBlogPostRouteImport.update({
+  id: '/blog/$post',
+  path: '/blog/$post',
+  getParentRoute: () => ShellRoute,
+} as any)
 const ShellDocsInstallationRoute = ShellDocsInstallationRouteImport.update({
   id: '/docs/installation',
   path: '/docs/installation',
@@ -98,7 +110,9 @@ export interface FileRoutesByFullPath {
   '/components/$slug': typeof ComponentsSlugRoute
   '/components/': typeof ComponentsIndexRoute
   '/docs/': typeof DocsIndexRoute
+  '/blog/$post': typeof ShellBlogPostRoute
   '/docs/installation': typeof ShellDocsInstallationRoute
+  '/blog/': typeof ShellBlogIndexRoute
   '/docs/component/': typeof DocsComponentIndexRoute
   '/docs/component/$slug': typeof ShellDocsComponentSlugRoute
 }
@@ -112,7 +126,9 @@ export interface FileRoutesByTo {
   '/components/$slug': typeof ComponentsSlugRoute
   '/components': typeof ComponentsIndexRoute
   '/docs': typeof DocsIndexRoute
+  '/blog/$post': typeof ShellBlogPostRoute
   '/docs/installation': typeof ShellDocsInstallationRoute
+  '/blog': typeof ShellBlogIndexRoute
   '/docs/component': typeof DocsComponentIndexRoute
   '/docs/component/$slug': typeof ShellDocsComponentSlugRoute
 }
@@ -128,7 +144,9 @@ export interface FileRoutesById {
   '/components/$slug': typeof ComponentsSlugRoute
   '/components/': typeof ComponentsIndexRoute
   '/docs/': typeof DocsIndexRoute
+  '/_shell/blog/$post': typeof ShellBlogPostRoute
   '/_shell/docs/installation': typeof ShellDocsInstallationRoute
+  '/_shell/blog/': typeof ShellBlogIndexRoute
   '/docs/component/': typeof DocsComponentIndexRoute
   '/_shell/docs/component/$slug': typeof ShellDocsComponentSlugRoute
 }
@@ -144,7 +162,9 @@ export interface FileRouteTypes {
     | '/components/$slug'
     | '/components/'
     | '/docs/'
+    | '/blog/$post'
     | '/docs/installation'
+    | '/blog/'
     | '/docs/component/'
     | '/docs/component/$slug'
   fileRoutesByTo: FileRoutesByTo
@@ -158,7 +178,9 @@ export interface FileRouteTypes {
     | '/components/$slug'
     | '/components'
     | '/docs'
+    | '/blog/$post'
     | '/docs/installation'
+    | '/blog'
     | '/docs/component'
     | '/docs/component/$slug'
   id:
@@ -173,7 +195,9 @@ export interface FileRouteTypes {
     | '/components/$slug'
     | '/components/'
     | '/docs/'
+    | '/_shell/blog/$post'
     | '/_shell/docs/installation'
+    | '/_shell/blog/'
     | '/docs/component/'
     | '/_shell/docs/component/$slug'
   fileRoutesById: FileRoutesById
@@ -262,6 +286,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_shell/blog/': {
+      id: '/_shell/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof ShellBlogIndexRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/blog/$post': {
+      id: '/_shell/blog/$post'
+      path: '/blog/$post'
+      fullPath: '/blog/$post'
+      preLoaderRoute: typeof ShellBlogPostRouteImport
+      parentRoute: typeof ShellRoute
+    }
     '/_shell/docs/installation': {
       id: '/_shell/docs/installation'
       path: '/docs/installation'
@@ -289,14 +327,18 @@ declare module '@tanstack/react-router' {
 interface ShellRouteChildren {
   ShellPageRoute: typeof ShellPageRoute
   ShellPrivacyRoute: typeof ShellPrivacyRoute
+  ShellBlogPostRoute: typeof ShellBlogPostRoute
   ShellDocsInstallationRoute: typeof ShellDocsInstallationRoute
+  ShellBlogIndexRoute: typeof ShellBlogIndexRoute
   ShellDocsComponentSlugRoute: typeof ShellDocsComponentSlugRoute
 }
 
 const ShellRouteChildren: ShellRouteChildren = {
   ShellPageRoute: ShellPageRoute,
   ShellPrivacyRoute: ShellPrivacyRoute,
+  ShellBlogPostRoute: ShellBlogPostRoute,
   ShellDocsInstallationRoute: ShellDocsInstallationRoute,
+  ShellBlogIndexRoute: ShellBlogIndexRoute,
   ShellDocsComponentSlugRoute: ShellDocsComponentSlugRoute,
 }
 

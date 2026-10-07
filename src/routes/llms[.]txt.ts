@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { componentCatalog, componentGroups } from '#/components/docs/component-catalog'
 import { createInstallCommand } from '#/components/docs/catalog/create-install-command'
+import { blogPosts } from '#/site/blog/posts'
 import { githubUrl, siteDescription, siteName, siteUrl } from '#/lib/seo'
 
 const content = `# ${siteName}
@@ -27,6 +28,9 @@ ${componentCatalog
   .join('\n')}`,
   )
   .join('\n\n')}
+
+## Guides
+${blogPosts.map((post) => `- [${post.title}](${siteUrl}/blog/${post.slug}): ${post.description}`).join('\n')}
 
 ## Key facts
 - React 19, TypeScript, Tailwind CSS v4

@@ -498,3 +498,69 @@
     animation: none !important;
   }
 }
+
+.blog-prose {
+  @apply paragraph-text-md text-pretty text-muted-foreground;
+
+  & > * + * {
+    margin-top: 1rem;
+  }
+  & h2 {
+    @apply mt-11 card-text-lg font-[550] text-balance text-foreground;
+    scroll-margin-top: 1.5rem;
+  }
+  & h3 {
+    @apply mt-7 card-text-md font-[550] text-foreground;
+    scroll-margin-top: 1.5rem;
+  }
+  & h2 + *,
+  & h3 + * {
+    margin-top: 0.5rem;
+  }
+  & strong {
+    @apply font-medium text-foreground/85;
+  }
+  & a {
+    @apply text-foreground underline decoration-foreground/30 underline-offset-4 transition-colors hover:decoration-foreground;
+  }
+  & ul,
+  & ol {
+    @apply flex flex-col gap-1.5 pl-5;
+  }
+  & ul {
+    list-style: disc;
+  }
+  & ol {
+    list-style: decimal;
+  }
+  & li::marker {
+    @apply text-muted-foreground/60;
+  }
+  & code {
+    @apply rounded-[5px] bg-muted px-1 py-0.5 font-mono text-[0.85em] text-foreground;
+  }
+  & pre {
+    @apply overflow-x-auto rounded-md bg-card p-4 shadow-card;
+  }
+  & pre code {
+    @apply bg-transparent p-0 text-[13px] leading-6;
+  }
+  & .blog-table {
+    @apply overflow-x-auto rounded-md bg-card shadow-card;
+  }
+  & table {
+    @apply w-full border-collapse text-left text-[13px] leading-5;
+  }
+  & th {
+    @apply border-b border-border px-3 py-2 font-[550] whitespace-nowrap text-foreground;
+  }
+  & td {
+    @apply border-b border-border px-3 py-2 align-top;
+  }
+  & tr:last-child td {
+    @apply border-b-0;
+  }
+  & hr {
+    @apply my-10 border-border;
+  }
+}
