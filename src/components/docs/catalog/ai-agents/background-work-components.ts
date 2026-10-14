@@ -38,7 +38,7 @@ export function Example() {
   createAiDocument({
     slug: 'tool-timeline',
     name: 'Tool Timeline',
-    description: 'A compact narrative of the verbs, targets, state, and timing in an agent run.',
+    description: 'A live timeline of agent tool calls with timings and expandable input and output for each call.',
     usage: `import { ToolTimeline } from "@/components/ai/tool-timeline"
 
 export function Example() {
@@ -59,6 +59,18 @@ export function Example() {
         type: 'string',
         defaultValue: '—',
         description: 'Summarizes the run outcome.',
+      },
+      {
+        name: 'items[].input / items[].output',
+        type: 'string',
+        defaultValue: 'undefined',
+        description: 'Makes a call expandable to inspect its input and output.',
+      },
+      {
+        name: 'defaultOpenId',
+        type: 'string',
+        defaultValue: 'undefined',
+        description: 'Expands one call on first render.',
       },
     ],
   }),

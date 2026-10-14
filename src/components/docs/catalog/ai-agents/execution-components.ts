@@ -7,7 +7,7 @@ export const aiExecutionComponents = [
   createAiDocument({
     slug: 'todo-list',
     name: 'Todo List',
-    description: 'A live agent plan with completion counts, task states, and expandable detail.',
+    description: 'A live agent plan with completion counts, checkable tasks, and details you can expand.',
     usage: `import { TodoList } from "@/components/ai/todo-list"
 
 export function Example() {
@@ -29,6 +29,12 @@ export function Example() {
         type: 'string',
         defaultValue: 'Plan',
         description: 'Names the task collection.',
+      },
+      {
+        name: 'onItemToggle',
+        type: '(id: string) => void',
+        defaultValue: 'undefined',
+        description: 'Lets people check items off.',
       },
     ],
   }),
@@ -123,7 +129,7 @@ export function Example() {
         name: 'filename',
         type: 'string',
         defaultValue: '—',
-        description: 'Names the changed file.',
+        description: 'A collapsible code diff with expandable unchanged lines, copy patch, and a Viewed toggle.',
       },
       {
         name: 'lines',
@@ -136,6 +142,30 @@ export function Example() {
         type: 'number',
         defaultValue: 'derived',
         description: 'Overrides calculated change counts.',
+      },
+      {
+        name: 'hunks',
+        type: 'DiffHunk[]',
+        defaultValue: 'undefined',
+        description: 'Groups lines into hunks with headers and expandable hidden lines.',
+      },
+      {
+        name: 'viewed / onViewedChange',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Controls the Viewed toggle, which collapses the file.',
+      },
+      {
+        name: 'defaultOpen',
+        type: 'boolean',
+        defaultValue: 'true',
+        description: 'Expands the diff on first render.',
+      },
+      {
+        name: 'onCopy',
+        type: '(patch: string) => void',
+        defaultValue: 'undefined',
+        description: 'Runs after the patch is copied.',
       },
     ],
   }),
@@ -158,7 +188,7 @@ export function Example() {
         name: 'status',
         type: 'complete | error | running',
         defaultValue: 'complete',
-        description: 'Sets the execution state.',
+        description: 'An execution disclosure with input and output, copyable results, and error recovery with retry.',
       },
       {
         name: 'summary',
@@ -171,6 +201,24 @@ export function Example() {
         type: 'ReactNode',
         defaultValue: '—',
         description: 'Adds expandable raw output.',
+      },
+      {
+        name: 'input',
+        type: 'ReactNode',
+        defaultValue: 'undefined',
+        description: 'Shows the call input above the output.',
+      },
+      {
+        name: 'copyText',
+        type: 'string',
+        defaultValue: 'undefined',
+        description: 'Adds a copy button for the output.',
+      },
+      {
+        name: 'error / onRetry',
+        type: 'string / () => void',
+        defaultValue: 'undefined',
+        description: 'Shows the failure reason and a Retry action.',
       },
     ],
   }),

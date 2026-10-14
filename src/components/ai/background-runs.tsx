@@ -4,6 +4,7 @@ import { ClockCircleIcon as Clock3Icon } from '@solar-icons/react/linear/clock-c
 import { LayersMinimalisticIcon as RunsIcon } from '@solar-icons/react/linear/layers-minimalistic'
 import { LoaderIcon as LoaderCircleIcon } from '@solar-icons/react/linear/loader'
 import { CloseIcon as XIcon } from '@solar-icons/react/linear/close'
+import { AnimatePresence, motion } from 'motion/react'
 import * as React from 'react'
 
 import { Button } from '@/components/ui/button'
@@ -71,93 +72,100 @@ function BackgroundRuns({ className, items, onCancel, onOpen, ...props }: Backgr
         </span>
       </header>
       <ul className="space-y-1 border-t border-foreground/8 p-2">
-        {items.map((item) => {
-          const cancellable = item.status === 'queued' || item.status === 'running'
-          const confirming = confirmingId === item.id
+        <AnimatePresence initial={false}>
+          {items.map((item) => {
+            const cancellable = item.status === 'queued' || item.status === 'running'
+            const confirming = confirmingId === item.id
 
-          return (
-            <li
-              className="group relative rounded-[10px] p-2.5 transition-colors hover:bg-foreground/4"
-              key={item.id}
-            >
-              <div className="flex items-start gap-3">
-                <span className="flex h-6 shrink-0 items-center">
-                  <RunStatus status={item.status} />
-                </span>
-                <button
-                  className={cn(
-                    'min-w-0 flex-1 rounded-sm text-left outline-none focus-visible:ring-2 focus-visible:ring-ring',
-                    cancellable && 'pointer-coarse:pr-8',
-                  )}
-                  onClick={() => onOpen?.(item.id)}
-                  type="button"
-                >
-                  <span className="flex items-baseline gap-3">
-                    <span
-                      className={cn(
-                        'min-w-0 flex-1 truncate text-[15px] leading-6 font-medium',
-                        titleTone[item.status],
-                      )}
-                    >
-                      {item.label}
-                    </span>
-                    {item.updatedAt && (
-                      <time
+            return (
+              <motion.li
+                animate={{ opacity: 1, y: 0 }}
+                className="group relative rounded-[10px] p-2.5 transition-colors hover:bg-foreground/4"
+                exit={{ opacity: 0, y: -4 }}
+                initial={{ opacity: 0, y: 4 }}
+                key={item.id}
+                layout="position"
+                transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+              >
+                <div className="flex items-start gap-3">
+                  <span className="flex h-6 shrink-0 items-center">
+                    <RunStatus status={item.status} />
+                  </span>
+                  <button
+                    className={cn(
+                      'min-w-0 flex-1 rounded-sm text-left outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                      cancellable && 'pointer-coarse:pr-8',
+                    )}
+                    onClick={() => onOpen?.(item.id)}
+                    type="button"
+                  >
+                    <span className="flex items-baseline gap-3">
+                      <span
                         className={cn(
-                          'shrink-0 text-xs text-muted-foreground/70 tabular-nums',
-                          cancellable &&
-                            'transition-opacity duration-150 ease-out group-focus-within:opacity-0 group-hover:opacity-0 pointer-coarse:opacity-100',
-                          confirming && 'opacity-0',
+                          'min-w-0 flex-1 truncate text-[15px] leading-6 font-medium',
+                          titleTone[item.status],
                         )}
                       >
-                        {item.updatedAt}
-                      </time>
-                    )}
-                  </span>
-                  {item.detail && (
-                    <span className="mt-0.5 block truncate text-[13px] leading-5 text-muted-foreground/70">
-                      {item.detail}
+                        {item.label}
+                      </span>
+                      {item.updatedAt && (
+                        <time
+                          className={cn(
+                            'shrink-0 text-xs text-muted-foreground/70 tabular-nums',
+                            cancellable &&
+                              'transition-opacity duration-150 ease-out group-focus-within:opacity-0 group-hover:opacity-0 pointer-coarse:opacity-100',
+                            confirming && 'opacity-0',
+                          )}
+                        >
+                          {item.updatedAt}
+                        </time>
+                      )}
                     </span>
-                  )}
-                </button>
-                <span className="absolute top-2.5 right-2.5 flex h-6 items-center">
-                  {cancellable &&
-                    (confirming ? (
-                      <Button
-                        aria-label={`Stop ${item.label}`}
-                        className="h-6 rounded-full bg-destructive/10 px-2 text-xs text-destructive hover:bg-destructive/20 hover:text-destructive"
-                        onClick={() => cancel(item)}
-                        size="xs"
-                        type="button"
-                        variant="ghost"
-                      >
-                        Stop
-                      </Button>
-                    ) : (
-                      <Button
-                        aria-label={`Cancel ${item.label}`}
-                        className="opacity-0 transition-[opacity,background-color] duration-150 ease-out group-focus-within:opacity-100 group-hover:opacity-100 pointer-coarse:opacity-100"
-                        onClick={() => cancel(item)}
-                        size="icon-xs"
-                        type="button"
-                        variant="ghost"
-                      >
-                        <XIcon />
-                      </Button>
-                    ))}
-                </span>
-              </div>
-              {item.status === 'running' && item.progress !== undefined && (
-                <div className="mt-2.5 ml-7 h-1 overflow-hidden rounded-full bg-foreground/8">
-                  <div
-                    className="h-full origin-left rounded-full bg-blue-500 transition-[scale] duration-300 ease-linear dark:bg-blue-400"
-                    style={{ scale: `${item.progress / 100} 1` }}
-                  />
+                    {item.detail && (
+                      <span className="mt-0.5 block truncate text-[13px] leading-5 text-muted-foreground/70">
+                        {item.detail}
+                      </span>
+                    )}
+                  </button>
+                  <span className="absolute top-2.5 right-2.5 flex h-6 items-center">
+                    {cancellable &&
+                      (confirming ? (
+                        <Button
+                          aria-label={`Stop ${item.label}`}
+                          className="h-6 rounded-full bg-destructive/10 px-2 text-xs text-destructive hover:bg-destructive/20 hover:text-destructive"
+                          onClick={() => cancel(item)}
+                          size="xs"
+                          type="button"
+                          variant="ghost"
+                        >
+                          Stop
+                        </Button>
+                      ) : (
+                        <Button
+                          aria-label={`Cancel ${item.label}`}
+                          className="opacity-0 transition-[opacity,background-color] duration-150 ease-out group-focus-within:opacity-100 group-hover:opacity-100 pointer-coarse:opacity-100"
+                          onClick={() => cancel(item)}
+                          size="icon-xs"
+                          type="button"
+                          variant="ghost"
+                        >
+                          <XIcon />
+                        </Button>
+                      ))}
+                  </span>
                 </div>
-              )}
-            </li>
-          )
-        })}
+                {item.status === 'running' && item.progress !== undefined && (
+                  <div className="mt-2.5 ml-7 h-1 overflow-hidden rounded-full bg-foreground/8">
+                    <div
+                      className="h-full origin-left rounded-full bg-blue-500 transition-[scale] duration-300 ease-linear dark:bg-blue-400"
+                      style={{ scale: `${item.progress / 100} 1` }}
+                    />
+                  </div>
+                )}
+              </motion.li>
+            )
+          })}
+        </AnimatePresence>
       </ul>
     </section>
   )

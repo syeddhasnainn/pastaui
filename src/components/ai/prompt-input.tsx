@@ -25,8 +25,10 @@ interface PromptInputProps extends Omit<React.ComponentProps<'form'>, 'onSubmit'
   ) => void
   onToolSelect?: (tool: PromptTool) => void
   onFilesChange?: (files: File[]) => void
+  onValueChange?: (value: string) => void
   pending?: boolean
   placeholder?: string
+  value?: string
 }
 
 const chipEnterClass =
@@ -35,6 +37,8 @@ const chipEnterClass =
 function PromptInput({
   className,
   defaultValue = '',
+  onValueChange,
+  value: valueProp,
   model,
   models = defaultModels,
   moreModels = additionalModels,
@@ -48,7 +52,12 @@ function PromptInput({
   placeholder = 'Ask anything…',
   ...props
 }: PromptInputProps) {
-  const [value, setValue] = useState(defaultValue)
+  const [internalValue, setInternalValue] = useState(defaultValue)
+  const value = valueProp ?? internalValue
+  const setValue = (next: string) => {
+    if (valueProp === undefined) setInternalValue(next)
+    onValueChange?.(next)
+  }
   const [selectedTool, setSelectedTool] = useState<PromptTool>()
   const [files, setFiles] = useState<File[]>([])
   const fileInputRef = useRef<HTMLInputElement>(null)

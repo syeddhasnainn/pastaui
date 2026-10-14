@@ -9,6 +9,9 @@ import { AgentActivity } from '#/components/ai/agent-activity'
 import { ImageGenerationLoader } from '#/components/ai/image-generation-loader'
 import { ReasoningText } from '#/components/ai/reasoning-text'
 import { ThinkingShimmer } from '#/components/ai/thinking-shimmer'
+import { CheckCircleIcon } from '@solar-icons/react/linear/check-circle'
+import * as React from 'react'
+import { type AgentActivityItem } from '#/components/ai/agent-activity'
 
 interface PreviewProps {
   slug: string
@@ -26,75 +29,129 @@ const reasoningSentences = [
   'Matching the animation to Pasta UI tokens and verifying both light and dark themes.',
 ]
 
+const imageLoaderPrompt = 'A small glass greenhouse reflecting the last light of sunset'
+
 function ImageGenerationLoaderPreview() {
   const [generation, setGeneration] = useState(0)
-  const [progress, setProgress] = useState(18)
+  const [progress, setProgress] = useState(0)
   const isComplete = progress >= 100
 
   useEffect(() => {
-    if (isComplete) return
+    new Image().src = generatedGreenhouse
+  }, [])
 
-    const timer = window.setInterval(
-      () => setProgress((current) => Math.min(current + 2, 100)),
-      420,
-    )
-
-    return () => window.clearInterval(timer)
-  }, [generation, isComplete])
+  useEffect(() => {
+    const timer = isComplete
+      ? window.setTimeout(restartGeneration, 5000)
+      : window.setTimeout(
+          () =>
+            setProgress((current) => Math.min(current + 1 + Math.round(Math.random() * 2), 100)),
+          progress < 80 ? 90 : 180,
+        )
+    return () => window.clearTimeout(timer)
+  }, [generation, isComplete, progress])
 
   function restartGeneration() {
-    setProgress(18)
+    setProgress(0)
     setGeneration((current) => current + 1)
   }
 
   return (
-    <ImageGenerationLoader
-      alt="A glass greenhouse reflecting the sunset"
-      className="max-w-72"
-      imageUrl={generatedGreenhouse}
-      key={generation}
-      onEdit={restartGeneration}
-      onShare={() => void navigator.clipboard.writeText(window.location.href)}
-      progress={progress}
-      prompt="A small glass greenhouse reflecting the last light of sunset"
-      status={isComplete ? 'complete' : 'generating'}
-    />
+    <div className="flex w-full max-w-sm flex-col gap-3">
+      <p className="ml-auto max-w-[85%] rounded-[16px] rounded-br-md bg-muted px-3.5 py-2 text-sm text-muted-foreground">
+        {imageLoaderPrompt}
+      </p>
+      <ImageGenerationLoader
+        alt="A glass greenhouse reflecting the sunset"
+        className="max-w-80"
+        imageUrl={generatedGreenhouse}
+        key={generation}
+        onEdit={restartGeneration}
+        onShare={() => void navigator.clipboard.writeText(window.location.href)}
+        progress={progress}
+        prompt={imageLoaderPrompt}
+        status={isComplete ? 'complete' : 'generating'}
+      />
+      <p className="text-xs text-muted-foreground">
+        {isComplete ? 'Generated in 5.4s · 1024 × 1024' : 'Generating image…'}
+      </p>
+    </div>
   )
 }
 
+const agentActivitySites = ['21st.dev', 'shadcn.io', 'assistant-ui.com', 'pro.pastaui.com']
+
+const agentActivitySteps = [
+  {
+    id: 'inventory',
+    icon: <Widget4Icon />,
+    running: 'Inspecting the component inventory',
+    done: 'Inspected the component inventory',
+    detail: '51 components indexed',
+  },
+  {
+    id: 'search',
+    icon: <GlobalIcon />,
+    running: 'Searching AI-focused registries',
+    done: 'Searched AI-focused registries',
+    detail: '576 directory items compared',
+  },
+  {
+    id: 'author',
+    icon: <PenNewSquareIcon />,
+    running: 'Authoring approval and execution surfaces',
+    done: 'Authored approval and execution surfaces',
+    detail: '7 surfaces drafted',
+  },
+  {
+    id: 'verify',
+    icon: <ShieldCheckIcon />,
+    running: 'Running production verification',
+    done: 'Verified the production build',
+    detail: '116 routes checked',
+  },
+  {
+    id: 'summary',
+    icon: <CheckCircleIcon />,
+    running: 'Writing the summary',
+    done: 'Wrote the summary',
+    detail: 'Ready for review',
+  },
+]
+
 function AgentActivityPreview() {
+  const [count, setCount] = React.useState(3)
+
+  React.useEffect(() => {
+    const finished = count > agentActivitySteps.length
+    const timer = setTimeout(
+      () => setCount((value) => (finished ? 1 : value + 1)),
+      finished ? 3200 : 1700,
+    )
+    return () => clearTimeout(timer)
+  }, [count])
+
+  const items: AgentActivityItem[] = agentActivitySteps
+    .slice(0, Math.min(count, agentActivitySteps.length))
+    .map((step, index) => {
+      const running = index === count - 1 && count <= agentActivitySteps.length
+      return {
+        id: step.id,
+        icon: step.icon,
+        label: running ? step.running : step.done,
+        detail: running ? undefined : step.detail,
+        status: running ? 'running' : 'complete',
+        sources:
+          step.id === 'search'
+            ? agentActivitySites.map((site) => ({ id: site, label: site, icon: <GlobalIcon /> }))
+            : undefined,
+      }
+    })
+
   return (
-    <AgentActivity
-      className="w-full max-w-lg"
-      items={[
-        {
-          id: '1',
-          icon: <Widget4Icon />,
-          label: 'Inspected the component inventory',
-          status: 'complete',
-        },
-        {
-          id: '2',
-          icon: <GlobalIcon />,
-          label: 'Searched AI-focused registries',
-          detail: '576 directory items compared',
-          status: 'complete',
-        },
-        {
-          id: '3',
-          icon: <PenNewSquareIcon />,
-          label: 'Authoring approval and execution surfaces',
-          detail: '4 of 7 surfaces drafted',
-          status: 'running',
-        },
-        {
-          id: '4',
-          icon: <ShieldCheckIcon />,
-          label: 'Run production verification',
-          status: 'waiting',
-        },
-      ]}
-    />
+    <div className="min-h-[19rem] w-full max-w-lg">
+      <AgentActivity items={items} />
+    </div>
   )
 }
 

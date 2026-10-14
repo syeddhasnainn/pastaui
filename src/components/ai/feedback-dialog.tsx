@@ -1,11 +1,16 @@
 import { ChatSquareIcon as MessageSquareIcon } from '@solar-icons/react/linear/chat-square'
+import { CheckCircleIcon as CheckIcon } from '@solar-icons/react/linear/check-circle'
+import { CopyIcon } from '@solar-icons/react/linear/copy'
+import { DislikeIcon } from '@solar-icons/react/linear/dislike'
+import { LikeIcon } from '@solar-icons/react/linear/like'
+import { AnimatePresence, MotionConfig, motion } from 'motion/react'
 import * as React from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { cn } from 'cn'
 
-interface FeedbackDialogProps extends Omit<React.ComponentProps<'form'>, 'onSubmit'> {
+interface FeedbackFormProps extends Omit<React.ComponentProps<'form'>, 'onSubmit'> {
   comment?: string
   onCancel?: () => void
   onCommentChange?: (comment: string) => void
@@ -16,7 +21,7 @@ interface FeedbackDialogProps extends Omit<React.ComponentProps<'form'>, 'onSubm
   title?: string
 }
 
-function FeedbackDialog({
+function FeedbackForm({
   className,
   comment = '',
   onCancel,
@@ -27,7 +32,7 @@ function FeedbackDialog({
   reasons,
   title = 'What could be better?',
   ...props
-}: FeedbackDialogProps) {
+}: FeedbackFormProps) {
   const commentId = React.useId()
   const [error, setError] = React.useState('')
   const [sent, setSent] = React.useState(false)
@@ -181,5 +186,177 @@ function FeedbackDialog({
   )
 }
 
+type FeedbackRating = 'down' | 'up' | null
+
+interface FeedbackDialogProps extends Omit<FeedbackFormProps, 'onSubmit'> {
+  defaultRating?: FeedbackRating
+  onCopy?: () => void
+  onRatingChange?: (rating: FeedbackRating) => void
+  onSubmit?: (feedback: { comment: string; rating: 'down'; reason?: string }) => void
+  rating?: FeedbackRating
+}
+
+const ease = [0.23, 1, 0.32, 1] as const
+
+function FeedbackDialog({
+  className,
+  comment,
+  defaultRating = null,
+  onCancel,
+  onCommentChange,
+  onCopy,
+  onRatingChange,
+  onReasonChange,
+  onSubmit,
+  rating,
+  reason,
+  ...props
+}: FeedbackDialogProps) {
+  const [internalRating, setInternalRating] = React.useState<FeedbackRating>(defaultRating)
+  const [internalReason, setInternalReason] = React.useState<string>()
+  const [internalComment, setInternalComment] = React.useState('')
+  const [copied, setCopied] = React.useState(false)
+  const current = rating === undefined ? internalRating : rating
+  const currentReason = reason ?? internalReason
+  const currentComment = comment ?? internalComment
+
+  React.useEffect(() => {
+    if (!copied) return
+    const timer = setTimeout(() => setCopied(false), 1400)
+    return () => clearTimeout(timer)
+  }, [copied])
+
+  function rate(next: FeedbackRating) {
+    const value = current === next ? null : next
+    if (rating === undefined) setInternalRating(value)
+    onRatingChange?.(value)
+  }
+
+  const actionClass =
+    'text-muted-foreground hover:text-muted-foreground aria-pressed:bg-muted aria-pressed:text-foreground'
+
+  return (
+    <MotionConfig reducedMotion="user">
+      <div
+        data-slot="feedback-dialog"
+        className={cn('w-full font-sans text-sm tracking-[-0.05px]', className)}
+      >
+        <div
+          aria-label="Rate this response"
+          className="flex items-center gap-0.5 text-muted-foreground"
+          role="toolbar"
+        >
+          <Button
+            aria-label={copied ? 'Copied' : 'Copy response'}
+            className={actionClass}
+            onClick={() => {
+              setCopied(true)
+              onCopy?.()
+            }}
+            size="icon-sm"
+            type="button"
+            variant="ghost"
+          >
+            <span className="grid *:col-start-1 *:row-start-1 *:transition-[opacity,scale] *:duration-150 motion-reduce:*:transition-opacity">
+              <CopyIcon className={cn('size-4', copied && 'scale-75 opacity-0')} />
+              <CheckIcon className={cn('size-4', !copied && 'scale-75 opacity-0')} />
+            </span>
+          </Button>
+          <Button
+            aria-label="Good response"
+            aria-pressed={current === 'up'}
+            className={actionClass}
+            onClick={() => rate('up')}
+            size="icon-sm"
+            type="button"
+            variant="ghost"
+          >
+            <motion.span
+              animate={
+                current === 'up'
+                  ? { scale: [1, 1.25, 1], rotate: [0, -12, 0] }
+                  : { scale: 1, rotate: 0 }
+              }
+              className="flex"
+              transition={{ duration: 0.35, ease }}
+            >
+              <LikeIcon className="size-4" />
+            </motion.span>
+          </Button>
+          <Button
+            aria-label="Bad response"
+            aria-pressed={current === 'down'}
+            className={actionClass}
+            onClick={() => rate('down')}
+            size="icon-sm"
+            type="button"
+            variant="ghost"
+          >
+            <motion.span
+              animate={
+                current === 'down'
+                  ? { scale: [1, 1.25, 1], rotate: [0, 12, 0] }
+                  : { scale: 1, rotate: 0 }
+              }
+              className="flex"
+              transition={{ duration: 0.35, ease }}
+            >
+              <DislikeIcon className="size-4" />
+            </motion.span>
+          </Button>
+          <AnimatePresence initial={false}>
+            {current === 'up' && (
+              <motion.span
+                animate={{ opacity: 1, x: 0 }}
+                aria-live="polite"
+                className="ml-2 text-[13px] leading-5 font-[450]"
+                exit={{ opacity: 0, x: -4 }}
+                initial={{ opacity: 0, x: -4 }}
+                transition={{ duration: 0.2, ease }}
+              >
+                Thanks for the feedback
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </div>
+        <AnimatePresence initial={false}>
+          {current === 'down' && (
+            <motion.div
+              animate={{ height: 'auto', opacity: 1 }}
+              className="overflow-hidden"
+              exit={{ height: 0, opacity: 0 }}
+              initial={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.25, ease }}
+            >
+              <div className="p-px pt-3">
+                <FeedbackForm
+                  comment={currentComment}
+                  onCancel={() => {
+                    rate('down')
+                    onCancel?.()
+                  }}
+                  onCommentChange={(value) => {
+                    if (comment === undefined) setInternalComment(value)
+                    onCommentChange?.(value)
+                  }}
+                  onReasonChange={(value) => {
+                    if (reason === undefined) setInternalReason(value)
+                    onReasonChange?.(value)
+                  }}
+                  onSubmit={() =>
+                    onSubmit?.({ comment: currentComment, rating: 'down', reason: currentReason })
+                  }
+                  reason={currentReason}
+                  {...props}
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </MotionConfig>
+  )
+}
+
 export { FeedbackDialog }
-export type { FeedbackDialogProps }
+export type { FeedbackDialogProps, FeedbackRating }

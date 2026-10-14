@@ -171,6 +171,126 @@
           }
         }
       }
+    },
+    "tool-result": {
+      "css": {
+        ".agent-text-shimmer": {
+          "color": "transparent",
+          "background-image": "linear-gradient( 90deg, var(--muted-foreground), var(--foreground), var(--muted-foreground) )",
+          "background-size": "200% 100%",
+          "background-clip": "text",
+          "animation": "agent-text-shimmer 1.6s linear infinite"
+        },
+        "@keyframes agent-text-shimmer": {
+          "from": {
+            "background-position": "200% 0"
+          },
+          "to": {
+            "background-position": "-200% 0"
+          }
+        },
+        "@media (prefers-reduced-motion: reduce)": {
+          ".agent-text-shimmer": {
+            "color": "var(--muted-foreground)",
+            "background-image": "none",
+            "animation": "none"
+          }
+        }
+      }
+    },
+    "email-composer": {
+      "css": {
+        ".agent-text-shimmer": {
+          "color": "transparent",
+          "background-image": "linear-gradient( 90deg, var(--muted-foreground), var(--foreground), var(--muted-foreground) )",
+          "background-size": "200% 100%",
+          "background-clip": "text",
+          "animation": "agent-text-shimmer 1.6s linear infinite"
+        },
+        "@keyframes agent-text-shimmer": {
+          "from": {
+            "background-position": "200% 0"
+          },
+          "to": {
+            "background-position": "-200% 0"
+          }
+        },
+        "@media (prefers-reduced-motion: reduce)": {
+          ".agent-text-shimmer": {
+            "color": "var(--muted-foreground)",
+            "background-image": "none",
+            "animation": "none"
+          }
+        }
+      }
+    },
+    "todo-list": {
+      "css": {
+        ".agent-text-shimmer": {
+          "color": "transparent",
+          "background-image": "linear-gradient( 90deg, var(--muted-foreground), var(--foreground), var(--muted-foreground) )",
+          "background-size": "200% 100%",
+          "background-clip": "text",
+          "animation": "agent-text-shimmer 1.6s linear infinite"
+        },
+        "@keyframes agent-text-shimmer": {
+          "from": {
+            "background-position": "200% 0"
+          },
+          "to": {
+            "background-position": "-200% 0"
+          }
+        },
+        "@media (prefers-reduced-motion: reduce)": {
+          ".agent-text-shimmer": {
+            "color": "var(--muted-foreground)",
+            "background-image": "none",
+            "animation": "none"
+          }
+        }
+      }
+    },
+    "video-player": {
+      "css": {
+        ".video-player-kenburns": {
+          "animation": "video-player-kenburns 24s ease-in-out infinite alternate"
+        },
+        "@keyframes video-player-kenburns": {
+          "from": {
+            "transform": "scale(1) translate(0, 0)"
+          },
+          "to": {
+            "transform": "scale(1.12) translate(-2%, -1%)"
+          }
+        },
+        "@media (prefers-reduced-motion: reduce)": {
+          ".video-player-kenburns": {
+            "animation": "none"
+          }
+        }
+      }
+    },
+    "message-bubble": {
+      "css": {
+        ".message-bubble-typing": {
+          "animation": "message-bubble-typing 1.2s ease-in-out infinite"
+        },
+        "@keyframes message-bubble-typing": {
+          "0%, 60%, 100%": {
+            "transform": "translateY(0)",
+            "opacity": "0.4"
+          },
+          "30%": {
+            "transform": "translateY(-3px)",
+            "opacity": "1"
+          }
+        },
+        "@media (prefers-reduced-motion: reduce)": {
+          ".message-bubble-typing": {
+            "animation": "none"
+          }
+        }
+      }
     }
   }
 }

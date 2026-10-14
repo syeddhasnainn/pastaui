@@ -1,12 +1,31 @@
 import { ToolboxIcon as WrenchIcon } from '@solar-icons/react/linear/toolbox'
+import { AnimatePresence, motion } from 'motion/react'
 import * as React from 'react'
 
-import { TimelineConnector, TimelineStatusIcon } from '@/components/ai/timeline-status'
+import { TimelineStatusIcon } from '@/components/ai/timeline-status'
 import { cn } from 'cn'
+
+function TimelineConnector({ reached }: { reached: boolean }) {
+  return (
+    <span
+      aria-hidden="true"
+      className="absolute top-6 bottom-1 left-2 w-px -translate-x-1/2 overflow-hidden bg-foreground/8"
+    >
+      <span
+        className={cn(
+          'absolute inset-0 origin-top bg-foreground/25 transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none',
+          reached ? 'scale-y-100' : 'scale-y-0',
+        )}
+      />
+    </span>
+  )
+}
 
 interface ToolTimelineItem {
   detail?: string
   id: string
+  input?: string
+  output?: string
   status: 'complete' | 'pending' | 'running'
   target?: string
   time?: string
@@ -14,6 +33,7 @@ interface ToolTimelineItem {
 }
 
 interface ToolTimelineProps extends React.ComponentProps<'section'> {
+  defaultOpenId?: string
   items: ToolTimelineItem[]
   summary?: string
   title?: string
@@ -27,11 +47,13 @@ const rowTone = {
 
 function ToolTimeline({
   className,
+  defaultOpenId,
   items,
   summary,
   title = 'Tool timeline',
   ...props
 }: ToolTimelineProps) {
+  const [openId, setOpenId] = React.useState<string | undefined>(defaultOpenId)
   return (
     <section
       data-slot="tool-timeline"
@@ -63,7 +85,15 @@ function ToolTimeline({
               {next && <TimelineConnector reached={next.status !== 'pending'} />}
               <TimelineStatusIcon className="mt-0.5" status={item.status} />
               <div className="min-w-0 flex-1">
-                <div className="flex items-baseline gap-3">
+                <button
+                  aria-expanded={item.input || item.output ? openId === item.id : undefined}
+                  className="group/row -mx-1.5 -my-0.5 flex w-[calc(100%+0.75rem)] items-baseline gap-3 rounded-md px-1.5 py-0.5 text-left transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring/40 enabled:hover:bg-muted disabled:cursor-default"
+                  disabled={!item.input && !item.output}
+                  onClick={() =>
+                    setOpenId((current) => (current === item.id ? undefined : item.id))
+                  }
+                  type="button"
+                >
                   <p className="min-w-0 flex-1 truncate text-sm leading-5">
                     <span className={tone.verb}>{item.verb}</span>
                     {item.target && (
@@ -94,10 +124,40 @@ function ToolTimeline({
                       {item.status === 'running' && '…'}
                     </time>
                   )}
-                </div>
+                </button>
                 {item.detail && (
                   <p className="mt-0.5 text-xs leading-4 text-muted-foreground/70">{item.detail}</p>
                 )}
+                <AnimatePresence initial={false}>
+                  {openId === item.id && (item.input || item.output) && (
+                    <motion.dl
+                      animate={{ height: 'auto', opacity: 1 }}
+                      className="overflow-hidden"
+                      exit={{ height: 0, opacity: 0 }}
+                      initial={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
+                    >
+                      <div className="mt-2 space-y-2 rounded-[10px] bg-muted p-3 font-mono text-[11px] leading-4">
+                        {item.input && (
+                          <div>
+                            <dt className="font-sans text-muted-foreground/70">Input</dt>
+                            <dd className="mt-0.5 break-all whitespace-pre-wrap text-foreground/70">
+                              {item.input}
+                            </dd>
+                          </div>
+                        )}
+                        {item.output && (
+                          <div>
+                            <dt className="font-sans text-muted-foreground/70">Output</dt>
+                            <dd className="mt-0.5 break-all whitespace-pre-wrap text-foreground/70">
+                              {item.output}
+                            </dd>
+                          </div>
+                        )}
+                      </div>
+                    </motion.dl>
+                  )}
+                </AnimatePresence>
               </div>
             </li>
           )

@@ -46,7 +46,8 @@
       "description": "A chronological stream for reasoning, searches, terminal work, and tool execution.",
       "dependencies": [
         "@solar-icons/react@^2.2.0",
-        "cn@^0.3.0"
+        "cn@^0.3.0",
+        "motion@^13.4.0"
       ],
       "registryDependencies": [],
       "files": [
@@ -188,7 +189,8 @@
       "description": "Ongoing and completed agent jobs collected in one actionable inbox.",
       "dependencies": [
         "@solar-icons/react@^2.2.0",
-        "cn@^0.3.0"
+        "cn@^0.3.0",
+        "motion@^13.4.0"
       ],
       "registryDependencies": [
         "button",
@@ -319,7 +321,8 @@
       "description": "Clear connected, reconnecting, resumed, and offline states for resumable agent streams.",
       "dependencies": [
         "@solar-icons/react@^2.2.0",
-        "cn@^0.3.0"
+        "cn@^0.3.0",
+        "motion@^13.4.0"
       ],
       "registryDependencies": [
         "button",
@@ -418,10 +421,11 @@
       "name": "edit-message",
       "type": "registry:component",
       "title": "Edit Message",
-      "description": "An in-place message editor with cancel and save actions.",
+      "description": "A user message with copy and edit actions, inline editing with keyboard shortcuts, and switching between edited versions.",
       "dependencies": [
         "@solar-icons/react@^2.2.0",
-        "cn@^0.3.0"
+        "cn@^0.3.0",
+        "motion@^13.4.0"
       ],
       "registryDependencies": [
         "button",
@@ -442,7 +446,8 @@
       "description": "A minimal email draft with inline fields, a spacious message, and copy, expand, and send actions.",
       "dependencies": [
         "@solar-icons/react@^2.2.0",
-        "cn@^0.3.0"
+        "cn@^0.3.0",
+        "motion@^13.4.0"
       ],
       "registryDependencies": [
         "button",
@@ -454,7 +459,31 @@
           "type": "registry:component",
           "target": "@components/ai/email-composer.tsx"
         }
-      ]
+      ],
+      "css": {
+        ".agent-text-shimmer": {
+          "color": "transparent",
+          "background-image": "linear-gradient( 90deg, var(--muted-foreground), var(--foreground), var(--muted-foreground) )",
+          "background-size": "200% 100%",
+          "background-clip": "text",
+          "animation": "agent-text-shimmer 1.6s linear infinite"
+        },
+        "@keyframes agent-text-shimmer": {
+          "from": {
+            "background-position": "200% 0"
+          },
+          "to": {
+            "background-position": "-200% 0"
+          }
+        },
+        "@media (prefers-reduced-motion: reduce)": {
+          ".agent-text-shimmer": {
+            "color": "var(--muted-foreground)",
+            "background-image": "none",
+            "animation": "none"
+          }
+        }
+      }
     },
     {
       "name": "environment-variables",
@@ -482,10 +511,11 @@
       "name": "feedback-dialog",
       "type": "registry:component",
       "title": "Feedback Dialog",
-      "description": "A low-friction reason and note form for turning negative feedback into signal.",
+      "description": "Response feedback with copy, thumbs up and thumbs down actions that expands into a reason picker and an optional note.",
       "dependencies": [
         "@solar-icons/react@^2.2.0",
-        "cn@^0.3.0"
+        "cn@^0.3.0",
+        "motion@^13.4.0"
       ],
       "registryDependencies": [
         "button",
@@ -507,7 +537,8 @@
       "description": "A compact code-change surface with old and new line numbers plus live change counts.",
       "dependencies": [
         "@solar-icons/react@^2.2.0",
-        "cn@^0.3.0"
+        "cn@^0.3.0",
+        "motion@^13.4.0"
       ],
       "registryDependencies": [
         "https://pastaui.com/r/pastaui-styles.json"
@@ -524,10 +555,11 @@
       "name": "file-tree",
       "type": "registry:component",
       "title": "File Tree",
-      "description": "A compact repository tree with selection, nesting, expansion, and change status.",
+      "description": "A keyboard-navigable file tree with collapsible folders, git change badges, and change counts rolled up to folders.",
       "dependencies": [
         "@solar-icons/react@^2.2.0",
-        "cn@^0.3.0"
+        "cn@^0.3.0",
+        "motion@^13.4.0"
       ],
       "registryDependencies": [
         "https://pastaui.com/r/pastaui-styles.json"
@@ -544,9 +576,10 @@
       "name": "follow-up",
       "type": "registry:component",
       "title": "Follow Up",
-      "description": "Compact follow-up prompts that continue the conversation with one click.",
+      "description": "Follow-up prompts that stagger in after an answer, with number key shortcuts and a selected state.",
       "dependencies": [
-        "cn@^0.3.0"
+        "cn@^0.3.0",
+        "motion@^13.4.0"
       ],
       "registryDependencies": [
         "https://pastaui.com/r/pastaui-styles.json"
@@ -563,7 +596,7 @@
       "name": "follow-up-suggestions",
       "type": "registry:component",
       "title": "Follow-up Suggestions",
-      "description": "Contextual next-step prompts that invite a useful continuation after an answer.",
+      "description": "A keyboard-driven next step picker with numbered options and a free text custom question.",
       "dependencies": [
         "cn@^0.3.0"
       ],
@@ -702,7 +735,8 @@
       "title": "Message Bubble",
       "description": "A focused conversational surface with distinct user, assistant, and system treatments.",
       "dependencies": [
-        "cn@^0.3.0"
+        "cn@^0.3.0",
+        "motion@^13.4.0"
       ],
       "registryDependencies": [],
       "files": [
@@ -711,7 +745,27 @@
           "type": "registry:component",
           "target": "@components/ai/message-bubble.tsx"
         }
-      ]
+      ],
+      "css": {
+        ".message-bubble-typing": {
+          "animation": "message-bubble-typing 1.2s ease-in-out infinite"
+        },
+        "@keyframes message-bubble-typing": {
+          "0%, 60%, 100%": {
+            "transform": "translateY(0)",
+            "opacity": "0.4"
+          },
+          "30%": {
+            "transform": "translateY(-3px)",
+            "opacity": "1"
+          }
+        },
+        "@media (prefers-reduced-motion: reduce)": {
+          ".message-bubble-typing": {
+            "animation": "none"
+          }
+        }
+      }
     },
     {
       "name": "message-queue",
@@ -929,9 +983,10 @@
       "name": "research-report",
       "type": "registry:component",
       "title": "Research Report",
-      "description": "A structured, citation-ready report for research agents and deep-search results.",
+      "description": "A long-form report reader with a contents rail, reading progress, and sections that stream in as they are written.",
       "dependencies": [
-        "cn@^0.3.0"
+        "cn@^0.3.0",
+        "motion@^13.4.0"
       ],
       "registryDependencies": [
         "https://pastaui.com/r/pastaui-styles.json"
@@ -948,10 +1003,11 @@
       "name": "retrieval-chunks",
       "type": "registry:component",
       "title": "Retrieval Chunks",
-      "description": "Ranked source passages that make retrieval-augmented answers inspectable.",
+      "description": "Ranked source passages with a searching state, highlighted query terms, relevance bars, and expandable text.",
       "dependencies": [
         "@solar-icons/react@^2.2.0",
-        "cn@^0.3.0"
+        "cn@^0.3.0",
+        "motion@^13.4.0"
       ],
       "registryDependencies": [
         "https://pastaui.com/r/pastaui-styles.json"
@@ -1073,10 +1129,11 @@
       "name": "todo-list",
       "type": "registry:component",
       "title": "Todo List",
-      "description": "A live agent plan with completion counts, task states, and expandable detail.",
+      "description": "A live agent plan with completion counts, checkable tasks, and details you can expand.",
       "dependencies": [
         "@solar-icons/react@^2.2.0",
-        "cn@^0.3.0"
+        "cn@^0.3.0",
+        "motion@^13.4.0"
       ],
       "registryDependencies": [
         "collapsible",
@@ -1088,7 +1145,31 @@
           "type": "registry:component",
           "target": "@components/ai/todo-list.tsx"
         }
-      ]
+      ],
+      "css": {
+        ".agent-text-shimmer": {
+          "color": "transparent",
+          "background-image": "linear-gradient( 90deg, var(--muted-foreground), var(--foreground), var(--muted-foreground) )",
+          "background-size": "200% 100%",
+          "background-clip": "text",
+          "animation": "agent-text-shimmer 1.6s linear infinite"
+        },
+        "@keyframes agent-text-shimmer": {
+          "from": {
+            "background-position": "200% 0"
+          },
+          "to": {
+            "background-position": "-200% 0"
+          }
+        },
+        "@media (prefers-reduced-motion: reduce)": {
+          ".agent-text-shimmer": {
+            "color": "var(--muted-foreground)",
+            "background-image": "none",
+            "animation": "none"
+          }
+        }
+      }
     },
     {
       "name": "tool-approval",
@@ -1136,7 +1217,7 @@
       "name": "tool-group",
       "type": "registry:component",
       "title": "Tool Group",
-      "description": "Consecutive tool calls collapsed into one readable execution group.",
+      "description": "Consecutive tool calls in one readable group with collapsible outputs for each call.",
       "dependencies": [
         "@solar-icons/react@^2.2.0",
         "cn@^0.3.0",
@@ -1191,7 +1272,8 @@
       "description": "An execution disclosure for running, successful, or failed tools with optional raw output.",
       "dependencies": [
         "@solar-icons/react@^2.2.0",
-        "cn@^0.3.0"
+        "cn@^0.3.0",
+        "motion@^13.4.0"
       ],
       "registryDependencies": [
         "collapsible",
@@ -1203,16 +1285,41 @@
           "type": "registry:component",
           "target": "@components/ai/tool-result.tsx"
         }
-      ]
+      ],
+      "css": {
+        ".agent-text-shimmer": {
+          "color": "transparent",
+          "background-image": "linear-gradient( 90deg, var(--muted-foreground), var(--foreground), var(--muted-foreground) )",
+          "background-size": "200% 100%",
+          "background-clip": "text",
+          "animation": "agent-text-shimmer 1.6s linear infinite"
+        },
+        "@keyframes agent-text-shimmer": {
+          "from": {
+            "background-position": "200% 0"
+          },
+          "to": {
+            "background-position": "-200% 0"
+          }
+        },
+        "@media (prefers-reduced-motion: reduce)": {
+          ".agent-text-shimmer": {
+            "color": "var(--muted-foreground)",
+            "background-image": "none",
+            "animation": "none"
+          }
+        }
+      }
     },
     {
       "name": "tool-timeline",
       "type": "registry:component",
       "title": "Tool Timeline",
-      "description": "A compact narrative of the verbs, targets, state, and timing in an agent run.",
+      "description": "A live timeline of agent tool calls with timings and expandable input and output for each call.",
       "dependencies": [
         "@solar-icons/react@^2.2.0",
-        "cn@^0.3.0"
+        "cn@^0.3.0",
+        "motion@^13.4.0"
       ],
       "registryDependencies": [
         "https://pastaui.com/r/pastaui-styles.json"
@@ -1234,10 +1341,11 @@
       "name": "video-player",
       "type": "registry:component",
       "title": "Video Player",
-      "description": "A compact video result with controllable playback, seek position, and metadata.",
+      "description": "A compact video player with keyboard shortcuts, chapter markers, seek previews, and volume control.",
       "dependencies": [
         "@solar-icons/react@^2.2.0",
-        "cn@^0.3.0"
+        "cn@^0.3.0",
+        "motion@^13.4.0"
       ],
       "registryDependencies": [
         "https://pastaui.com/r/pastaui-styles.json"
@@ -1248,7 +1356,25 @@
           "type": "registry:component",
           "target": "@components/ai/video-player.tsx"
         }
-      ]
+      ],
+      "css": {
+        ".video-player-kenburns": {
+          "animation": "video-player-kenburns 24s ease-in-out infinite alternate"
+        },
+        "@keyframes video-player-kenburns": {
+          "from": {
+            "transform": "scale(1) translate(0, 0)"
+          },
+          "to": {
+            "transform": "scale(1.12) translate(-2%, -1%)"
+          }
+        },
+        "@media (prefers-reduced-motion: reduce)": {
+          ".video-player-kenburns": {
+            "animation": "none"
+          }
+        }
+      }
     },
     {
       "name": "voice-input",
@@ -1257,7 +1383,8 @@
       "description": "A tactile recording control with a recessed waveform, red playhead, and pause control.",
       "dependencies": [
         "@solar-icons/react@^2.2.0",
-        "cn@^0.3.0"
+        "cn@^0.3.0",
+        "motion@^13.4.0"
       ],
       "registryDependencies": [
         "button",

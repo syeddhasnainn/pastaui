@@ -8,6 +8,7 @@ import { cn } from 'cn'
 
 interface JobStage {
   detail?: string
+  duration?: string
   id: string
   label: string
   progress?: number
@@ -18,6 +19,8 @@ interface JobStage {
 interface JobProgressProps extends React.ComponentProps<'section'> {
   eta?: string
   onCancel?: () => void
+  onPausedChange?: (paused: boolean) => void
+  paused?: boolean
   stages: JobStage[]
   title: string
 }
@@ -34,7 +37,18 @@ function stageFill(stage: JobStage) {
   return 0
 }
 
-function JobProgress({ className, eta, onCancel, stages, title, ...props }: JobProgressProps) {
+function JobProgress({
+  className,
+  eta,
+  onCancel,
+  onPausedChange,
+  paused = false,
+  stages,
+  title,
+  ...props
+}: JobProgressProps) {
+  const [confirming, setConfirming] = React.useState(false)
+  const finished = stages.every((stage) => stage.status === 'complete')
   const totalWeight = stages.reduce((sum, stage) => sum + (stage.weight ?? 1), 0)
   const doneWeight = stages.reduce((sum, stage) => sum + (stage.weight ?? 1) * stageFill(stage), 0)
   const progress = totalWeight ? Math.round((doneWeight / totalWeight) * 100) : 0
@@ -52,13 +66,84 @@ function JobProgress({ className, eta, onCancel, stages, title, ...props }: JobP
         <div className="min-w-0 flex-1">
           <h3 className="text-[15px] leading-6 font-medium text-foreground">{title}</h3>
           <p className="mt-0.5 text-[13px] leading-5 text-muted-foreground tabular-nums">
-            {eta ? `${progress}% complete · ${eta} remaining` : `${progress}% complete`}
+            {finished
+              ? 'Finished'
+              : paused
+                ? `Paused at ${progress}%`
+                : eta
+                  ? `${progress}% complete · ${eta} remaining`
+                  : `${progress}% complete`}
           </p>
         </div>
-        {onCancel && (
-          <Button aria-label="Cancel job" onClick={onCancel} size="icon-sm" variant="ghost">
-            <XIcon />
-          </Button>
+        {!finished && (onPausedChange || onCancel) && (
+          <div className="flex shrink-0 items-center gap-1">
+            {confirming ? (
+              <>
+                <Button
+                  className="h-7 rounded-full px-3 text-muted-foreground"
+                  onClick={() => setConfirming(false)}
+                  size="sm"
+                  variant="ghost"
+                >
+                  Keep running
+                </Button>
+                <Button
+                  className="h-7 rounded-full bg-destructive/10 px-3 text-destructive hover:bg-destructive/20 hover:text-destructive"
+                  onClick={() => {
+                    setConfirming(false)
+                    onCancel?.()
+                  }}
+                  size="sm"
+                  variant="ghost"
+                >
+                  Stop
+                </Button>
+              </>
+            ) : (
+              <>
+                {onPausedChange && (
+                  <Button
+                    aria-label={paused ? 'Resume job' : 'Pause job'}
+                    aria-pressed={paused}
+                    onClick={() => onPausedChange(!paused)}
+                    size="icon-sm"
+                    variant="ghost"
+                  >
+                    {paused ? (
+                      <svg
+                        aria-hidden="true"
+                        className="size-3.5"
+                        fill="currentColor"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M5 3.5v9l7.5-4.5z" />
+                      </svg>
+                    ) : (
+                      <svg
+                        aria-hidden="true"
+                        className="size-3.5"
+                        fill="currentColor"
+                        viewBox="0 0 16 16"
+                      >
+                        <rect height="9" rx="1" width="2.5" x="4" y="3.5" />
+                        <rect height="9" rx="1" width="2.5" x="9.5" y="3.5" />
+                      </svg>
+                    )}
+                  </Button>
+                )}
+                {onCancel && (
+                  <Button
+                    aria-label="Cancel job"
+                    onClick={() => setConfirming(true)}
+                    size="icon-sm"
+                    variant="ghost"
+                  >
+                    <XIcon />
+                  </Button>
+                )}
+              </>
+            )}
+          </div>
         )}
       </div>
       <progress aria-label={`${title} progress`} className="sr-only" max={100} value={progress} />
@@ -70,7 +155,10 @@ function JobProgress({ className, eta, onCancel, stages, title, ...props }: JobP
             style={{ flexGrow: stage.weight ?? 1, flexBasis: 0 }}
           >
             <span
-              className="block h-full origin-left rounded-full bg-blue-500 transition-[scale] duration-300 ease-linear dark:bg-blue-400"
+              className={cn(
+                'block h-full origin-left rounded-full bg-blue-500 transition-[scale,opacity] duration-300 ease-linear dark:bg-blue-400',
+                paused && stage.status === 'running' && 'opacity-50',
+              )}
               style={{ scale: `${stageFill(stage)} 1` }}
             />
           </span>
@@ -80,10 +168,19 @@ function JobProgress({ className, eta, onCancel, stages, title, ...props }: JobP
         {stages.map((stage) => (
           <li className="flex items-start gap-3" key={stage.id}>
             <span className="flex h-5 w-4 shrink-0 items-center justify-center">
-              <StageIcon status={stage.status} />
+              <StageIcon paused={paused} status={stage.status} />
             </span>
             <div className="min-w-0 flex-1">
-              <p className={cn('text-sm leading-5', labelTone[stage.status])}>{stage.label}</p>
+              <p className="flex items-baseline gap-3">
+                <span className={cn('min-w-0 flex-1 text-sm leading-5', labelTone[stage.status])}>
+                  {stage.label}
+                </span>
+                {stage.status === 'complete' && stage.duration && (
+                  <span className="shrink-0 text-[13px] leading-5 text-muted-foreground/70 tabular-nums">
+                    {stage.duration}
+                  </span>
+                )}
+              </p>
               {stage.status === 'running' && stage.detail && (
                 <p className="mt-0.5 text-[13px] leading-5 text-muted-foreground/70 tabular-nums">
                   {stage.detail}
@@ -97,7 +194,7 @@ function JobProgress({ className, eta, onCancel, stages, title, ...props }: JobP
   )
 }
 
-function StageIcon({ status }: Pick<JobStage, 'status'>) {
+function StageIcon({ paused, status }: Pick<JobStage, 'status'> & { paused?: boolean }) {
   if (status === 'complete')
     return (
       <CheckIcon
@@ -109,7 +206,10 @@ function StageIcon({ status }: Pick<JobStage, 'status'>) {
     return (
       <LoaderCircleIcon
         aria-label="Running"
-        className="size-4 animate-spin text-blue-500 motion-reduce:animate-none dark:text-blue-400"
+        className={cn(
+          'size-4 text-blue-500 dark:text-blue-400',
+          paused ? 'opacity-50' : 'animate-spin motion-reduce:animate-none',
+        )}
       />
     )
   return (
@@ -124,4 +224,4 @@ function StageIcon({ status }: Pick<JobStage, 'status'>) {
 }
 
 export { JobProgress }
-export type { JobProgressProps, JobStage }
+export type { JobStage, JobProgressProps }

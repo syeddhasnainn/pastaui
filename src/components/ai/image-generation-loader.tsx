@@ -62,6 +62,15 @@ function ImageGenerationLoader({
               max={100}
               value={displayedProgress}
             />
+            {playable && status === 'generating' && (
+              <span className="pointer-events-none absolute top-3.5 left-3.5 z-30 flex h-7 items-center gap-1.5 rounded-full border-[0.5px] border-border bg-background/80 px-2.5 text-xs font-medium text-foreground shadow-sm backdrop-blur-md transition-[opacity,translate] [transition-delay:1200ms] duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] select-none starting:-translate-y-1 starting:opacity-0 motion-reduce:starting:translate-y-0">
+                <span className="relative flex size-1.5">
+                  <span className="absolute inset-0 animate-ping rounded-full bg-current opacity-50 motion-reduce:animate-none" />
+                  <span className="relative size-1.5 rounded-full bg-current" />
+                </span>
+                Click to play Snake while you wait
+              </span>
+            )}
             <span className="pointer-events-none absolute right-3.5 bottom-3.5 z-30 flex h-7 min-w-14 items-center justify-center rounded-full border-[0.5px] border-border bg-background/80 px-2 text-sm font-medium text-foreground tabular-nums shadow-sm backdrop-blur-md select-none">
               {status === 'queued' ? 'Queued' : `${displayedProgress}%`}
             </span>
@@ -81,7 +90,7 @@ interface CompletedImageProps {
 }
 
 const revealClass =
-  'transition-[opacity,scale] duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] starting:scale-[1.03] starting:opacity-0 motion-reduce:starting:scale-100'
+  'transition-[opacity,scale,filter] duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] starting:scale-[1.06] starting:opacity-0 starting:blur-xl motion-reduce:starting:scale-100 motion-reduce:starting:blur-none'
 
 function CompletedImage({ alt, imageUrl, onEdit, onShare }: CompletedImageProps) {
   return (
@@ -129,4 +138,5 @@ function CompletedImage({ alt, imageUrl, onEdit, onShare }: CompletedImageProps)
 }
 
 export { ImageGenerationLoader }
-export type { ImageGenerationLoaderProps }
+export type { ImageGenerationLoaderProps, CompletedImageProps }
+export default ImageGenerationLoader

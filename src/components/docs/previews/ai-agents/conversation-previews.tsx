@@ -11,19 +11,56 @@ import { MessageQueue } from '#/components/ai/message-queue'
 import { ModelPicker } from '#/components/ai/model-picker'
 import { PromptInput } from '#/components/ai/prompt-input'
 import { VoiceInput } from '#/components/ai/voice-input'
+import * as React from 'react'
+import { type MessageStatus } from '#/components/ai/message-bubble'
 
 interface PreviewProps {
   slug: string
 }
 
+const messageBubbleReply =
+  'The email field is missing a persistent label. I can add one and preserve the current layout.'
+
+const messageBubbleFrames: {
+  status: MessageStatus
+  reply: 'none' | 'typing' | 'streaming' | 'done'
+  wait: number
+}[] = [
+  { status: 'sending', reply: 'none', wait: 700 },
+  { status: 'sent', reply: 'none', wait: 700 },
+  { status: 'read', reply: 'typing', wait: 1500 },
+  { status: 'read', reply: 'streaming', wait: 1800 },
+  { status: 'read', reply: 'done', wait: 3200 },
+]
+
 function MessageBubblePreview() {
+  const [index, setIndex] = React.useState(3)
+  const [round, setRound] = React.useState(0)
+  const frame = messageBubbleFrames[index]
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      if (index === messageBubbleFrames.length - 1) setRound((value) => value + 1)
+      setIndex((value) => (value + 1) % messageBubbleFrames.length)
+    }, frame.wait)
+    return () => clearTimeout(timer)
+  }, [frame.wait, index])
+
   return (
-    <div className="flex w-full max-w-lg flex-col gap-3">
-      <MessageBubble from="user">Find the accessibility issue in this form.</MessageBubble>
-      <MessageBubble>
-        The email field is missing a persistent label. I can add one and preserve the current
-        layout.
+    <div className="flex min-h-64 w-full max-w-lg flex-col gap-3" key={round}>
+      <MessageBubble from="system">Today</MessageBubble>
+      <MessageBubble from="user" status={frame.status} time="09:41">
+        Find the accessibility issue in this form.
       </MessageBubble>
+      {frame.reply !== 'none' && (
+        <MessageBubble
+          streaming={frame.reply === 'streaming'}
+          time={frame.reply === 'done' ? '09:41' : undefined}
+          typing={frame.reply === 'typing'}
+        >
+          {messageBubbleReply}
+        </MessageBubble>
+      )}
     </div>
   )
 }
@@ -52,17 +89,51 @@ function MessageScrollerPreview() {
   return <MessageScroller className="max-w-lg" messages={messages} />
 }
 
+const promptInputPrompts = [
+  'Build a pricing page with monthly and yearly toggles, three plans, and a comparison table.',
+  'Add keyboard shortcuts to the command palette and show them next to each action.',
+]
+
 function PromptInputPreview() {
-  const [submitted, setSubmitted] = useState('')
-  return (
-    <div className="w-full max-w-xl space-y-3">
-      <PromptInput
-        placeholder="Describe what you want to build…"
-        onSubmit={(message, selection) =>
-          setSubmitted(`Sent with ${selection.model} · ${selection.effort} effort: ${message}`)
+  const [prompt, setPrompt] = React.useState(0)
+  const [typed, setTyped] = React.useState(48)
+  const [pending, setPending] = React.useState(false)
+  const [value, setValue] = React.useState(promptInputPrompts[0].slice(0, 48))
+  const [auto, setAuto] = React.useState(true)
+  const [sent, setSent] = React.useState('')
+  const text = promptInputPrompts[prompt]
+
+  React.useEffect(() => {
+    if (!auto) return
+    const done = typed >= text.length
+    const timer = setTimeout(
+      () => {
+        if (!done) {
+          setTyped((count) => count + 1)
+          setValue(text.slice(0, typed + 1))
+        } else if (!pending) setPending(true)
+        else {
+          setPending(false)
+          setValue('')
+          setTyped(0)
+          setPrompt((index) => (index + 1) % promptInputPrompts.length)
         }
+      },
+      done ? (pending ? 1800 : 900) : 32,
+    )
+    return () => clearTimeout(timer)
+  }, [auto, pending, text, typed])
+
+  return (
+    <div className="w-full max-w-xl space-y-3" onPointerDown={() => setAuto(false)}>
+      <PromptInput
+        onSubmit={(message, selection) => setSent(`Sent with ${selection.model}: ${message}`)}
+        onValueChange={setValue}
+        pending={pending}
+        placeholder="Describe what you want to build…"
+        value={value}
       />
-      <output className="block text-xs leading-5 text-muted-foreground">{submitted}</output>
+      <output className="block min-h-5 text-xs leading-5 text-muted-foreground">{sent}</output>
     </div>
   )
 }
@@ -183,11 +254,57 @@ function ModelPickerPreview() {
   )
 }
 
+const voiceInputWords =
+  'Summarize the open pull requests and flag anything that touches the checkout flow before Friday.'.split(
+    ' ',
+  )
+
+function voiceInputFormat(seconds: number) {
+  return `00:${String(seconds).padStart(2, '0')}`
+}
+
 function VoiceInputPreview() {
-  const [recording, setRecording] = useState(true)
+  const [recording, setRecording] = React.useState(true)
+  const [count, setCount] = React.useState(4)
+  const [seconds, setSeconds] = React.useState(3)
+
+  React.useEffect(() => {
+    if (!recording) return
+    const timer = setInterval(() => setSeconds((value) => value + 1), 1000)
+    return () => clearInterval(timer)
+  }, [recording])
+
+  React.useEffect(() => {
+    const timer = setTimeout(
+      () => {
+        if (!recording) {
+          setCount(0)
+          setSeconds(0)
+          setRecording(true)
+        } else if (count >= voiceInputWords.length) setRecording(false)
+        else setCount((value) => value + 1)
+      },
+      recording ? 380 : 3600,
+    )
+    return () => clearTimeout(timer)
+  }, [count, recording])
+
+  function reset() {
+    setCount(0)
+    setSeconds(0)
+    setRecording(false)
+  }
 
   return (
-    <VoiceInput className="max-w-[460px]" recording={recording} onRecordingChange={setRecording} />
+    <VoiceInput
+      className="max-w-md"
+      duration={voiceInputFormat(seconds)}
+      onCancel={reset}
+      onRecordingChange={setRecording}
+      onSend={reset}
+      recording={recording}
+      transcript={voiceInputWords.slice(0, count).join(' ')}
+    />
   )
 }
 

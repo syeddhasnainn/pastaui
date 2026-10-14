@@ -50,7 +50,7 @@ export function ResearchingExample() {
         name: 'PlanResearchCard',
         type: 'component',
         defaultValue: '—',
-        description: 'Researching variant, imported from components/ai/plan-research-card.',
+        description: 'A proposed agent plan with inline step editing, a start countdown, and cancel controls.',
       },
       {
         name: 'progress / searchCount',
@@ -120,6 +120,12 @@ export function ResearchingExample() {
         type: 'number',
         defaultValue: '60',
         description: 'Total countdown duration used to draw the remaining-time ring.',
+      },
+      {
+        name: 'onStepsChange',
+        type: '(steps) => void',
+        defaultValue: 'undefined',
+        description: 'Enables inline editing of the plan steps.',
       },
     ],
   }),

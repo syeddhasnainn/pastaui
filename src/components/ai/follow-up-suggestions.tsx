@@ -8,15 +8,17 @@ import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { cn } from 'cn'
 
 interface FollowUpSuggestion {
+  custom?: boolean
   id: string
   label: string
+  placeholder?: string
 }
 
 interface FollowUpSuggestionsProps extends Omit<React.ComponentProps<'section'>, 'onSelect'> {
   defaultSelectedId?: string
   items: FollowUpSuggestion[]
   onDismiss?: () => void
-  onSelect?: (id: string) => void
+  onSelect?: (id: string, value?: string) => void
   onSelectedIdChange?: (id: string) => void
   selectedId?: string
   title?: string
@@ -39,6 +41,9 @@ function FollowUpSuggestions({
     defaultSelectedId ?? items[0]?.id,
   )
   const currentSelectedId = selectedId ?? uncontrolledSelectedId
+  const currentItem = items.find((item) => item.id === currentSelectedId)
+  const [customValue, setCustomValue] = useState('')
+  const customRef = useRef<HTMLInputElement>(null)
 
   function selectSuggestion(id: string, focus = false) {
     if (selectedId === undefined) setUncontrolledSelectedId(id)
@@ -58,7 +63,13 @@ function FollowUpSuggestions({
   }
 
   function submitSelection() {
-    if (currentSelectedId) onSelect?.(currentSelectedId)
+    if (!currentSelectedId) return
+    if (currentItem?.custom) {
+      if (!customValue.trim()) return customRef.current?.focus()
+      onSelect?.(currentSelectedId, customValue.trim())
+      return
+    }
+    onSelect?.(currentSelectedId)
   }
 
   function handleKeyDown(event: React.KeyboardEvent<HTMLElement>) {
@@ -150,6 +161,36 @@ function FollowUpSuggestions({
               )
             })}
           </ToggleGroup>
+          <div
+            className={cn(
+              'grid transition-[grid-template-rows,opacity] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)]',
+              currentItem?.custom
+                ? 'mt-1 grid-rows-[1fr] opacity-100'
+                : 'grid-rows-[0fr] opacity-0',
+            )}
+          >
+            <div className="overflow-hidden">
+              <label className="sr-only" htmlFor={`${titleId}-custom`}>
+                {currentItem?.label ?? 'Your question'}
+              </label>
+              <input
+                className="h-10 w-full rounded-[10px] bg-muted/70 px-3 text-sm leading-5 font-[450] text-muted-foreground outline-none placeholder:text-muted-foreground/60"
+                id={`${titleId}-custom`}
+                onChange={(event) => setCustomValue(event.target.value)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
+                    event.preventDefault()
+                    submitSelection()
+                  }
+                  if (event.key === 'Escape') onDismiss?.()
+                }}
+                placeholder={currentItem?.placeholder ?? 'Type your question'}
+                ref={customRef}
+                tabIndex={currentItem?.custom ? 0 : -1}
+                value={customValue}
+              />
+            </div>
+          </div>
         </CardContent>
 
         <CardFooter className="flex flex-wrap justify-between gap-3 border-t-0 bg-transparent pt-1 pb-5">
@@ -167,7 +208,7 @@ function FollowUpSuggestions({
             )}
             <Button
               className="h-7 rounded-full border-0 bg-primary bg-linear-to-b from-[color-mix(in_oklch,var(--primary),var(--primary-foreground)_30%)] to-primary px-3 text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.18)] shadow-none hover:brightness-110 dark:bg-none"
-              disabled={!currentSelectedId}
+              disabled={!currentSelectedId || (currentItem?.custom && !customValue.trim())}
               onClick={submitSelection}
               size="sm"
               variant="default"

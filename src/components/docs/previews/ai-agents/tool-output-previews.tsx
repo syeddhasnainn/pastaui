@@ -1,5 +1,5 @@
 import type { ComponentType } from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { EmailComposer } from '#/components/ai/email-composer'
 import { SearchResultsTabs, type SearchResultItem } from '#/components/ai/search-results-tabs'
@@ -9,20 +9,45 @@ interface PreviewProps {
   slug: string
 }
 
+const videoPlayerDuration = 74
+
+const videoPlayerChapters = [
+  { start: 0, title: 'Arrival' },
+  { start: 14, title: 'Into the forest' },
+  { start: 38, title: 'The ridge' },
+  { start: 58, title: 'Last light' },
+]
+
 function VideoPlayerPreview() {
   const [playing, setPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(18)
+
+  useEffect(() => {
+    if (!playing) return
+    const timer = setInterval(
+      () => setCurrentTime((time) => (time + 0.25 >= videoPlayerDuration ? 0 : time + 0.25)),
+      250,
+    )
+    return () => clearInterval(timer)
+  }, [playing])
+
   return (
-    <VideoPlayer
-      className="w-full max-w-2xl"
-      currentTime={currentTime}
-      duration={74}
-      onPlayingChange={setPlaying}
-      onSeek={setCurrentTime}
-      playing={playing}
-      subtitle="A moment outdoors"
-      title="Into the wild"
-    />
+    <div className="w-full max-w-2xl space-y-3">
+      <VideoPlayer
+        chapters={videoPlayerChapters}
+        className="w-full"
+        currentTime={currentTime}
+        duration={videoPlayerDuration}
+        onPlayingChange={setPlaying}
+        onSeek={setCurrentTime}
+        playing={playing}
+        subtitle="A moment outdoors"
+        title="Into the wild"
+      />
+      <p className="text-center text-xs leading-5 font-[450] text-muted-foreground">
+        Space to play · ← → to seek 10s · M to mute · F for fullscreen
+      </p>
+    </div>
   )
 }
 
@@ -168,29 +193,49 @@ function SearchResultsTabsPreview() {
   )
 }
 
+const emailComposerDraft =
+  'Hi team,\n\nThe new agent component collection is ready for review. It focuses on complete application workflows rather than low-level primitives.\n\nCould you share feedback by Friday?\n\nThanks,\nSam'
+
+const emailComposerTeam = ['design@pastaui.dev', 'maya@pastaui.dev']
+
 function EmailComposerPreview() {
-  const [recipients, setRecipients] = useState(['design@pastaui.dev'])
-  const [sent, setSent] = useState(false)
+  const [recipients, setRecipients] = useState<string[]>(emailComposerTeam)
   const [subject, setSubject] = useState('Launch review for Pasta UI')
-  const [body, setBody] = useState(
-    'Hi team,\n\nThe new agent component collection is ready for review. It focuses on complete application workflows rather than low-level primitives.\n\nCould you share feedback by Friday?',
-  )
+  const [body, setBody] = useState(emailComposerDraft.slice(0, 140))
+  const [typed, setTyped] = useState(140)
+  const drafting = typed < emailComposerDraft.length
+
+  useEffect(() => {
+    if (recipients.length >= emailComposerTeam.length || typed > 0) return
+    const timer = setTimeout(
+      () => setRecipients(emailComposerTeam.slice(0, recipients.length + 1)),
+      450,
+    )
+    return () => clearTimeout(timer)
+  }, [recipients, typed])
+
+  useEffect(() => {
+    if (!drafting || recipients.length < emailComposerTeam.length) return
+    const timer = setTimeout(() => {
+      const next = Math.min(typed + 3, emailComposerDraft.length)
+      setTyped(next)
+      setBody(emailComposerDraft.slice(0, next))
+    }, 22)
+    return () => clearTimeout(timer)
+  }, [drafting, recipients, typed])
+
   return (
-    <div className="w-full max-w-2xl">
-      <EmailComposer
-        body={body}
-        className="w-full max-w-2xl"
-        onSubmit={() => setSent(true)}
-        onRecipientsChange={setRecipients}
-        onBodyChange={setBody}
-        onSubjectChange={setSubject}
-        recipients={recipients}
-        subject={subject}
-      />
-      <output className="mt-3 block text-center text-xs text-muted-foreground">
-        {sent ? 'Email sent (demo).' : ''}
-      </output>
-    </div>
+    <EmailComposer
+      body={body}
+      className="w-full max-w-2xl"
+      drafting={drafting}
+      onBodyChange={setBody}
+      onRecipientsChange={setRecipients}
+      onSubjectChange={setSubject}
+      onSubmit={() => new Promise((resolve) => setTimeout(resolve, 1100))}
+      recipients={recipients}
+      subject={subject}
+    />
   )
 }
 

@@ -7,7 +7,7 @@ export const aiConversationUtilityComponents = [
   createAiDocument({
     slug: 'follow-up',
     name: 'Follow Up',
-    description: 'Compact follow-up prompts that continue the conversation with one click.',
+    description: 'Follow-up prompts that stagger in after an answer, with number key shortcuts and a selected state.',
     usage: `import { useState } from "react"
 import { FollowUp } from "@/components/ai/follow-up"
 
@@ -48,12 +48,30 @@ export function Example() {
         description:
           'Called with the selected prompt. Connect this to your chat submission handler.',
       },
+      {
+        name: 'loading',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Shows placeholder chips while suggestions load.',
+      },
+      {
+        name: 'selectedId',
+        type: 'string',
+        defaultValue: 'undefined',
+        description: 'Marks the chosen suggestion and fades the rest.',
+      },
+      {
+        name: 'shortcuts',
+        type: 'boolean',
+        defaultValue: 'true',
+        description: 'Enables number key shortcuts while focus is inside.',
+      },
     ],
   }),
   createAiDocument({
     slug: 'follow-up-suggestions',
     name: 'Follow-up Suggestions',
-    description: 'Contextual next-step prompts that invite a useful continuation after an answer.',
+    description: 'A keyboard-driven next step picker with numbered options and a free text custom question.',
     usage: `import { FollowUpSuggestions } from "@/components/ai/follow-up-suggestions"
 
 export function Example() {
@@ -98,33 +116,65 @@ export function Example() {
         defaultValue: '—',
         description: 'Dismisses the suggestion card.',
       },
+      {
+        name: 'items[].custom',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Turns an item into a free text question field.',
+      },
     ],
   }),
   createAiDocument({
     slug: 'edit-message',
     name: 'Edit Message',
-    description: 'An in-place message editor with cancel and save actions.',
+    description:
+      'A user message with copy and edit actions, inline editing with keyboard shortcuts, and switching between edited versions.',
     usage: `import { EditMessage } from "@/components/ai/edit-message"
 
 export function Example() {
-  return <EditMessage value={value} onValueChange={setValue} />
+  return <EditMessage defaultVersions={["Summarize the release notes."]} onSave={resend} />
 }`,
-    source: `<section>
-  <Textarea value={value} onChange={onValueChange} />
-  <EditActions />
-</section>`,
+    source: `<div>
+  <MessageBubble>{versions[active]}</MessageBubble>
+  <MessageActions versions copy edit />
+  <InlineEditor draft onSave onCancel />
+</div>`,
     api: [
       {
-        name: 'value',
+        name: 'versions / defaultVersions',
+        type: 'string[]',
+        defaultValue: "['']",
+        description: 'Holds each edited version of the message.',
+      },
+      {
+        name: 'activeVersion',
+        type: 'number',
+        defaultValue: 'last version',
+        description: 'Controls which version is shown.',
+      },
+      {
+        name: 'editing / onEditingChange',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Controls the inline editor.',
+      },
+      {
+        name: 'draft / onDraftChange',
         type: 'string',
-        defaultValue: '—',
-        description: 'Controls the edited message.',
+        defaultValue: "''",
+        description: 'Controls the editor text.',
       },
       {
         name: 'onSave',
-        type: '() => void',
-        defaultValue: '—',
-        description: 'Saves and resends the edited message.',
+        type: '(value: string) => void',
+        defaultValue: 'undefined',
+        description: 'Saves the edit as a new version.',
+      },
+      {
+        name: 'onCopy',
+        type: '(value: string) => void',
+        defaultValue: 'undefined',
+        description: 'Runs after the message is copied.',
       },
     ],
   }),

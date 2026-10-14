@@ -4,7 +4,7 @@ export const aiToolOutputComponents = [
   createAiDocument({
     slug: 'video-player',
     name: 'Video Player',
-    description: 'A compact video result with controllable playback, seek position, and metadata.',
+    description: 'A compact video player with keyboard shortcuts, chapter markers, seek previews, and volume control.',
     usage: `import { VideoPlayer } from "@/components/ai/video-player"
 
 export function Example() {
@@ -46,6 +46,12 @@ export function Example() {
         type: 'ReactNode',
         defaultValue: '—',
         description: 'Renders a custom poster surface.',
+      },
+      {
+        name: 'chapters',
+        type: '{ start: number; title: string }[]',
+        defaultValue: '[]',
+        description: 'Adds chapter marks and the current chapter name.',
       },
     ],
   }),
@@ -119,7 +125,7 @@ export function Example() {
         name: 'recipients',
         type: 'string[]',
         defaultValue: '—',
-        description: 'Displays recipient addresses separated by commas.',
+        description: 'A minimal email draft with inline recipients, a subject, a spacious message, and an animated send action.',
       },
       {
         name: 'subject',

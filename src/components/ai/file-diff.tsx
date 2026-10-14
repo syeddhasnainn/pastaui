@@ -1,4 +1,9 @@
+import { AltArrowRightIcon as ChevronRightIcon } from '@solar-icons/react/linear/alt-arrow-right'
+import { CheckCircleIcon as CheckIcon } from '@solar-icons/react/linear/check-circle'
+import { CopyIcon } from '@solar-icons/react/linear/copy'
 import { FileCodeIcon as FileCode2Icon } from '@solar-icons/react/linear/file-code'
+import { SortVerticalIcon as ExpandIcon } from '@solar-icons/react/linear/sort-vertical'
+import { AnimatePresence, MotionConfig, motion } from 'motion/react'
 import * as React from 'react'
 
 import { cn } from 'cn'
@@ -10,67 +15,225 @@ interface DiffLine {
   type: 'addition' | 'context' | 'deletion'
 }
 
-interface FileDiffProps extends React.ComponentProps<'figure'> {
-  additions?: number
-  deletions?: number
-  filename: string
+interface DiffHunk {
+  header?: string
+  hidden?: DiffLine[]
+  id: string
   lines: DiffLine[]
 }
 
-function FileDiff({ additions, className, deletions, filename, lines, ...props }: FileDiffProps) {
-  const added = additions ?? lines.filter((line) => line.type === 'addition').length
-  const removed = deletions ?? lines.filter((line) => line.type === 'deletion').length
+interface FileDiffProps extends Omit<React.ComponentProps<'figure'>, 'onCopy'> {
+  additions?: number
+  defaultOpen?: boolean
+  deletions?: number
+  filename: string
+  hunks?: DiffHunk[]
+  lines?: DiffLine[]
+  onCopy?: (patch: string) => void
+  onViewedChange?: (viewed: boolean) => void
+  viewed?: boolean
+}
 
+const ease = [0.23, 1, 0.32, 1] as const
+const sign = { addition: '+', context: ' ', deletion: '−' }
+
+function Row({ line }: { line: DiffLine }) {
   return (
-    <figure
-      data-slot="file-diff"
+    <span
       className={cn(
-        'overflow-hidden rounded-[16px] bg-card font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',
-        className,
+        'grid min-w-max grid-cols-[2rem_2rem_1rem_1fr] px-2 transition-colors duration-100 hover:brightness-95 dark:hover:brightness-125',
+        line.type === 'addition' && 'bg-emerald-500/10',
+        line.type === 'deletion' && 'bg-red-500/10',
       )}
-      {...props}
     >
-      <figcaption className="flex h-10 items-center gap-2 px-3 metadata-label">
-        {/\.tsx?$/i.test(filename) ? (
-          <TypeScriptIcon aria-hidden="true" className="size-4 shrink-0 text-[#3178c6]" />
-        ) : (
-          <FileCode2Icon aria-hidden="true" className="size-4 shrink-0" />
-        )}
-        <span className="min-w-0 truncate">{filename}</span>
-        <span className="ml-auto text-emerald-600">+{added}</span>
-        <span className="text-red-500">−{removed}</span>
-      </figcaption>
-      <pre className="overflow-x-auto border-t border-foreground/8 py-2 text-[12px] leading-5">
-        <code>
-          {lines.map((line, index) => (
-            <span
-              className={cn(
-                'grid min-w-max grid-cols-[2rem_2rem_1rem_1fr] px-2',
-                line.type === 'addition' && 'bg-emerald-500/10',
-                line.type === 'deletion' && 'bg-red-500/10',
-              )}
-              key={`${line.type}-${index}-${line.content}`}
-            >
-              <span className="text-right text-muted-foreground/60 select-none">
-                {line.oldNumber ?? ''}
-              </span>
-              <span className="text-right text-muted-foreground/60 select-none">
-                {line.newNumber ?? ''}
-              </span>
-              <span className="text-center text-muted-foreground select-none">
-                {line.type === 'addition' ? '+' : line.type === 'deletion' ? '−' : ' '}
-              </span>
-              <span className="pr-4">{line.content || ' '}</span>
-            </span>
-          ))}
-        </code>
-      </pre>
-    </figure>
+      <span className="text-right text-muted-foreground/60 select-none">
+        {line.oldNumber ?? ''}
+      </span>
+      <span className="text-right text-muted-foreground/60 select-none">
+        {line.newNumber ?? ''}
+      </span>
+      <span className="text-center text-muted-foreground select-none">{sign[line.type]}</span>
+      <span className="pr-4 text-foreground">{line.content || ' '}</span>
+    </span>
   )
 }
 
-export { FileDiff }
-export type { DiffLine, FileDiffProps }
+function FileDiff({
+  additions,
+  className,
+  defaultOpen = true,
+  deletions,
+  filename,
+  hunks,
+  lines = [],
+  onCopy,
+  onViewedChange,
+  viewed,
+  ...props
+}: FileDiffProps) {
+  const bodyId = React.useId()
+  const groups = hunks ?? [{ id: 'all', lines }]
+  const all = groups.flatMap((hunk) => hunk.lines)
+  const added = additions ?? all.filter((line) => line.type === 'addition').length
+  const removed = deletions ?? all.filter((line) => line.type === 'deletion').length
+  const [internalViewed, setInternalViewed] = React.useState(false)
+  const isViewed = viewed ?? internalViewed
+  const [open, setOpen] = React.useState(defaultOpen && !isViewed)
+  const [expanded, setExpanded] = React.useState<Set<string>>(() => new Set())
+  const [copied, setCopied] = React.useState(false)
+
+  React.useEffect(() => {
+    if (!copied) return
+    const timer = setTimeout(() => setCopied(false), 1400)
+    return () => clearTimeout(timer)
+  }, [copied])
+
+  function toggleViewed() {
+    const next = !isViewed
+    if (viewed === undefined) setInternalViewed(next)
+    if (next) setOpen(false)
+    onViewedChange?.(next)
+  }
+
+  function copy() {
+    const patch = all
+      .map((line) => `${sign[line.type] === '−' ? '-' : sign[line.type]}${line.content}`)
+      .join('\n')
+    void navigator.clipboard?.writeText(patch).catch(() => undefined)
+    setCopied(true)
+    onCopy?.(patch)
+  }
+
+  const iconButton =
+    'flex size-6 items-center justify-center rounded-md text-muted-foreground outline-none transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring/40'
+
+  return (
+    <MotionConfig reducedMotion="user">
+      <figure
+        data-slot="file-diff"
+        data-viewed={isViewed}
+        className={cn(
+          'overflow-hidden rounded-[16px] bg-card font-sans text-sm font-[450] tracking-[-0.05px] text-muted-foreground shadow-card',
+          className,
+        )}
+        {...props}
+      >
+        <figcaption className="flex h-10 items-center gap-2 pr-2 pl-1.5 metadata-label">
+          <button
+            aria-controls={bodyId}
+            aria-expanded={open}
+            aria-label={open ? `Collapse ${filename}` : `Expand ${filename}`}
+            className={iconButton}
+            onClick={() => setOpen((value) => !value)}
+            type="button"
+          >
+            <ChevronRightIcon
+              className={cn(
+                'size-3.5 transition-[rotate] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none',
+                open && 'rotate-90',
+              )}
+            />
+          </button>
+          {/\.tsx?$/i.test(filename) ? (
+            <TypeScriptIcon aria-hidden="true" className="size-4 shrink-0 text-[#3178c6]" />
+          ) : (
+            <FileCode2Icon aria-hidden="true" className="size-4 shrink-0" />
+          )}
+          <span className={cn('min-w-0 truncate transition-opacity', isViewed && 'opacity-60')}>
+            {filename}
+          </span>
+          <span className="ml-auto text-emerald-600 tabular-nums">+{added}</span>
+          <span className="text-red-500 tabular-nums">−{removed}</span>
+          <button
+            aria-label={copied ? 'Copied' : 'Copy patch'}
+            className={iconButton}
+            onClick={copy}
+            type="button"
+          >
+            <span className="grid *:col-start-1 *:row-start-1 *:transition-[opacity,scale] *:duration-150 motion-reduce:*:transition-opacity">
+              <CopyIcon className={cn('size-3.5', copied && 'scale-75 opacity-0')} />
+              <CheckIcon className={cn('size-3.5', !copied && 'scale-75 opacity-0')} />
+            </span>
+          </button>
+          <label className="flex cursor-pointer items-center gap-1.5 rounded-md px-1.5 py-0.5 transition-colors hover:bg-muted">
+            <input
+              checked={isViewed}
+              className="size-3.5 accent-current"
+              onChange={toggleViewed}
+              type="checkbox"
+            />
+            Viewed
+          </label>
+        </figcaption>
+        <AnimatePresence initial={false}>
+          {open && (
+            <motion.div
+              animate={{ height: 'auto', opacity: 1 }}
+              className="overflow-hidden"
+              exit={{ height: 0, opacity: 0 }}
+              id={bodyId}
+              initial={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.22, ease }}
+            >
+              <pre className="overflow-x-auto border-t border-foreground/8 py-2 text-[12px] leading-5">
+                <code className="block">
+                  {groups.map((hunk) => {
+                    const showHidden = expanded.has(hunk.id)
+                    return (
+                      <React.Fragment key={hunk.id}>
+                        {hunk.header && (
+                          <span className="flex min-w-max items-center gap-2 px-2 text-muted-foreground/60">
+                            {hunk.hidden?.length ? (
+                              <button
+                                aria-expanded={showHidden}
+                                className="-ml-0.5 flex items-center gap-1.5 rounded-md px-1 text-muted-foreground transition-colors outline-none hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring/40"
+                                onClick={() =>
+                                  setExpanded((current) => {
+                                    const next = new Set(current)
+                                    if (next.has(hunk.id)) next.delete(hunk.id)
+                                    else next.add(hunk.id)
+                                    return next
+                                  })
+                                }
+                                type="button"
+                              >
+                                <ExpandIcon aria-hidden="true" className="size-3.5" />
+                                {showHidden ? 'Hide' : 'Show'} {hunk.hidden.length} unchanged lines
+                              </button>
+                            ) : null}
+                            <span className="select-none">{hunk.header}</span>
+                          </span>
+                        )}
+                        <AnimatePresence initial={false}>
+                          {showHidden && hunk.hidden && (
+                            <motion.span
+                              animate={{ height: 'auto', opacity: 1 }}
+                              className="block overflow-hidden"
+                              exit={{ height: 0, opacity: 0 }}
+                              initial={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.2, ease }}
+                            >
+                              {hunk.hidden.map((line, index) => (
+                                <Row key={`hidden-${index}-${line.content}`} line={line} />
+                              ))}
+                            </motion.span>
+                          )}
+                        </AnimatePresence>
+                        {hunk.lines.map((line, index) => (
+                          <Row key={`${line.type}-${index}-${line.content}`} line={line} />
+                        ))}
+                      </React.Fragment>
+                    )
+                  })}
+                </code>
+              </pre>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </figure>
+    </MotionConfig>
+  )
+}
 
 function TypeScriptIcon(props: React.ComponentProps<'svg'>) {
   return (
@@ -79,3 +242,6 @@ function TypeScriptIcon(props: React.ComponentProps<'svg'>) {
     </svg>
   )
 }
+
+export { FileDiff }
+export type { DiffHunk, DiffLine, FileDiffProps }

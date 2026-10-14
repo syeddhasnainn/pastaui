@@ -4,7 +4,7 @@ export const aiCollaborationComponents = [
   createAiDocument({
     slug: 'feedback-dialog',
     name: 'Feedback Dialog',
-    description: 'A low-friction reason and note form for turning negative feedback into signal.',
+    description: 'Response feedback with copy, thumbs up and thumbs down actions that expands into a reason picker and an optional note.',
     usage: `import { FeedbackDialog } from "@/components/ai/feedback-dialog"
 
 export function Example() {
@@ -45,6 +45,24 @@ export function Example() {
         type: '() => void',
         defaultValue: '—',
         description: 'Shows a Cancel button that dismisses the form.',
+      },
+      {
+        name: 'rating / defaultRating',
+        type: '\'up\' | \'down\' | null',
+        defaultValue: 'null',
+        description: 'Controls the thumbs up or down selection.',
+      },
+      {
+        name: 'onRatingChange',
+        type: '(rating) => void',
+        defaultValue: 'undefined',
+        description: 'Runs when the rating changes.',
+      },
+      {
+        name: 'onCopy',
+        type: '() => void',
+        defaultValue: 'undefined',
+        description: 'Runs when the response is copied.',
       },
     ],
   }),
