@@ -16,7 +16,9 @@ async function retrieveAsset(request, pathname, ctx) {
   let response = await caches.default.match(request)
   if (!response) {
     response = await fetch(`https://${ASSET_HOST}${pathname}`)
-    ctx.waitUntil(caches.default.put(request, response.clone()))
+    if (response.ok) {
+      ctx.waitUntil(caches.default.put(request, response.clone()))
+    }
   }
   return response
 }
