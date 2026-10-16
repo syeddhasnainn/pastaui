@@ -13,7 +13,7 @@ export function componentHead(component: ComponentDocument) {
         headline: component.name,
         description: component.description,
         url: `${siteUrl}${path}`,
-        image: `${siteUrl}/og.png`,
+        image: `${siteUrl}/og.png?v=2`,
         author: organization,
         publisher: organization,
       }),

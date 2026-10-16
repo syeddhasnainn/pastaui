@@ -27,7 +27,7 @@ export const Route = createRootRoute({
       { title: `${siteName} — Open-source React components` },
       { name: 'description', content: siteDescription },
       { property: 'og:site_name', content: siteName },
-      { property: 'og:image', content: `${siteUrl}/og.png` },
+      { property: 'og:image', content: `${siteUrl}/og.png?v=2` },
       { property: 'og:image:width', content: '1200' },
       { property: 'og:image:height', content: '630' },
       {
@@ -35,7 +35,7 @@ export const Route = createRootRoute({
         content: `${siteName}: Beautifully crafted interfaces for AI agents`,
       },
       { name: 'twitter:card', content: 'summary_large_image' },
-      { name: 'twitter:image', content: `${siteUrl}/og.png` },
+      { name: 'twitter:image', content: `${siteUrl}/og.png?v=2` },
       {
         name: 'theme-color',
         content: '#ffffff',
