@@ -1,7 +1,7 @@
 import { createRouter as createTanStackRouter } from '@tanstack/react-router'
 import { routeTree } from './routeTree.gen'
 
-const isShellPath = (pathname: string) => pathname !== '/' && pathname !== '/ocean'
+const isShellPath = (pathname: string) => pathname !== '/'
 
 export function getRouter() {
   const router = createTanStackRouter({

@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ShellRouteImport } from './routes/_shell'
 import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
-import { Route as OceanRouteImport } from './routes/ocean'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ShellPageRouteImport } from './routes/_shell/$page'
@@ -38,11 +37,6 @@ const ShellRoute = ShellRouteImport.update({
 const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
   id: '/llms.txt',
   path: '/llms.txt',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const OceanRoute = OceanRouteImport.update({
-  id: '/ocean',
-  path: '/ocean',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
@@ -109,7 +103,6 @@ const ShellDocsComponentSlugRoute = ShellDocsComponentSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/llms.txt': typeof LlmsDottxtRoute
-  '/ocean': typeof OceanRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/$page': typeof ShellPageRoute
@@ -126,7 +119,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/llms.txt': typeof LlmsDottxtRoute
-  '/ocean': typeof OceanRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/$page': typeof ShellPageRoute
@@ -145,7 +137,6 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_shell': typeof ShellRouteWithChildren
   '/llms.txt': typeof LlmsDottxtRoute
-  '/ocean': typeof OceanRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_shell/$page': typeof ShellPageRoute
@@ -164,7 +155,6 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/llms.txt'
-    | '/ocean'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/$page'
@@ -181,7 +171,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/llms.txt'
-    | '/ocean'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/$page'
@@ -199,7 +188,6 @@ export interface FileRouteTypes {
     | '/'
     | '/_shell'
     | '/llms.txt'
-    | '/ocean'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/_shell/$page'
@@ -218,7 +206,6 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ShellRoute: typeof ShellRouteWithChildren
   LlmsDottxtRoute: typeof LlmsDottxtRoute
-  OceanRoute: typeof OceanRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ComponentsSlugRoute: typeof ComponentsSlugRoute
@@ -247,13 +234,6 @@ declare module '@tanstack/react-router' {
       path: '/llms.txt'
       fullPath: '/llms.txt'
       preLoaderRoute: typeof LlmsDottxtRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ocean': {
-      id: '/ocean'
-      path: '/ocean'
-      fullPath: '/ocean'
-      preLoaderRoute: typeof OceanRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/robots.txt': {
@@ -369,7 +349,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ShellRoute: ShellRouteWithChildren,
   LlmsDottxtRoute: LlmsDottxtRoute,
-  OceanRoute: OceanRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ComponentsSlugRoute: ComponentsSlugRoute,
