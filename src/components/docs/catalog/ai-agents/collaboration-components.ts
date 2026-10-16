@@ -4,7 +4,8 @@ export const aiCollaborationComponents = [
   createAiDocument({
     slug: 'feedback-dialog',
     name: 'Feedback Dialog',
-    description: 'Response feedback with copy, thumbs up and thumbs down actions that expands into a reason picker and an optional note.',
+    description:
+      'Response feedback with copy, thumbs up and thumbs down actions that expands into a reason picker and an optional note.',
     usage: `import { FeedbackDialog } from "@/components/ai/feedback-dialog"
 
 export function Example() {
@@ -48,7 +49,7 @@ export function Example() {
       },
       {
         name: 'rating / defaultRating',
-        type: '\'up\' | \'down\' | null',
+        type: "'up' | 'down' | null",
         defaultValue: 'null',
         description: 'Controls the thumbs up or down selection.',
       },

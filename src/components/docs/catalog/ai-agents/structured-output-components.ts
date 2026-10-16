@@ -1,6 +1,3 @@
-// Vite exposes raw file contents as a default export.
-// oxlint-disable-next-line import/default
-import dataTableSource from '#/components/ai/data-table.tsx?raw'
 import { createAiDocument } from './create-ai-document'
 
 export const aiStructuredOutputComponents = [
@@ -90,7 +87,6 @@ export function Example() {
     />
   )
 }`,
-  source: dataTableSource,
   api: [
     {
       name: 'columns',

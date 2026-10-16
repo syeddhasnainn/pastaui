@@ -7,34 +7,34 @@
 
 :root,
 .light {
-  --shell: #1c1d1f;
+  --shell: #191919;
   --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  --foreground: #202020;
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
+  --card-foreground: #202020;
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
+  --popover-foreground: #202020;
+  --primary: #202020;
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.965 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.965 0 0);
-  --muted-foreground: oklch(0.515 0 0);
+  --secondary: #f3f3f3;
+  --secondary-foreground: #202020;
+  --muted: #f3f3f3;
+  --muted-foreground: #646464;
   --surface: var(--background);
-  --accent: oklch(0.965 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  --accent: #f3f3f3;
+  --accent-foreground: #202020;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.918 0 0);
-  --input: oklch(0.918 0 0);
-  --ring: oklch(0.708 0 0);
+  --border: #e8e8e8;
+  --input: #e0e0e0;
+  --ring: #8d8d8d;
   --radius: 0.625rem;
   --linear-surface-shadow: 0 3px 6px -2px lch(0 0 0 / 2%), 0 1px 1px 0 lch(0 0 0 / 4%);
   --card-outline: lch(0 0 0 / 8.8%);
   --card-shadow:
     0 0 0 0.5px var(--card-outline), 0 3px 6px -2px lch(0 0 0 / 2%), 0 1px 1px 0 lch(0 0 0 / 4%);
   --sidebar-item-hover: color-mix(in oklch, var(--foreground) 7%, transparent);
-  --sidebar-item-active: lch(89.54% 0.5 282);
-  --search-item-active: lch(91.64% 0.5 282);
+  --sidebar-item-active: #ededed;
+  --search-item-active: #f0f0f0;
   --sidebar-glide-ease: cubic-bezier(0.23, 1, 0.32, 1);
   --syntax-comment: oklch(0.556 0 0);
   --syntax-keyword: oklch(0.49 0.2 292);
@@ -50,34 +50,34 @@
 }
 
 .dark {
-  --shell: #171717;
+  --shell: #000000;
   --card-outline: lch(100 0 0 / 8.8%);
   --audio-surface: oklch(0.08 0 0);
   --audio-track: oklch(0.26 0 0);
   --audio-progress: oklch(0.62 0 0);
   --audio-shadow: oklch(0 0 0 / 35%);
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
+  --background: #111111;
+  --foreground: #eeeeee;
+  --card: #191919;
+  --card-foreground: #eeeeee;
+  --popover: #262626;
+  --popover-foreground: #eeeeee;
+  --primary: #eeeeee;
+  --primary-foreground: #111111;
+  --secondary: #222222;
+  --secondary-foreground: #eeeeee;
+  --muted: #222222;
+  --muted-foreground: #b4b4b4;
   --surface: var(--background);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  --accent: #222222;
+  --accent-foreground: #eeeeee;
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --border: rgb(255 255 255 / 7%);
+  --input: rgb(255 255 255 / 10%);
+  --ring: #6e6e6e;
   --sidebar-item-hover: var(--muted);
-  --sidebar-item-active: oklch(1 0 0 / 12%);
-  --search-item-active: oklch(1 0 0 / 8%);
+  --sidebar-item-active: rgb(255 255 255 / 10%);
+  --search-item-active: rgb(255 255 255 / 7%);
   --syntax-comment: oklch(0.708 0 0);
   --syntax-keyword: oklch(0.75 0.16 292);
   --syntax-string: oklch(0.76 0.13 153);
@@ -307,16 +307,17 @@
 
 @utility preview-stage {
   @variant dark {
-    --background: var(--color-neutral-900);
-    --card: var(--color-neutral-900);
-    background-color: var(--color-neutral-950);
+    --background: #111111;
+    --card: #191919;
+    --popover: #262626;
+    background-color: #111111;
 
     & [data-slot='prompt-input'] {
       border-color: transparent;
     }
 
     & [data-slot='message-bubble'][data-from='assistant'] {
-      background-color: var(--color-neutral-900);
+      background-color: #191919;
     }
   }
 }
@@ -543,17 +544,17 @@
 }
 
 .blog-prose {
-  @apply paragraph-text-md text-pretty text-muted-foreground;
+  @apply text-[16px] leading-[1.6] text-pretty text-muted-foreground;
 
   & > * + * {
     margin-top: 1rem;
   }
   & h2 {
-    @apply mt-11 card-text-lg font-[550] text-balance text-foreground;
+    @apply mt-11 text-[18px] leading-[1.4] font-[550] text-balance text-foreground;
     scroll-margin-top: 1.5rem;
   }
   & h3 {
-    @apply mt-7 card-text-md font-[550] text-foreground;
+    @apply mt-7 text-[16px] leading-[1.5] font-[600] text-foreground;
     scroll-margin-top: 1.5rem;
   }
   & h2 + *,
@@ -579,7 +580,7 @@
   & li::marker {
     @apply text-muted-foreground/60;
   }
-  & code {
+  & :where(p, li, td, th) code {
     @apply rounded-[5px] bg-muted px-1 py-0.5 font-mono text-[0.85em] text-foreground;
   }
   & pre {
@@ -605,5 +606,344 @@
   }
   & hr {
     @apply my-10 border-border;
+  }
+}
+
+.ocean-wave {
+  animation: ocean-wave 14s linear infinite;
+}
+
+.ocean-wave-slow {
+  animation: ocean-wave 22s linear infinite reverse;
+}
+
+@keyframes ocean-wave {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.ocean-ray {
+  transform-origin: top center;
+  animation: ocean-ray 9s ease-in-out infinite alternate;
+}
+
+@keyframes ocean-ray {
+  from {
+    transform: rotate(var(--ray-angle)) scaleX(1);
+    opacity: 0.55;
+  }
+  to {
+    transform: rotate(calc(var(--ray-angle) + 4deg)) scaleX(1.35);
+    opacity: 1;
+  }
+}
+
+.ocean-bubble {
+  animation: ocean-rise var(--duration) linear var(--delay) infinite;
+}
+
+.ocean-bubble > span {
+  animation: ocean-wobble 2.4s ease-in-out infinite alternate;
+}
+
+@keyframes ocean-rise {
+  from {
+    transform: translateY(110vh);
+  }
+  to {
+    transform: translateY(-15vh);
+  }
+}
+
+@keyframes ocean-wobble {
+  from {
+    transform: translateX(-6px);
+  }
+  to {
+    transform: translateX(6px);
+  }
+}
+
+.ocean-snow {
+  animation: ocean-sink var(--duration) linear var(--delay) infinite;
+}
+
+@keyframes ocean-sink {
+  from {
+    transform: translate3d(0, -10vh, 0);
+  }
+  to {
+    transform: translate3d(24px, 110vh, 0);
+  }
+}
+
+.ocean-twinkle {
+  animation: ocean-twinkle var(--duration) ease-in-out var(--delay) infinite alternate;
+}
+
+@keyframes ocean-twinkle {
+  from {
+    opacity: 0.1;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.ocean-school {
+  animation: ocean-swim var(--duration) linear var(--delay) infinite;
+}
+
+@keyframes ocean-swim {
+  from {
+    transform: translateX(110vw);
+  }
+  to {
+    transform: translateX(calc(-100% - 80px));
+  }
+}
+
+.ocean-fish {
+  animation: ocean-bob 1.6s ease-in-out var(--delay) infinite alternate;
+}
+
+@keyframes ocean-bob {
+  from {
+    transform: translateY(-3px) rotate(-3deg);
+  }
+  to {
+    transform: translateY(3px) rotate(3deg);
+  }
+}
+
+.ocean-jelly {
+  animation: ocean-jelly var(--duration) ease-in-out var(--delay) infinite alternate;
+}
+
+@keyframes ocean-jelly {
+  from {
+    transform: translateY(24px) scaleY(1);
+  }
+  50% {
+    transform: translateY(0) scaleY(0.92);
+  }
+  to {
+    transform: translateY(-24px) scaleY(1);
+  }
+}
+
+.ocean-sway {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+  animation: ocean-sway var(--duration, 6s) ease-in-out var(--delay, 0s) infinite alternate;
+}
+
+@keyframes ocean-sway {
+  from {
+    transform: rotate(-4deg);
+  }
+  to {
+    transform: rotate(4deg);
+  }
+}
+
+.ocean-glow-pulse {
+  animation: ocean-glow-pulse 3.2s ease-in-out infinite alternate;
+}
+
+@keyframes ocean-glow-pulse {
+  from {
+    opacity: 0.6;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.ocean-cue {
+  animation: ocean-cue 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes ocean-cue {
+  from {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  50% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  50.1% {
+    transform-origin: bottom;
+  }
+  to {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+.ocean-octopus {
+  animation: ocean-octopus 12s ease-in-out var(--delay, 0s) infinite alternate;
+}
+
+@keyframes ocean-octopus {
+  from {
+    transform: translate3d(-8px, 12px, 0) rotate(-5deg);
+  }
+  to {
+    transform: translate3d(8px, -14px, 0) rotate(5deg);
+  }
+}
+
+.ocean-tentacle {
+  animation: ocean-tentacle var(--duration, 6s) ease-in-out var(--delay, 0s) infinite alternate;
+}
+
+@keyframes ocean-tentacle {
+  from {
+    transform: rotate(-4deg) scaleY(0.96);
+  }
+  to {
+    transform: rotate(5deg) scaleY(1.04);
+  }
+}
+
+.ocean-octopus-fin {
+  transform-origin: 106px 100px;
+  animation: ocean-octopus-fin 3.5s ease-in-out var(--delay, 0s) infinite alternate;
+}
+
+@keyframes ocean-octopus-fin {
+  from {
+    transform: rotate(-8deg) scaleX(0.92);
+  }
+  to {
+    transform: rotate(6deg) scaleX(1.04);
+  }
+}
+
+.ocean-reef-shimmer {
+  animation: ocean-reef-shimmer 7s ease-in-out infinite alternate;
+}
+
+@keyframes ocean-reef-shimmer {
+  from {
+    opacity: 0.3;
+  }
+  to {
+    opacity: 0.9;
+  }
+}
+
+.ocean-cloud-drift {
+  animation: ocean-cloud-drift 48s ease-in-out infinite alternate;
+}
+
+@keyframes ocean-cloud-drift {
+  from {
+    transform: scale(1.08) translateX(-1%);
+  }
+  to {
+    transform: scale(1.08) translateX(1%);
+  }
+}
+
+.ocean-palm-left {
+  transform-origin: 15% 100%;
+  animation: ocean-palm-sway 9s ease-in-out infinite alternate;
+}
+
+.ocean-palm-right {
+  transform-origin: 85% 100%;
+  animation: ocean-palm-sway 11s ease-in-out -4s infinite alternate-reverse;
+}
+
+@keyframes ocean-palm-sway {
+  from {
+    transform: rotate(-1.2deg);
+  }
+  to {
+    transform: rotate(1.2deg);
+  }
+}
+
+.ocean-surf {
+  animation: ocean-surf 8s ease-in-out infinite alternate;
+}
+
+@keyframes ocean-surf {
+  from {
+    transform: translate3d(-1%, 0, 0);
+    opacity: 0.65;
+  }
+  to {
+    transform: translate3d(1%, 8px, 0);
+    opacity: 1;
+  }
+}
+
+.ocean-sea-shimmer {
+  animation: ocean-sea-shimmer 5s ease-in-out -2s infinite alternate;
+}
+
+@keyframes ocean-sea-shimmer {
+  from {
+    opacity: 0.15;
+    transform: translateX(-4px);
+  }
+  to {
+    opacity: 0.55;
+    transform: translateX(4px);
+  }
+}
+
+.ocean-sailboat {
+  transform-origin: center 85%;
+  animation: ocean-sailboat 6s ease-in-out infinite alternate;
+}
+
+@keyframes ocean-sailboat {
+  from {
+    transform: translateY(-2px) rotate(-3deg);
+  }
+  to {
+    transform: translateY(2px) rotate(3deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ocean-wave,
+  .ocean-wave-slow,
+  .ocean-ray,
+  .ocean-bubble,
+  .ocean-bubble > span,
+  .ocean-snow,
+  .ocean-twinkle,
+  .ocean-school,
+  .ocean-fish,
+  .ocean-jelly,
+  .ocean-sway,
+  .ocean-glow-pulse,
+  .ocean-cue,
+  .ocean-octopus,
+  .ocean-tentacle,
+  .ocean-octopus-fin,
+  .ocean-reef-shimmer,
+  .ocean-cloud-drift,
+  .ocean-palm-left,
+  .ocean-palm-right,
+  .ocean-surf,
+  .ocean-sea-shimmer,
+  .ocean-sailboat {
+    animation: none;
+  }
+
+  .ocean-bubble,
+  .ocean-snow,
+  .ocean-school {
+    display: none;
   }
 }

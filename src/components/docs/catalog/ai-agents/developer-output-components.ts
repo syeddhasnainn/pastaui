@@ -1,6 +1,3 @@
-// Vite exposes raw file contents as a default export.
-// oxlint-disable-next-line import/default
-import commitSource from '#/components/ai/commit.tsx?raw'
 import { createAiDocument } from './create-ai-document'
 
 export const aiDeveloperOutputComponents = [
@@ -17,7 +14,6 @@ export function Example() {
     { path: "DESIGN.md", additions: 1, deletions: 0 },
   ]} onOpen={() => console.log("Open diff")} />
 }`,
-    source: commitSource,
     api: [
       {
         name: 'files',

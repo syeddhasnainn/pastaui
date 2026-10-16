@@ -1,6 +1,3 @@
-// Vite exposes raw file contents as a default export.
-// oxlint-disable-next-line import/default
-import colorPickerSource from '#/components/ai/color-picker.tsx?raw'
 import { createAiDocument } from './create-ai-document'
 
 export const colorPickerComponent = createAiDocument({
@@ -21,7 +18,6 @@ export function Example() {
     </>
   )
 }`,
-  source: colorPickerSource,
   examples: [
     {
       title: 'Popover',
@@ -100,6 +96,81 @@ export function Fields() {
       type: 'string',
       defaultValue: '—',
       description: 'ColorPickerPopover only. Text shown in the trigger beside the swatch.',
+    },
+  ],
+})
+
+export const categoryDropdownComponent = createAiDocument({
+  slug: 'category-dropdown',
+  isNew: true,
+  name: 'Category Dropdown',
+  description:
+    'A dropdown with vertical category tabs on the left and their items on the right, with a sliding tab indicator, animated height, and a morphing chevron.',
+  usage: `import { CategoryDropdown } from "@/components/ai/category-dropdown"
+
+const categories = [
+  {
+    id: "conversation",
+    label: "Conversation",
+    items: [
+      { id: "message-bubble", label: "Message Bubble" },
+      { id: "prompt-input", label: "Prompt Input" },
+    ],
+  },
+  {
+    id: "tools",
+    label: "Tools & execution",
+    items: [
+      { id: "tool-call", label: "Tool Call" },
+      { id: "tool-approval", label: "Tool Approval" },
+    ],
+  },
+]
+
+export function Example() {
+  const [value, setValue] = React.useState("prompt-input")
+
+  return <CategoryDropdown categories={categories} value={value} onValueChange={setValue} />
+}`,
+  api: [
+    {
+      name: 'categories',
+      type: 'CategoryDropdownCategory[]',
+      defaultValue: '—',
+      description:
+        'Tabs shown on the left. Each category has an id, a label, and items with an id, a label, and an optional href.',
+    },
+    {
+      name: 'value',
+      type: 'string',
+      defaultValue: '—',
+      description:
+        'The selected item id. It labels the trigger, marks the item as current, and opens its category.',
+    },
+    {
+      name: 'onValueChange',
+      type: '(id: string) => void',
+      defaultValue: '—',
+      description: 'Called with the item id when an item is chosen.',
+    },
+    {
+      name: 'placeholder',
+      type: 'string',
+      defaultValue: "'Browse'",
+      description: 'Trigger text when no item is selected.',
+    },
+    {
+      name: 'renderItem',
+      type: '(item: CategoryDropdownItem) => ReactElement',
+      defaultValue: '—',
+      description:
+        'Renders each item as a custom element, such as a router Link. Items with an href render as anchors by default.',
+    },
+    {
+      name: 'align',
+      type: "'start' | 'center' | 'end'",
+      defaultValue: "'center'",
+      description: 'Aligns the popup to the trigger.',
     },
   ],
 })

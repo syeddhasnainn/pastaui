@@ -16,26 +16,25 @@ export const Route = createFileRoute('/_shell/blog/')({
 
 function BlogIndexPage() {
   return (
-    <div className="mx-auto w-full max-w-[960px] min-w-0 pb-16">
-      <p className="sidebar-text-sm text-muted-foreground">Blog</p>
-      <h1 className="mt-1 heading-text-sm text-foreground">Guides and comparisons</h1>
-      <p className="mt-2 max-w-xl paragraph-text-sm text-muted-foreground">
-        How to pick and build React UI for AI products, landing pages and dashboards.
-      </p>
-      <ul className="mt-9 grid gap-3 sm:grid-cols-2">
+    <div className="mx-auto w-full max-w-[760px] min-w-0 pb-16">
+      <h1 className="text-[32px] leading-[1.15] font-[600] tracking-[-0.025em] text-balance text-foreground">
+        Blog
+      </h1>
+      <ul className="mt-6 flex flex-col">
         {blogPosts.map((post) => (
-          <li className="flex" key={post.slug}>
+          <li className="border-b-[0.5px] border-border last:border-b-0" key={post.slug}>
             <Link
-              className="flex w-full flex-col rounded-md bg-card p-4 shadow-card transition-colors hover:bg-muted/60"
+              className="group flex flex-col gap-1 py-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8"
               params={{ post: post.slug }}
               to="/blog/$post"
             >
-              <h2 className="card-heading text-foreground">{post.title}</h2>
-              <p className="mt-1 text-xs leading-5 font-[450] text-muted-foreground">
-                {post.description}
-              </p>
-              <p className="mt-auto pt-2 metadata-label">
-                {formatPostDate(post.updated ?? post.date)}
+              <h2 className="min-w-0 text-[18px] leading-[1.4] font-[500] tracking-[-0.01em] text-foreground transition-colors group-hover:text-foreground/70">
+                {post.title}
+              </h2>
+              <p className="shrink-0 text-[14px] whitespace-nowrap text-muted-foreground tabular-nums">
+                <time dateTime={post.updated ?? post.date}>
+                  {formatPostDate(post.updated ?? post.date)}
+                </time>
               </p>
             </Link>
           </li>

@@ -116,6 +116,7 @@ const aiPreviewCollections: Record<string, ComponentType<PreviewProps>> = {
   'research-report': AiRichOutputPreview,
   'audio-player': AiStructuredOutputPreview,
   'data-table': AiStructuredOutputPreview,
+  'category-dropdown': AiInputPreview,
   'color-picker': AiInputPreview,
   'color-picker-popover': AiInputPreview,
   'link-preview': AiRichOutputPreview,

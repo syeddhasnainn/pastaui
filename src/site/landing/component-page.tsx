@@ -10,7 +10,7 @@ import {
   UsageCode,
   type SourceFile,
 } from '#/site/landing/variant-code'
-import { ComponentViewToggle, useComponentView } from '#/site/landing/component-view-toggle'
+import { useComponentView } from '#/site/landing/component-view-toggle'
 import { sectionClass, sectionStackClass } from '#/site/landing/variant-ui'
 import { cn } from '#/lib/utils'
 
@@ -26,19 +26,21 @@ const registry = Object.values(
 const sources = import.meta.glob<string>('/src/components/ai/*.{ts,tsx,css}', {
   query: '?raw',
   import: 'default',
-  eager: true,
 })
 
-function componentFiles(slug: string): SourceFile[] {
+export async function loadComponentFiles(slug: string): Promise<SourceFile[]> {
   const item = registry?.items.find((entry) => entry.name === slug)
-  return (item?.files ?? []).flatMap(({ path }) => {
-    const code = sources[`/${path}`]
-    return code ? [{ name: path.split('/').pop() ?? path, code }] : []
-  })
+  const files = await Promise.all(
+    (item?.files ?? []).map(async ({ path }) => {
+      const load = sources[`/${path}`]
+      return load ? { name: path.split('/').pop() ?? path, code: await load() } : null
+    }),
+  )
+  return files.filter((file) => file !== null)
 }
 
 const previewFrameSizes = {
-  full: 'min-h-[520px] p-5 sm:p-8 lg:h-[calc(100dvh-7rem)] lg:min-h-0',
+  full: 'min-h-[520px] p-5 sm:p-8 lg:h-[calc(100dvh-11.5rem)] lg:min-h-0',
   compact: 'min-h-48 p-5 sm:p-8',
 }
 
@@ -52,7 +54,7 @@ function PreviewFrame({
   return (
     <div
       className={cn(
-        'flex items-center-safe justify-center-safe overflow-y-auto overscroll-contain rounded-[16px] bg-surface dark:bg-black',
+        'flex items-center-safe justify-center-safe overflow-y-auto overscroll-contain',
         previewFrameSizes[size],
       )}
       data-preview-frame
@@ -64,44 +66,30 @@ function PreviewFrame({
   )
 }
 
-export function ComponentPage({ component }: { component: ComponentDocument }) {
-  const files = componentFiles(component.slug)
+export function ComponentPage({
+  component,
+  files,
+}: {
+  component: ComponentDocument
+  files: SourceFile[]
+}) {
   const view = useComponentView()
 
   return (
-    <div className={cn('@container', view === 'code' && 'pb-10')}>
-      <div className="mb-2 flex min-h-9 items-center gap-2.5 lg:hidden">
-        <h1 className="shrink-0 truncate text-[16px] leading-[1.3] font-[550] tracking-[-0.015em] text-foreground">
-          {component.name}
-        </h1>
-        <span aria-hidden="true" className="h-3.5 w-px shrink-0 bg-border" />
-        <p className="min-w-0 truncate paragraph-text-sm font-[500] text-muted-foreground">
-          {component.description}
-        </p>
-        <ComponentViewToggle className="ml-auto shrink-0" />
-      </div>
-
+    <div
+      className={cn(
+        '@container animate-in pb-20 duration-300 fade-in-0 motion-reduce:animate-none',
+      )}
+    >
       {view === 'preview' ? (
         <section aria-label={`${component.name} preview`} className="min-w-0">
           <PreviewFrame slug={component.slug} />
         </section>
       ) : (
-        <div className={sectionStackClass}>
+        <div className={cn(sectionStackClass, 'mx-auto w-full max-w-[960px]')}>
           {component.examples?.map((example) => (
-            <section
-              aria-labelledby={`${example.previewSlug}-heading`}
-              className={sectionClass}
-              key={example.previewSlug}
-            >
-              <h2 className={sectionHeadingClass} id={`${example.previewSlug}-heading`}>
-                {example.title}
-              </h2>
-              {example.description && (
-                <p className="mt-1.5 max-w-xl paragraph-text-sm text-muted-foreground">
-                  {example.description}
-                </p>
-              )}
-              <div className="mt-2.5 flex flex-col gap-4">
+            <section aria-label={example.title} className={sectionClass} key={example.previewSlug}>
+              <div className="flex flex-col gap-4">
                 <PreviewFrame slug={example.previewSlug} size="compact" />
                 {example.usage && <UsageCode usage={example.usage} />}
               </div>
@@ -151,7 +139,7 @@ export function ComponentPage({ component }: { component: ComponentDocument }) {
   )
 }
 
-const sectionHeadingClass = 'paragraph-text-sm font-medium text-foreground'
+const sectionHeadingClass = 'text-[15px] leading-[1.5] font-[600] text-foreground'
 
 const apiCellClass =
   'px-4 py-2.5 @max-[640px]:p-0 @min-[640px]:border-b-[0.5px] @min-[640px]:border-(--code-border)'

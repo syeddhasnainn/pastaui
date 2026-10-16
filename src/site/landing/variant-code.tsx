@@ -127,7 +127,13 @@ function CollapsibleCode({ code, language = 'tsx' }: { code: string; language?: 
   )
 }
 
-export function InstallPanel({ command }: { command: string }) {
+export function InstallPanel({
+  command,
+  size = 'default',
+}: {
+  command: string
+  size?: 'default' | 'large'
+}) {
   const [manager, setManager] = useState<PackageManager>('pnpm')
   const commands = createCommands(command)
 
@@ -159,12 +165,21 @@ export function InstallPanel({ command }: { command: string }) {
       <div className={innerCardClass}>
         {packageManagers.map((item) => (
           <Tabs.Panel
-            className={cn('overflow-x-auto overscroll-x-contain px-4 py-3.5', focusRing)}
+            className={cn(
+              'overflow-x-auto overscroll-x-contain px-4',
+              size === 'large' ? 'pt-1.5 pb-4' : 'py-3.5',
+              focusRing,
+            )}
             key={item}
             keepMounted
             value={item}
           >
-            <code className="font-mono text-[13px] leading-[22px] whitespace-nowrap text-(--code-ink)">
+            <code
+              className={cn(
+                'font-mono whitespace-nowrap text-(--code-ink)',
+                size === 'large' ? 'text-[14px] leading-[24px]' : 'text-[13px] leading-[22px]',
+              )}
+            >
               {commands[item]}
             </code>
           </Tabs.Panel>

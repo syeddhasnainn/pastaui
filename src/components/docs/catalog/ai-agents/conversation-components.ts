@@ -1,12 +1,3 @@
-// Vite exposes raw file contents as a default export.
-// oxlint-disable-next-line import/default
-import attachmentsSource from '#/components/ai/attachments.tsx?raw'
-// Vite exposes raw file contents as a default export.
-// oxlint-disable-next-line import/default
-import promptInputSource from '#/components/ai/prompt-input.tsx?raw'
-// Vite exposes raw file contents as a default export.
-// oxlint-disable-next-line import/default
-import modelPickerSource from '#/components/ai/model-picker.tsx?raw'
 import { createAiDocument } from './create-ai-document'
 
 export const aiConversationComponents = [
@@ -28,7 +19,8 @@ export function Example() {
         name: 'from',
         type: 'assistant | system | user',
         defaultValue: 'assistant',
-        description: 'Conversation bubbles with a typing indicator, streamed replies, timestamps, and delivery status.',
+        description:
+          'Conversation bubbles with a typing indicator, streamed replies, timestamps, and delivery status.',
       },
       {
         name: 'children',
@@ -38,7 +30,7 @@ export function Example() {
       },
       {
         name: 'status',
-        type: '\'sending\' | \'sent\' | \'read\' | \'failed\'',
+        type: "'sending' | 'sent' | 'read' | 'failed'",
         defaultValue: 'undefined',
         description: 'Shows delivery status under the bubble.',
       },
@@ -131,7 +123,6 @@ export function Example() {
 export function Example() {
   return <PromptInput onSubmit={(message, { model, effort }) => console.log(message, model, effort)} />
 }`,
-    source: promptInputSource,
     api: [
       {
         name: 'onToolSelect',
@@ -152,7 +143,8 @@ export function Example() {
         name: 'models / moreModels',
         type: 'ModelOption[]',
         defaultValue: 'OpenAI and Claude models',
-        description: 'Auto-growing composer for AI agents with attachment, model, submit and stop controls.',
+        description:
+          'Auto-growing composer for AI agents with attachment, model, submit and stop controls.',
       },
       {
         name: 'onModelChange',
@@ -353,7 +345,6 @@ export function UploadExample({
     />
   )
 }`,
-    source: attachmentsSource,
     examples: [
       {
         title: 'Default',
@@ -448,7 +439,6 @@ export function Example() {
     { id: "claude-sonnet-5", name: "Claude Sonnet 5", provider: "claude", description: "Everyday tasks and coding" },
   ]} defaultValue="claude-sonnet-5" />
 }`,
-    source: modelPickerSource,
     api: [
       {
         name: 'models[].provider',
@@ -533,7 +523,8 @@ export function Example() {
         name: 'recording',
         type: 'boolean',
         defaultValue: '—',
-        description: 'A voice composer with a live scrolling waveform, recording timer, streaming transcript, and discard or send actions.',
+        description:
+          'A voice composer with a live scrolling waveform, recording timer, streaming transcript, and discard or send actions.',
       },
       {
         name: 'duration',

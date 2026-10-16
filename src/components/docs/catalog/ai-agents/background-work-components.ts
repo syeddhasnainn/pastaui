@@ -38,7 +38,8 @@ export function Example() {
   createAiDocument({
     slug: 'tool-timeline',
     name: 'Tool Timeline',
-    description: 'A live timeline of agent tool calls with timings and expandable input and output for each call.',
+    description:
+      'A live timeline of agent tool calls with timings and expandable input and output for each call.',
     usage: `import { ToolTimeline } from "@/components/ai/tool-timeline"
 
 export function Example() {

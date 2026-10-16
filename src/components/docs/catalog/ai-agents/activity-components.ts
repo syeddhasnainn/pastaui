@@ -82,7 +82,8 @@ export function Example() {
         name: 'items',
         type: 'AgentActivityItem[]',
         defaultValue: '—',
-        description: 'A live timeline of agent activity with per-step icons, searched sources, running state, and details.',
+        description:
+          'A live timeline of agent activity with per-step icons, searched sources, running state, and details.',
       },
       {
         name: 'items[].sources',

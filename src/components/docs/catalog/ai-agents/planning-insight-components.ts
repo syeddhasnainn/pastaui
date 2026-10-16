@@ -50,7 +50,8 @@ export function ResearchingExample() {
         name: 'PlanResearchCard',
         type: 'component',
         defaultValue: '—',
-        description: 'A proposed agent plan with inline step editing, a start countdown, and cancel controls.',
+        description:
+          'A proposed agent plan with inline step editing, a start countdown, and cancel controls.',
       },
       {
         name: 'progress / searchCount',

@@ -1,14 +1,27 @@
 import { createRouter as createTanStackRouter } from '@tanstack/react-router'
 import { routeTree } from './routeTree.gen'
 
+const isShellPath = (pathname: string) => pathname !== '/' && pathname !== '/ocean'
+
 export function getRouter() {
   const router = createTanStackRouter({
     routeTree,
     scrollRestoration: true,
-    scrollToTopSelectors: ['#main-content'],
     defaultPreload: 'intent',
     defaultPreloadStaleTime: 0,
-    defaultViewTransition: true,
+    defaultViewTransition: {
+      types: ({ fromLocation, toLocation, pathChanged }) => {
+        if (!pathChanged) return false
+        if (
+          fromLocation &&
+          isShellPath(fromLocation.pathname) &&
+          isShellPath(toLocation.pathname)
+        ) {
+          return false
+        }
+        return ['page']
+      },
+    },
   })
 
   return router

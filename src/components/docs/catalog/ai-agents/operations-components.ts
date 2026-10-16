@@ -62,7 +62,8 @@ export function Example() {
         name: 'eta',
         type: 'string',
         defaultValue: '—',
-        description: 'A weighted multi-stage progress surface with pause and resume, stage durations, and cancel confirmation.',
+        description:
+          'A weighted multi-stage progress surface with pause and resume, stage durations, and cancel confirmation.',
       },
       {
         name: 'onCancel',
@@ -103,7 +104,8 @@ export function Example() {
         name: 'state',
         type: 'connected | offline | reconnected | reconnecting',
         defaultValue: '—',
-        description: 'A resumable stream status with a retry countdown, attempt count, Retry now, and a collapsible connection log.',
+        description:
+          'A resumable stream status with a retry countdown, attempt count, Retry now, and a collapsible connection log.',
       },
       {
         name: 'detail',
@@ -199,7 +201,8 @@ export function Example() {
         name: 'segments',
         type: 'ContextSegment[]',
         defaultValue: '—',
-        description: 'Context window usage by source with linked hover, a near-limit warning, and a compact action.',
+        description:
+          'Context window usage by source with linked hover, a near-limit warning, and a compact action.',
       },
       {
         name: 'limit',

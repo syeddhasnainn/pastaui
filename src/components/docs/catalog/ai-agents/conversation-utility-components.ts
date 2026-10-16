@@ -1,13 +1,11 @@
-// Vite exposes raw file contents as a default export.
-// oxlint-disable-next-line import/default
-import followUpSource from '#/components/ai/follow-up.tsx?raw'
 import { createAiDocument } from './create-ai-document'
 
 export const aiConversationUtilityComponents = [
   createAiDocument({
     slug: 'follow-up',
     name: 'Follow Up',
-    description: 'Follow-up prompts that stagger in after an answer, with number key shortcuts and a selected state.',
+    description:
+      'Follow-up prompts that stagger in after an answer, with number key shortcuts and a selected state.',
     usage: `import { useState } from "react"
 import { FollowUp } from "@/components/ai/follow-up"
 
@@ -27,7 +25,6 @@ export function Example() {
     </div>
   )
 }`,
-    source: followUpSource,
     api: [
       {
         name: 'items',
@@ -71,7 +68,8 @@ export function Example() {
   createAiDocument({
     slug: 'follow-up-suggestions',
     name: 'Follow-up Suggestions',
-    description: 'A keyboard-driven next step picker with numbered options and a free text custom question.',
+    description:
+      'A keyboard-driven next step picker with numbered options and a free text custom question.',
     usage: `import { FollowUpSuggestions } from "@/components/ai/follow-up-suggestions"
 
 export function Example() {

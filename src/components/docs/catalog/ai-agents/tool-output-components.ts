@@ -4,7 +4,8 @@ export const aiToolOutputComponents = [
   createAiDocument({
     slug: 'video-player',
     name: 'Video Player',
-    description: 'A compact video player with keyboard shortcuts, chapter markers, seek previews, and volume control.',
+    description:
+      'A compact video player with keyboard shortcuts, chapter markers, seek previews, and volume control.',
     usage: `import { VideoPlayer } from "@/components/ai/video-player"
 
 export function Example() {
@@ -125,7 +126,8 @@ export function Example() {
         name: 'recipients',
         type: 'string[]',
         defaultValue: '—',
-        description: 'A minimal email draft with inline recipients, a subject, a spacious message, and an animated send action.',
+        description:
+          'A minimal email draft with inline recipients, a subject, a spacious message, and an animated send action.',
       },
       {
         name: 'subject',

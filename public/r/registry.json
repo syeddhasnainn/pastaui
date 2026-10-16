@@ -205,6 +205,24 @@
       ]
     },
     {
+      "name": "category-dropdown",
+      "type": "registry:component",
+      "title": "Category Dropdown",
+      "description": "A dropdown with vertical category tabs on the left and their items on the right, with a sliding tab indicator, animated height, and a morphing chevron.",
+      "dependencies": [
+        "@base-ui/react@^1.8.0",
+        "cn@^0.3.0"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/components/ai/category-dropdown.tsx",
+          "type": "registry:component",
+          "target": "@components/ai/category-dropdown.tsx"
+        }
+      ]
+    },
+    {
       "name": "citations",
       "type": "registry:component",
       "title": "Citations",

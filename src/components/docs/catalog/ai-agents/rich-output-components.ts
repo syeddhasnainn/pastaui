@@ -4,7 +4,8 @@ export const aiRichOutputComponents = [
   createAiDocument({
     slug: 'file-tree',
     name: 'File Tree',
-    description: 'A keyboard-navigable file tree with collapsible folders, git change badges, and change counts rolled up to folders.',
+    description:
+      'A keyboard-navigable file tree with collapsible folders, git change badges, and change counts rolled up to folders.',
     usage: `import { FileTree } from "@/components/ai/file-tree"
 
 export function Example() {
@@ -43,7 +44,8 @@ export function Example() {
   createAiDocument({
     slug: 'retrieval-chunks',
     name: 'Retrieval Chunks',
-    description: 'Ranked source passages with a searching state, highlighted query terms, relevance bars, and expandable text.',
+    description:
+      'Ranked source passages with a searching state, highlighted query terms, relevance bars, and expandable text.',
     usage: `import { RetrievalChunks } from "@/components/ai/retrieval-chunks"
 
 export function Example() {
@@ -130,7 +132,8 @@ export function Example() {
   createAiDocument({
     slug: 'research-report',
     name: 'Research Report',
-    description: 'A long-form report reader with a contents rail, reading progress, and sections that stream in as they are written.',
+    description:
+      'A long-form report reader with a contents rail, reading progress, and sections that stream in as they are written.',
     usage: `import { ResearchReport } from "@/components/ai/research-report"
 
 export function Example() {
@@ -163,7 +166,7 @@ export function Example() {
       {
         name: 'summaryTitle',
         type: 'string',
-        defaultValue: '\'Executive summary\'',
+        defaultValue: "'Executive summary'",
         description: 'Names the summary section.',
       },
     ],

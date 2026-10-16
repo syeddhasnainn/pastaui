@@ -1,13 +1,11 @@
-// Vite exposes raw file contents as a default export.
-// oxlint-disable-next-line import/default
-import toolErrorSource from '#/components/ai/tool-error.tsx?raw'
 import { createAiDocument } from './create-ai-document'
 
 export const aiExecutionComponents = [
   createAiDocument({
     slug: 'todo-list',
     name: 'Todo List',
-    description: 'A live agent plan with completion counts, checkable tasks, and details you can expand.',
+    description:
+      'A live agent plan with completion counts, checkable tasks, and details you can expand.',
     usage: `import { TodoList } from "@/components/ai/todo-list"
 
 export function Example() {
@@ -129,7 +127,8 @@ export function Example() {
         name: 'filename',
         type: 'string',
         defaultValue: '—',
-        description: 'A collapsible code diff with expandable unchanged lines, copy patch, and a Viewed toggle.',
+        description:
+          'A collapsible code diff with expandable unchanged lines, copy patch, and a Viewed toggle.',
       },
       {
         name: 'lines',
@@ -188,7 +187,8 @@ export function Example() {
         name: 'status',
         type: 'complete | error | running',
         defaultValue: 'complete',
-        description: 'An execution disclosure with input and output, copyable results, and error recovery with retry.',
+        description:
+          'An execution disclosure with input and output, copyable results, and error recovery with retry.',
       },
       {
         name: 'summary',
@@ -276,7 +276,6 @@ export function Example({ openConnectionSettings, retry }: {
     />
   )
 }`,
-    source: toolErrorSource,
     api: [
       {
         name: 'tool',

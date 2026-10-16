@@ -17,7 +17,7 @@ export function LegalPage({
   title: string
 }) {
   return (
-    <article className="mx-auto w-full max-w-[608px] min-w-0 pb-16">
+    <article className="mx-auto w-full max-w-[608px] min-w-0 pb-16 lg:mx-0">
       <p className="sidebar-text-sm text-muted-foreground">Legal</p>
       <h1 className="mt-1 heading-text-sm font-medium text-foreground">{title}</h1>
       <p className="mt-2 max-w-xl paragraph-text-sm text-muted-foreground">

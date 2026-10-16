@@ -67,7 +67,8 @@ export function Example() {
   createAiDocument({
     slug: 'tool-group',
     name: 'Tool Group',
-    description: 'Consecutive tool calls in one readable group with collapsible outputs for each call.',
+    description:
+      'Consecutive tool calls in one readable group with collapsible outputs for each call.',
     usage: `import { ToolGroup } from "@/components/ai/tool-group"
 
 export function Example() {

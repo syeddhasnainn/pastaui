@@ -159,7 +159,7 @@ function SearchPalette({ children }: SearchProviderProps) {
       <ScriptOnce>{earlyShortcutScript}</ScriptOnce>
       {children}
       <Dialog onOpenChange={handleOpenChange} open={open}>
-        <DialogContent className="flex max-h-[min(28rem,calc(100dvh-2rem))] max-w-lg flex-col overflow-hidden p-3 text-[15px] leading-5 font-[450] tracking-[-0.05px] text-muted-foreground dark:bg-[#1c1d1f] dark:ring-0 [&>button]:top-3 [&>button]:right-3 [&>button]:size-9">
+        <DialogContent className="flex max-h-[min(28rem,calc(100dvh-2rem))] max-w-lg flex-col overflow-hidden p-3 text-[15px] leading-5 font-[450] tracking-[-0.05px] text-muted-foreground dark:bg-popover dark:ring-[0.5px] dark:ring-foreground/10 [&>button]:top-3 [&>button]:right-3 [&>button]:size-9">
           <DialogTitle className="sr-only">Search documentation</DialogTitle>
           <DialogDescription className="sr-only">
             Search Pasta UI components and docs.
@@ -176,7 +176,7 @@ function SearchPalette({ children }: SearchProviderProps) {
               aria-expanded={results.length > 0}
               aria-label="Search components"
               autoComplete="off"
-              className="h-9 w-full min-w-0 rounded-md border-0 bg-muted py-1 pr-3 pl-9 text-[15px] leading-5 font-[450] tracking-[-0.05px] text-muted-foreground shadow-none transition-[color,box-shadow,border-color] outline-none selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground dark:bg-[#242528]"
+              className="h-9 w-full min-w-0 rounded-md border-0 bg-muted py-1 pr-3 pl-9 text-[15px] leading-5 font-[450] tracking-[-0.05px] text-muted-foreground shadow-none transition-[color,box-shadow,border-color] outline-none selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground dark:bg-foreground/7"
               data-slot="input"
               name="component-search"
               onChange={(event) => {

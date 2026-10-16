@@ -6,7 +6,7 @@ import { aiConversationComponents } from './conversation-components'
 import { aiConversationUtilityComponents } from './conversation-utility-components'
 import { aiDeveloperOutputComponents } from './developer-output-components'
 import { aiExecutionComponents } from './execution-components'
-import { colorPickerComponent } from './input-components'
+import { categoryDropdownComponent, colorPickerComponent } from './input-components'
 import { aiOperationsComponents } from './operations-components'
 import { aiPlanningInsightComponents } from './planning-insight-components'
 import { aiRichOutputComponents } from './rich-output-components'
@@ -21,6 +21,7 @@ function withCategory(category: string, components: ComponentDocument[]) {
 
 export const aiAgentComponents = [
   ...withCategory('Featured', [
+    categoryDropdownComponent,
     colorPickerComponent,
     dataTableComponent,
     imageGenerationLoaderComponent,

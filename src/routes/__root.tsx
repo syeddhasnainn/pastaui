@@ -30,7 +30,10 @@ export const Route = createRootRoute({
       { property: 'og:image', content: `${siteUrl}/og.png` },
       { property: 'og:image:width', content: '1200' },
       { property: 'og:image:height', content: '630' },
-      { property: 'og:image:alt', content: `${siteName} — Copy, paste, and ship.` },
+      {
+        property: 'og:image:alt',
+        content: `${siteName}: Beautifully crafted interfaces for AI agents`,
+      },
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:image', content: `${siteUrl}/og.png` },
       {
